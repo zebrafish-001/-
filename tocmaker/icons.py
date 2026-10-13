@@ -42,12 +42,15 @@ class IconInfo:
         name = self.id.lower()
         kw = " ".join(self.keywords).lower()
         s = 0.0
+        base = os.path.basename(name)
         for t in query_tokens:
             if not t:
                 continue
-            if t == os.path.basename(name).split(".")[0]:
+            if t == base or t == base.replace("-", " ").replace("_", " "):
                 s += 10
-            elif t in os.path.basename(name):
+            elif len(t) < 3 and not any("\u4e00" <= ch <= "\u9fff" for ch in t):
+                continue   # 1-2 letter fragments match everything; ignore them
+            elif t in base:
                 s += 4
             elif t in kw:
                 s += 2

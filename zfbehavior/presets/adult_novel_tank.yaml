@@ -1,0 +1,76 @@
+# 成鱼新环境水箱实验（Novel Tank Test，侧视，每缸 1 尾）
+# 指标：上/中/下层停留时间、进入上层潜伏期与次数、僵直（freezing）、游动距离与速度。
+name: adult_novel_tank
+
+video:
+  fps: null
+  start_s: 0
+  end_s: 360           # 经典 NTT 分析前 6 min
+  frame_step: 1
+
+arenas:
+  # 侧视水箱请用 rects 给出水体区域 [x, y, 宽, 高]（像素）。
+  # 先运行 `zfb arenas -c 本文件 视频` 生成带像素坐标轴的预览图，再读出坐标。
+  # 多个水箱并排拍摄时可写多个矩形，并用 ids 命名。
+  type: full_frame
+  margin_px: 0
+  rects: null
+  ids: null
+  size_mm: null        # rects 对应的实际尺寸 [宽 mm, 高 mm]，例如 [225, 152]
+  mask_scale: 1.0
+
+calibration:
+  px_per_mm: null      # 未给 size_mm 时直接填写像素/毫米
+
+background:
+  method: auto         # auto | median | image（见 larva_96well.yaml 说明）
+  n_frames: 80
+
+detection:
+  polarity: dark
+  threshold: auto
+  auto_threshold_k: 6.0
+  min_threshold: 10
+  blur_ksize: 5
+  morph_open_px: 3
+  morph_close_px: 5
+  min_area_px: 50
+  max_area_px: 50000
+  animals_per_arena: 1   # 群游实验可设 >1（简单匈牙利匹配，鱼体重叠时身份可能互换）
+
+postprocess:
+  max_speed_mm_s: 1000
+  max_gap_s: 0.5
+  smooth_window_s: 0.1
+  min_distance_moved_mm: 1.0
+  heading_conf_threshold: 0.15
+
+metrics:
+  speed_smoothing_s: 0.4
+  move_threshold_mm_s: 10
+  immobile_threshold_mm_s: 5     # 僵直：速度 < 5 mm/s 持续 ≥ 2 s
+  min_immobile_s: 2.0
+  bout_threshold_mm_s: 10
+  bout_min_duration_s: 0.2
+  bout_merge_gap_s: 0.2
+  turn_threshold_deg: 45
+  time_bin_s: 60
+  zones:
+    - name: depth                # 垂直分层（图像上方 = 水面）
+      type: vertical_bands
+      labels: [top, middle, bottom]
+      edges: [0.3333, 0.6667]
+  phases: []
+  events: []
+  event_window_s: 1.0
+  response_threshold_mm_s: 100
+
+qc:
+  min_valid_fraction: 0.9
+
+output:
+  tracks_format: csv
+  save_tracks: true
+  plots: true
+  report: true
+  overlay_video: false

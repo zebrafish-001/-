@@ -1,0 +1,10 @@
+# 斑马鱼幼鱼 24 孔板（继承 96 孔板设置，仅修改板型）
+# 24 孔板空间较大，常用于趋触性 / 探索行为。
+extends: larva_96well
+name: larva_24well
+arenas:
+  rows: 4
+  cols: 6
+  size_mm: 15.6       # 孔内径（mm），请按所用板子规格修改
+detection:
+  max_area_px: 6000

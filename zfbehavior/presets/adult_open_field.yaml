@@ -1,0 +1,14 @@
+# 成鱼旷场实验（俯视，圆形或方形水槽）：游动、趋触性（外周/中心）、僵直
+extends: adult_novel_tank
+name: adult_open_field
+video:
+  end_s: null
+arenas:
+  # 圆形水槽：type: circles, circles: [[cx, cy, r]], size_mm: 水槽内径
+  # 方形水槽：type: rects,   rects: [[x, y, w, h]], size_mm: [宽, 高]
+  type: full_frame
+metrics:
+  zones:
+    - name: thigmotaxis
+      type: center_periphery
+      center_fraction: 0.5

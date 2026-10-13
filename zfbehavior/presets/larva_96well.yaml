@@ -1,0 +1,85 @@
+# 斑马鱼幼鱼 96 孔板运动行为（俯视，红外背光，每孔 1 尾）
+# 适用：5-7 dpf 幼鱼自发运动、光暗交替（VMR/光运动反应）、声/振动惊跳。
+# 用法：zfb init-config larva_96well -o my.yaml，然后按实际实验修改。
+name: larva_96well
+
+video:
+  fps: null            # null = 读取视频文件中的帧率；帧率不对时手动填写
+  start_s: 0           # 从第几秒开始分析（可跳过适应期）
+  end_s: null          # 分析到第几秒；null = 视频结尾
+  frame_step: 1        # 每 n 帧处理一帧（>1 可加速，但会降低游动片段的时间分辨率）
+
+arenas:
+  type: plate          # plate=孔板自动识别；也可 circles / rects / polygons / full_frame
+  rows: 8
+  cols: 12
+  auto_detect: true    # Hough 圆检测 + 网格拟合；失败时改为手动给出下面三个参数
+  first_center: null   # 手动：A1 孔中心像素坐标 [x, y]
+  last_center: null    # 手动：最后一孔（H12）中心 [x, y]
+  radius_px: null      # 手动：孔半径（像素）
+  size_mm: 6.5         # 孔内径（mm），用于像素→毫米标定；请按所用板子规格修改
+  mask_scale: 1.0      # <1 可缩小孔掩膜，去除孔壁反光
+
+calibration:
+  px_per_mm: null      # 直接给定像素/毫米，会覆盖 arenas.size_mm 的标定
+
+background:
+  method: auto         # auto = 按极性取百分位背景（暗鱼取 90%，对长时间静止的鱼更稳健）；
+                       # median = 多帧中值；image = 使用 background.image 指定的空板/空缸图像
+  n_frames: 60
+
+detection:
+  polarity: dark       # dark=鱼比背景暗（背光常见）；light=鱼比背景亮；both
+  threshold: auto      # 或固定灰度差，例如 15
+  auto_threshold_k: 6.0
+  min_threshold: 8
+  blur_ksize: 3
+  morph_open_px: 0
+  morph_close_px: 3    # 闭运算连接头部和半透明尾部
+  min_area_px: 4
+  max_area_px: 2000
+  animals_per_arena: 1
+
+postprocess:
+  max_speed_mm_s: 300          # 超过此速度的位移视为识别错误
+  max_gap_s: 0.4               # 丢失 ≤ 该时长的轨迹做线性插值
+  smooth_window_s: 0           # 幼鱼游动片段很短，默认不平滑
+  min_distance_moved_mm: 0.1   # 最小移动距离过滤（消除质心抖动）
+  heading_conf_threshold: 0.15
+
+metrics:
+  speed_smoothing_s: 0
+  move_threshold_mm_s: 2.0       # 速度 > 该值记为"运动"
+  immobile_threshold_mm_s: 1.0   # 速度 < 该值且持续 ≥ min_immobile_s 记为"不动"
+  min_immobile_s: 2.0
+  bout_threshold_mm_s: 2.0       # 游动片段（bout）检测阈值
+  bout_min_duration_s: 0.04
+  bout_merge_gap_s: 0.08
+  turn_threshold_deg: 30         # 片段前后朝向变化 > 该角度记为"转向"
+  time_bin_s: 60                 # 时间分箱（光暗实验常用 60 s；精细可用 1-10 s）
+  zones:
+    - name: thigmotaxis          # 趋触性：外周 vs 中心
+      type: center_periphery
+      center_fraction: 0.5       # 中心区半径 = 0.5 × 孔半径
+  # 光暗交替示例（取消注释并按方案修改）：
+  # phase_cycle:
+  #   sequence: [[light, 600], [dark, 600]]
+  #   repeat: 3
+  #   start_s: 0
+  phases: []
+  # 惊跳刺激示例：
+  # event_series:
+  #   - {name: tap, start_s: 300, interval_s: 10, count: 10}
+  events: []
+  event_window_s: 1.0
+  response_threshold_mm_s: 20
+
+qc:
+  min_valid_fraction: 0.8   # 有效追踪帧比例低于此值的孔标记为 qc_pass = False
+
+output:
+  tracks_format: csv        # 大数据量可用 csv.gz 或 parquet（需 pip install pyarrow）
+  save_tracks: true
+  plots: true
+  report: true
+  overlay_video: false

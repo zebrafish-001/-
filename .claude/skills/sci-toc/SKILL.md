@@ -37,8 +37,12 @@ or write python-pptx code yourself: write the spec, render, look, iterate.
    - ≤ 20 words on an ACS canvas, ≤ 30 on Elsevier; labels 2–4 words, sublabel for n/matrix/time.
    - 1–2 icons per panel, ≤ 6 icons total. Search: `python -m tocmaker.cli icons search 孕妇 placenta`.
      House set `envtox/*` (42 recolourable icons: zebrafish, organs, exposure sources, mechanism,
-     mini-plots) first; then `healthicons/*` (MIT), `bioicons/*` (CC0 subset vendored; full sets via
-     `scripts/fetch_icon_sets.sh`). Avoid CC-BY-SA icons for journal art.
+     mini-plots) first; then `healthicons/*` (MIT, public-health people/organs), `bioicons/*` (CC0 subset),
+     `reactome/*` (CC BY 4.0: detailed human tissues incl. `female-body-with-organs`, cell types,
+     organelles, receptors, compounds — cite "Reactome Icon Library, CC BY 4.0" in the SI when used).
+     Full sets via `scripts/fetch_icon_sets.sh` + `TOCMAKER_ICON_PATHS`. Avoid CC-BY-SA icons for journal art.
+     Tall icons (bodies, test tubes) get their natural aspect; mix at most one detailed Reactome drawing
+     with flat envtox icons per panel, or the styles clash.
    - Roles drive colour: `exposure` warm, `organism` blue, `mechanism` teal, `outcome` plum,
      `method` grey. Palettes: `envtox` (default), `calm`, `alert`, `mono`.
    - ACS TOC art traditionally *hints* the finding (↑/↓, no numbers); Elsevier/Cell want the key

@@ -287,38 +287,50 @@ class Layout:
             return
         n = len(p.icons)
         scales = [max(0.2, ic.scale) for ic in p.icons]
+        aspects = []
+        for ic in p.icons:
+            try:
+                aspects.append(max(0.45, min(2.2, iconlib.aspect(iconlib.get(ic.id).path))))
+            except KeyError:
+                aspects.append(1.0)
         gap = 2.0
         if p.icon_layout == "overlap":
             gap = -box.h * 0.25
         if p.icon_layout == "stack":
             h_each = (box.h - gap * (n - 1)) / n
             y = box.y
-            for ic, sc in zip(p.icons, scales):
-                s = min(h_each, box.w) * sc
-                self._icon(ic, box.cx - s / 2, y + (h_each - s) / 2, s, role_col)
+            for ic, sc, a in zip(p.icons, scales, aspects):
+                h = min(h_each, box.w / a) * sc
+                w = h * a
+                self._icon(ic, box.cx - w / 2, y + (h_each - h) / 2, w, h, role_col)
                 y += h_each + gap
             return
-        # row: size limited by height and by width share
-        unit = min(box.h, (box.w - gap * (n - 1)) / sum(scales))
-        sizes = [unit * sc for sc in scales]
-        total = sum(sizes) + gap * (n - 1)
+        # row: start from full height, shrink uniformly until the widths fit
+        unit = box.h
+        widths = [unit * sc * a for sc, a in zip(scales, aspects)]
+        total = sum(widths) + gap * (n - 1)
+        if total > box.w:
+            unit *= box.w / total
+            widths = [unit * sc * a for sc, a in zip(scales, aspects)]
+            total = sum(widths) + gap * (n - 1)
         x = box.cx - total / 2
-        for ic, s in zip(p.icons, sizes):
-            self._icon(ic, x, box.cy - s / 2, s, role_col)
-            x += s + gap
+        for ic, sc, a, w in zip(p.icons, scales, aspects, widths):
+            h = unit * sc
+            self._icon(ic, x, box.cy - h / 2, w, h, role_col)
+            x += w + gap
 
-    def _icon(self, ref, x, y, s, role_col):
+    def _icon(self, ref, x, y, w, h, role_col):
         try:
             info = iconlib.get(ref.id)
         except KeyError as e:
             self.warnings.append(str(e))
-            self.scene.append(dict(type="rect", x=x, y=y, w=s, h=s, rx=2, fill="#DDDDDD", stroke="#999999",
+            self.scene.append(dict(type="rect", x=x, y=y, w=w, h=h, rx=2, fill="#DDDDDD", stroke="#999999",
                                    stroke_width=0.5, placeholder=ref.id))
             return
         primary = self.pal["ink"]
         if info.monochrome and ref.tint in ("auto", "mono"):
             primary = shade(role_col, 0.12)
-        self.scene.append(dict(type="icon", x=x, y=y, w=s, h=s, icon=info, primary=primary, accent=role_col,
+        self.scene.append(dict(type="icon", x=x, y=y, w=w, h=h, icon=info, primary=primary, accent=role_col,
                                tint=ref.tint, flip=ref.flip, opacity=ref.opacity))
 
     def _text(self, x, y, w, lines, size, weight, color, align, panel=None):

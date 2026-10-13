@@ -204,6 +204,16 @@ def _viewbox(root: etree._Element) -> Tuple[float, float, float, float]:
 _counter = [0]
 
 
+@functools.lru_cache(maxsize=4096)
+def aspect(path: str) -> float:
+    """width / height of the icon's viewBox (1.0 for square)."""
+    try:
+        _x, _y, w, h = _viewbox(_parse(path))
+        return max(0.2, min(5.0, w / h)) if h else 1.0
+    except Exception:
+        return 1.0
+
+
 def placed_svg(info: IconInfo, x: float, y: float, w: float, h: float, primary: Optional[str] = None,
                accent: Optional[str] = None, tint_mode: str = "auto", opacity: float = 1.0,
                flip: bool = False) -> str:
@@ -285,16 +295,20 @@ def icon_png(info: IconInfo, width_px: int, primary: Optional[str] = None, accen
              tint_mode: str = "auto", flip: bool = False) -> bytes:
     """Rasterise an icon (for PPTX fallback thumbnails and previews)."""
     import cairosvg
-    inner = placed_svg(info, 0, 0, 100, 100, primary, accent, tint_mode, flip=flip)
-    svg = f'<svg xmlns="{SVG_NS}" viewBox="0 0 100 100" width="100" height="100">{inner}</svg>'
-    return cairosvg.svg2png(bytestring=svg.encode("utf-8"), output_width=width_px, output_height=width_px)
+    a = aspect(info.path)
+    h = 100.0 / a
+    inner = placed_svg(info, 0, 0, 100, h, primary, accent, tint_mode, flip=flip)
+    svg = f'<svg xmlns="{SVG_NS}" viewBox="0 0 100 {h:.3f}" width="100" height="{h:.3f}">{inner}</svg>'
+    return cairosvg.svg2png(bytestring=svg.encode("utf-8"), output_width=width_px, output_height=max(1, round(width_px / a)))
 
 
 def icon_svg_bytes(info: IconInfo, primary: Optional[str] = None, accent: Optional[str] = None,
                    tint_mode: str = "auto", flip: bool = False) -> bytes:
     """Standalone SVG document for one icon (used for PPTX svgBlip embedding)."""
-    inner = placed_svg(info, 0, 0, 100, 100, primary, accent, tint_mode, flip=flip)
-    svg = f'<svg xmlns="{SVG_NS}" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" width="100" height="100">{inner}</svg>'
+    h = 100.0 / aspect(info.path)
+    inner = placed_svg(info, 0, 0, 100, h, primary, accent, tint_mode, flip=flip)
+    svg = (f'<svg xmlns="{SVG_NS}" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 {h:.3f}" '
+           f'width="100" height="{h:.3f}">{inner}</svg>')
     return svg.encode("utf-8")
 
 

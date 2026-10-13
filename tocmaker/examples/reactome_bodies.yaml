@@ -1,0 +1,18 @@
+journal: elsevier
+palette: envtox
+template: flow
+panels:
+  - role: exposure
+    label: Indoor PM2.5
+    sublabel: 3-yr residential monitoring
+    icons: [pm25-particles]
+  - role: organism
+    label: Adults, n = 4,210
+    icons: [{id: "reactome/human_tissue/female-body-with-organs", scale: 1.0}, {id: "reactome/human_tissue/male-body-with-organs", scale: 1.0}]
+  - role: mechanism
+    label: Systemic inflammation
+    icons: [reactome/human_tissue/alveolus, inflammation-cell]
+  - role: outcome
+    label: Lung function decline
+    icons: [reactome/human_tissue/lungs]
+    badge: "FEV1 −38 mL per 10 µg/m³"

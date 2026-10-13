@@ -1,0 +1,24 @@
+# ES&T TOC graphic — Gu et al., emamectin benzoate (EMB) reaches the zebrafish brain and reroutes tryptophan
+journal: acs
+palette: envtox
+template: flow
+font_pt: 7
+options: {gap_pt: 7}
+panels:
+  - role: exposure
+    label: EMB 0.1–10 µg/L
+    icons: [pesticide-sprayer, water-drop-contaminated]
+  - role: organism
+    label: Enters fish brain
+    sublabel: ♂ > ♀
+    icons: [{id: zebrafish-adult, scale: 1.2}, brain]
+    weight: 1.1
+  - role: mechanism
+    label: Trp → kynurenine
+    sublabel: serotonin ↓
+    icons: [{id: tocmaker/examples/emb_est/trp-fork.svg, scale: 1.1}]
+  - role: outcome
+    label: Anxiety, memory loss
+    sublabel: serotonin rescues
+    icons: [tocmaker/examples/emb_est/anxious-fish.svg, tocmaker/examples/emb_est/t-maze-fish.svg]
+    weight: 1.1

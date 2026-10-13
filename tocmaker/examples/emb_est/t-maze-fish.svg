@@ -1,0 +1,14 @@
+<!-- keywords: T-maze, learning, memory, behavior, zebrafish, cognition, T迷宫, 学习记忆 -->
+<!-- license: CC0 (drawn for this manuscript) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- T corridor -->
+  <path d="M38 92 V40 H8 V18 H92 V40 H62 V92 Z" fill="none" stroke="#1F2937" stroke-width="5" stroke-linejoin="round"/>
+  <!-- reward cue in left arm -->
+  <circle cx="22" cy="29" r="5" fill="#4F8FC0"/>
+  <!-- fish at the choice point, heading up -->
+  <path d="M50 78 C44 70 44 58 50 48 C56 58 56 70 50 78 Z" fill="#1F2937"/>
+  <path d="M50 78 L44 88 L56 88 Z" fill="#1F2937"/>
+  <circle cx="48" cy="54" r="1.6" fill="#FFFFFF"/>
+  <!-- question/hesitation: wavy path -->
+  <path d="M50 46 C47 40 53 36 50 30 C47 26 53 22 50 19" fill="none" stroke="#4F8FC0" stroke-width="3" stroke-linecap="round" stroke-dasharray="3 3"/>
+</svg>

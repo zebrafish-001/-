@@ -155,7 +155,18 @@ def search(query: str, limit: int = 10, sources: Optional[Iterable[str]] = None,
 def get(icon_id: str) -> IconInfo:
     """Exact id, or path to an SVG file, or a search query (best hit)."""
     if os.path.isfile(icon_id) and icon_id.lower().endswith(".svg"):
-        return IconInfo(os.path.splitext(os.path.basename(icon_id))[0], icon_id, "file", "unknown")
+        lic, recol = "unknown", False
+        try:
+            with open(icon_id, "r", encoding="utf-8", errors="ignore") as fh:
+                head = fh.read(3000)
+            m = re.search(r"<!--\s*licen[cs]e:\s*(.*?)-->", head, re.I)
+            if m:
+                lic = m.group(1).strip()
+            recol = ENVTOX_PRIMARY.lower() in head.lower() or ENVTOX_ACCENT.lower() in head.lower()
+        except OSError:
+            pass
+        return IconInfo(os.path.splitext(os.path.basename(icon_id))[0], icon_id, "file", lic,
+                        _keywords_from_file(icon_id), recolorable=recol)
     idx = {ic.id.lower(): ic for ic in build_index()}
     if icon_id.lower() in idx:
         return idx[icon_id.lower()]

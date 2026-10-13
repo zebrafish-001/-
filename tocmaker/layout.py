@@ -294,9 +294,12 @@ class Layout:
             except KeyError:
                 aspects.append(1.0)
         gap = 2.0
-        if p.icon_layout == "overlap":
+        layout = p.icon_layout
+        if layout == "row" and n >= 2 and box.h >= 1.25 * box.w:
+            layout = "stack"   # tall narrow panel: stacking uses the height instead of squeezing the row
+        if layout == "overlap":
             gap = -box.h * 0.25
-        if p.icon_layout == "stack":
+        if layout == "stack":
             h_each = (box.h - gap * (n - 1)) / n
             y = box.y
             for ic, sc, a in zip(p.icons, scales, aspects):

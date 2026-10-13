@@ -1,0 +1,16 @@
+<!-- keywords: tryptophan, kynurenine, serotonin, metabolic switch, pathway fork, 色氨酸, 犬尿氨酸, 血清素 -->
+<!-- license: CC0 (drawn for this manuscript) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- tryptophan node -->
+  <circle cx="16" cy="50" r="9" fill="#1F2937"/>
+  <!-- trunk -->
+  <path d="M25 50 H44" fill="none" stroke="#1F2937" stroke-width="6" stroke-linecap="round"/>
+  <!-- kynurenine branch: thick, accent, up -->
+  <path d="M44 50 C56 50 58 24 72 24 H80" fill="none" stroke="#4F8FC0" stroke-width="7" stroke-linecap="round"/>
+  <path d="M76 14 L90 24 L76 34 Z" fill="#4F8FC0"/>
+  <circle cx="88" cy="24" r="0" fill="none"/>
+  <!-- serotonin branch: thin, ink, down, blocked -->
+  <path d="M44 50 C56 50 58 76 70 76 H74" fill="none" stroke="#1F2937" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="6 5"/>
+  <circle cx="84" cy="76" r="8" fill="none" stroke="#1F2937" stroke-width="3.5"/>
+  <path d="M78 70 L90 82" fill="none" stroke="#1F2937" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

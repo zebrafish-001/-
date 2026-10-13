@@ -1,0 +1,7 @@
+<!-- keywords: factory, industry, smokestack, emission, air pollution, industrial, 工厂, 排放 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M6 92 V60 L26 48 V60 L46 48 V60 L66 48 V92 Z" fill="#1F2937"/>
+<rect x="66" y="34" width="16" height="58" fill="#1F2937"/>
+<rect x="14" y="70" width="10" height="10" fill="#FFFFFF"/><rect x="34" y="70" width="10" height="10" fill="#FFFFFF"/>
+<circle cx="72" cy="24" r="8" fill="#4F8FC0"/><circle cx="84" cy="16" r="9" fill="#4F8FC0"/><circle cx="88" cy="28" r="6" fill="#4F8FC0"/>
+</svg>

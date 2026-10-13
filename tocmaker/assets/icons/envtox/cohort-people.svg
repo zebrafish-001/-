@@ -1,0 +1,7 @@
+<!-- keywords: cohort, population, group, participants, epidemiology, people, 队列, 人群 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<circle cx="26" cy="36" r="11" fill="#1F2937"/><path d="M8 78 Q8 54 26 52 Q44 54 44 78 Z" fill="#1F2937"/>
+<circle cx="74" cy="36" r="11" fill="#1F2937"/><path d="M56 78 Q56 54 74 52 Q92 54 92 78 Z" fill="#1F2937"/>
+<circle cx="50" cy="30" r="14" fill="#4F8FC0" stroke="#FFFFFF" stroke-width="3"/>
+<path d="M26 84 Q26 54 50 52 Q74 54 74 84 Z" fill="#4F8FC0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

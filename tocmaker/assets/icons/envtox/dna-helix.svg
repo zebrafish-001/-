@@ -1,0 +1,6 @@
+<!-- keywords: DNA, helix, genotoxicity, genetics, gene, mutation, 基因, DNA损伤 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M30 6 C30 28 70 28 70 50 C70 72 30 72 30 94" fill="none" stroke="#1F2937" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M70 6 C70 28 30 28 30 50 C30 72 70 72 70 94" fill="none" stroke="#1F2937" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M33 12 H67 M40 20 H60 M40 42 H60 M33 50 H67 M40 58 H60 M40 80 H60 M33 88 H67" fill="none" stroke="#4F8FC0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,8 @@
+<!-- keywords: mouse, rodent, laboratory animal, in vivo, murine, 小鼠, 动物实验 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M6 58 Q10 42 28 38 L62 38 Q86 38 86 62 Q86 82 60 82 L30 82 Q12 80 8 68 Z" fill="#1F2937"/>
+<circle cx="34" cy="36" r="11" fill="#1F2937"/><circle cx="34" cy="36" r="6" fill="#4F8FC0"/>
+<path d="M84 62 Q98 60 94 44" fill="none" stroke="#1F2937" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="18" cy="54" r="3.5" fill="#FFFFFF"/>
+<path d="M28 82 V90 M46 82 V90 M66 82 V90" fill="none" stroke="#1F2937" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

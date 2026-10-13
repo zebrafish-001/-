@@ -1,0 +1,6 @@
+<!-- keywords: map, location, region, geographic, study area, spatial, 地图, 区域 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M8 70 L24 56 L40 62 L56 50 L76 54 L92 66 L84 86 L60 92 L34 88 L14 88 Z" fill="#1F2937"/>
+<path d="M50 70 L34 46 A19 19 0 1 1 66 46 Z" fill="#4F8FC0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="50" cy="34" r="7" fill="#FFFFFF"/>
+</svg>

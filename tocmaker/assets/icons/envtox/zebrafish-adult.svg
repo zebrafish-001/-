@@ -1,0 +1,9 @@
+<!-- keywords: zebrafish, adult fish, Danio rerio, model organism, aquatic, 斑马鱼, 成鱼 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M8 50 Q20 30 46 31 Q66 33 74 45 L74 55 Q66 67 46 69 Q20 70 8 50 Z" fill="#1F2937"/>
+<path d="M40 32 Q50 20 60 33 Z" fill="#1F2937"/>
+<path d="M44 68 Q52 78 60 67 Z" fill="#1F2937"/>
+<path d="M72 50 L92 34 L87 50 L92 66 Z" fill="#1F2937"/>
+<path d="M26 44 H70 M24 50 H72 M26 56 H70" fill="none" stroke="#4F8FC0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="18" cy="46" r="4.5" fill="#FFFFFF"/><circle cx="18.5" cy="46" r="2.2" fill="#1F2937"/>
+</svg>

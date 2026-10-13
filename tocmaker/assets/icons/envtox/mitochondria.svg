@@ -1,0 +1,6 @@
+<!-- keywords: mitochondria, mitochondrion, oxidative phosphorylation, energy metabolism, cristae, 线粒体 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<ellipse cx="50" cy="50" rx="44" ry="24" fill="#1F2937"/>
+<ellipse cx="50" cy="50" rx="36" ry="16" fill="#FFFFFF"/>
+<path d="M14 50 C22 30 30 70 38 50 C46 30 54 70 62 50 C70 30 78 70 86 50" fill="none" stroke="#4F8FC0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

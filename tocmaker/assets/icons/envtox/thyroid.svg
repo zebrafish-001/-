@@ -1,0 +1,7 @@
+<!-- keywords: thyroid, endocrine, hormone, trachea, endocrine disruption, 甲状腺, 内分泌 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<rect x="42" y="8" width="16" height="84" rx="8" fill="#1F2937"/>
+<path d="M46 20 H54 M46 32 H54 M46 72 H54 M46 84 H54" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="33" cy="48" rx="13" ry="19" fill="#4F8FC0"/><ellipse cx="67" cy="48" rx="13" ry="19" fill="#4F8FC0"/>
+<rect x="33" y="52" width="34" height="12" rx="4" fill="#4F8FC0"/>
+</svg>

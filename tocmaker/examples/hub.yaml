@@ -1,0 +1,23 @@
+# One central hazard with converging evidence lines
+journal: elsevier
+palette: alert
+template: hub
+center: 0
+hub_direction: in
+panels:
+  - role: outcome
+    label: Thyroid disruption
+    icons: [thyroid]
+    badge: "TSH ↑ 14%"
+  - role: exposure
+    label: Drinking-water PFAS
+    icons: [tap-faucet]
+  - role: exposure
+    label: Dietary fish
+    icons: [food-fish-plate]
+  - role: mechanism
+    label: Receptor binding
+    icons: [receptor-ligand]
+  - role: organism
+    label: Cohort, n = 2,310
+    icons: [cohort-people]

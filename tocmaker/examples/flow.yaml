@@ -1,0 +1,20 @@
+# Left-to-right story: exposure -> mechanism -> outcome (the ES&T / Environ Int default)
+journal: acs
+palette: envtox
+template: flow
+panels:
+  - role: exposure
+    label: Prenatal PFAS exposure
+    sublabel: maternal serum, 1st trimester
+    icons: [pregnant-woman, chemical-flask-hazard]
+  - role: mechanism
+    label: Placental inflammation
+    icons: [placenta-umbilical, inflammation-cell]
+  - role: outcome
+    label: Lower birth weight
+    icons: [fetus]
+    badge: "−48 g per ln-unit"
+arrows:
+  - {from: 0, to: 1}
+  - {from: 1, to: 2, label: mediates, style: dashed}
+footer: "n = 1,203 mother–infant pairs, prospective cohort"

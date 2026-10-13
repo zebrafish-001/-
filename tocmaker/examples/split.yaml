@@ -1,0 +1,27 @@
+# Many sources -> one model system -> several outcomes
+journal: acs
+palette: envtox
+template: split
+panels:
+  - role: exposure
+    label: Microplastics
+    icons: [plastic-bottle-microplastics]
+  - role: exposure
+    label: Cadmium
+    icons: [water-drop-contaminated]
+  - role: organism
+    label: Zebrafish larvae, 5 dpf
+    sublabel: co-exposure, 96 h
+    icons: [{id: zebrafish-larva, scale: 1.3}]
+  - role: outcome
+    label: Hypoactivity
+    icons: [dose-response-curve]
+  - role: outcome
+    label: Gut dysbiosis
+    icons: [gut-microbiome]
+  - role: outcome
+    label: Oxidative stress
+    icons: [ros-radical]
+left: [0, 1]
+center: 2
+right: [3, 4, 5]

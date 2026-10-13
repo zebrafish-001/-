@@ -1,0 +1,6 @@
+<!-- keywords: risk, increase, trend, association, elevated risk, hazard, 风险升高, 上升趋势 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<rect x="10" y="68" width="14" height="24" rx="2" fill="#4F8FC0"/><rect x="30" y="54" width="14" height="38" rx="2" fill="#4F8FC0"/><rect x="50" y="40" width="14" height="52" rx="2" fill="#4F8FC0"/>
+<path d="M12 56 L36 36 L54 46 L78 22" fill="none" stroke="#1F2937" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="64,14 90,10 86,36" fill="#1F2937"/>
+</svg>

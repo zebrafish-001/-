@@ -1,0 +1,6 @@
+<!-- keywords: heart, cardiovascular, cardiotoxicity, cardiac, 心脏, 心血管 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M50 92 Q20 72 16 50 Q14 32 32 30 Q44 30 50 42 Q56 30 68 30 Q86 32 84 50 Q80 72 50 92 Z" fill="#1F2937"/>
+<path d="M44 34 V18 Q44 10 52 10 H64 M62 34 V20" fill="none" stroke="#4F8FC0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M52 48 Q42 62 46 80" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

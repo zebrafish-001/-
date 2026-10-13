@@ -1,0 +1,23 @@
+# Two evidence streams (in vivo + human) converging on one outcome
+journal: acs
+palette: envtox
+template: two_row
+converge: 4
+panels:
+  - role: exposure
+    label: BPA analogues
+    icons: [chemical-flask-hazard]
+  - role: organism
+    label: Zebrafish
+    icons: [zebrafish-adult]
+  - role: exposure
+    label: Urinary BPA
+    icons: [blood-drop]
+  - role: organism
+    label: Children, n = 980
+    icons: [child]
+  - role: outcome
+    label: Impaired neurodevelopment
+    icons: [brain]
+    badge: "β = −2.1 IQ"
+rows: [[0, 1], [2, 3]]

@@ -1,0 +1,8 @@
+<!-- keywords: pill, drug, pharmaceutical, medication, capsule, 药物, 胶囊 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<g transform="rotate(-45 50 50)">
+<rect x="14" y="36" width="72" height="28" rx="14" fill="#1F2937"/>
+<path d="M50 36 H72 A14 14 0 0 1 72 64 H50 Z" fill="#4F8FC0"/>
+<rect x="24" y="43" width="18" height="4" rx="2" fill="#FFFFFF"/>
+</g>
+</svg>

@@ -1,0 +1,6 @@
+<!-- keywords: placenta, umbilical cord, maternal-fetal transfer, prenatal, 胎盘, 脐带 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<ellipse cx="36" cy="48" rx="30" ry="24" fill="#1F2937"/>
+<circle cx="26" cy="42" r="4" fill="#FFFFFF"/><circle cx="40" cy="38" r="4" fill="#FFFFFF"/><circle cx="32" cy="56" r="4" fill="#FFFFFF"/><circle cx="46" cy="52" r="4" fill="#FFFFFF"/>
+<path d="M64 50 C78 50 72 66 84 66 C96 66 88 84 94 88" fill="none" stroke="#4F8FC0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

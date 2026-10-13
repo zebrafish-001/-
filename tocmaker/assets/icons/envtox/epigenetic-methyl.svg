@@ -1,0 +1,7 @@
+<!-- keywords: epigenetics, DNA methylation, methyl group, CpG, gene regulation, 表观遗传, 甲基化 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M8 62 H92 M8 80 H92" fill="none" stroke="#1F2937" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18 62 V80 M38 62 V80 M58 62 V80 M78 62 V80" fill="none" stroke="#1F2937" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M28 62 V34 M48 62 V26 M68 62 V34" fill="none" stroke="#4F8FC0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="28" cy="28" r="8" fill="#4F8FC0"/><circle cx="48" cy="20" r="8" fill="#4F8FC0"/><circle cx="68" cy="28" r="8" fill="#4F8FC0"/>
+</svg>

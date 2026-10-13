@@ -1,0 +1,117 @@
+# TOC / graphical-abstract design patterns for environmental toxicology & population health.
+# Each pattern = a narrative skeleton that recurs in ES&T / Environ Int / JHM / EHP-style TOC art.
+# Use: pick the pattern whose "fits" matches the study; copy its template + panel roles into a spec.
+# These are distilled conventions (knowledge-based), not a copy of any specific published graphic.
+meta:
+  version: 1
+  roles: [exposure, organism, mechanism, outcome, method, neutral]
+  reading_order: "left -> right (or top -> bottom for square Cell-style canvases); one arrow chain, one message"
+
+patterns:
+  - id: exposure-mechanism-outcome
+    name: 暴露 → 机制 → 效应（三段式，最常用）
+    template: flow
+    fits: [toxicology, in vivo, in vitro, mechanistic epidemiology]
+    panels: [exposure, mechanism, outcome]
+    tips:
+      - 中间机制面板放 1–2 个图标（受体/线粒体/ROS/菌群），不要堆通路名
+      - 结局面板可带一个徽章放核心效应量；ACS 期刊更习惯只暗示方向（↑/↓）
+    example_badge: "ROS ↑ 2.3×"
+
+  - id: cohort-pipeline
+    name: 人群队列流水线：人群 → 暴露评估 → 模型 → 结局
+    template: cohort
+    fits: [cohort, cross-sectional, birth cohort, biomonitoring]
+    panels: [organism, exposure, method, outcome]
+    tips:
+      - 第一格写样本量与地点（n、城市数、年份），用 cohort-people + map-pin-region
+      - 方法格用 forest-plot-mini 或 dose-response-curve，避免真实图表截图
+      - 徽章放 HR/OR/β 与单位（per 10 µg/m³、per ln-unit）
+
+  - id: multi-source-one-model-multi-endpoint
+    name: 多来源 → 一个模型系统 → 多终点
+    template: split
+    fits: [co-exposure, mixture toxicity, zebrafish, mouse]
+    panels: [exposure, exposure, organism, outcome, outcome, outcome]
+    tips:
+      - 中心放大的模式生物（zebrafish-larva scale 1.3），左右各 2–3 个小格
+      - 终点用 3 个以内；再多就合并成"多器官毒性"
+
+  - id: hub-converging-evidence
+    name: 中心危害 + 汇聚的证据线
+    template: hub
+    fits: [review, risk assessment, weight of evidence, mixed in vivo + human]
+    panels: [outcome(center), exposure, exposure, mechanism, organism]
+    tips:
+      - 中心面板给一个徽章总结（TSH ↑ 14%），卫星面板只放图标 + 2–3 词
+
+  - id: two-stream-convergence
+    name: 双证据流（动物 + 人群）汇聚于同一结局
+    template: two_row
+    fits: [translational, in vivo + epidemiology, AOP-anchored]
+    panels: [exposure, organism, exposure, organism, outcome(converge)]
+    tips:
+      - 上行为动物实验，下行为人群，右侧汇聚结局；颜色上两行共用 exposure/organism 角色色即可
+
+  - id: source-to-receptor-cycle
+    name: 来源 → 环境 → 暴露 → 效应 → 管理（环形）
+    template: cycle
+    fits: [policy, source apportionment, One Health, life-cycle]
+    panels: [exposure, method, organism, outcome]
+    tips:
+      - 只放 4–5 格，每格 1 个图标、≤ 2 词；环形适合 Springer 7:5 或 Cell 方形画布
+
+  - id: dose-response-spotlight
+    name: 剂量–反应聚光灯
+    template: flow
+    fits: [benchmark dose, non-monotonic, low-dose]
+    panels: [exposure, organism, outcome]
+    tips:
+      - 结局面板用 dose-response-curve 图标 + 徽章 "BMD10 = 0.8 mg/kg"
+
+  - id: window-of-susceptibility
+    name: 易感窗口（孕期/生命早期）
+    template: flow
+    fits: [DOHaD, prenatal, birth cohort, placenta]
+    panels: [exposure, mechanism, outcome]
+    tips:
+      - 暴露格用 pregnant-woman；机制格用 placenta-umbilical/epigenetic-methyl；结局用 fetus/child
+
+  - id: biomarker-mediation
+    name: 暴露 → 生物标志物（中介）→ 结局
+    template: flow
+    fits: [mediation analysis, metabolomics, inflammation markers]
+    panels: [exposure, mechanism, outcome]
+    tips:
+      - 第二个箭头写 "mediates xx%"；机制格 inflammation-cell/blood-drop
+
+  - id: microbiome-axis
+    name: 暴露 → 肠道菌群 → 器官轴（肠–脑/肠–肝）
+    template: flow
+    fits: [gut microbiota, zebrafish, mouse, metabolic]
+    panels: [exposure, mechanism, outcome]
+    tips:
+      - 机制格 gut-microbiome + gut-intestine；结局格 brain 或 liver
+
+  - id: mixture-risk-map
+    name: 区域监测 → 风险排序
+    template: cohort
+    fits: [monitoring, risk ranking, spatial]
+    panels: [method, exposure, method, outcome]
+    tips:
+      - 第一格 map-pin-region + 样本数，第三格 forest-plot-mini 当"排序"
+
+  - id: in-vitro-aop
+    name: 体外/AOP 链（分子起始事件 → 关键事件 → 不良结局）
+    template: flow
+    fits: [AOP, NAMs, in vitro, high-throughput]
+    panels: [exposure, mechanism, mechanism, outcome]
+    tips:
+      - 两个机制格分别 receptor-ligand 与 mitochondria/ros-radical；箭头可标 KE1/KE2
+
+journal_notes:
+  acs: "不透露具体结果的传统；8 pt 无衬线；画布 3.25×1.75 in；图必须是作者原创、无人物照片/商标"
+  elsevier: "鼓励展示核心发现；1328×531 px；一张图说一件事；Environ Int/JHM/STOTEN/Chemosphere 必交"
+  cell: "方形 1200×1200 px，上下阅读；可以多一点文字（12–16 pt）"
+  rsc: "8×4 cm + 20–30 词 TOC 句子，句子不能是图注"
+  mdpi: "≥1100×560 px；不能与正文图相同；不能拼贴"

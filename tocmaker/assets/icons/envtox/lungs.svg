@@ -1,0 +1,6 @@
+<!-- keywords: lungs, respiratory, pulmonary, inhalation, airway, 肺, 呼吸 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M44 38 Q44 30 38 32 Q12 46 12 74 Q12 90 28 90 Q44 90 44 72 Z" fill="#1F2937"/>
+<path d="M56 38 Q56 30 62 32 Q88 46 88 74 Q88 90 72 90 Q56 90 56 72 Z" fill="#1F2937"/>
+<path d="M50 10 V42 M50 42 Q50 48 42 52 M50 42 Q50 48 58 52" fill="none" stroke="#4F8FC0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

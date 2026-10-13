@@ -1,0 +1,8 @@
+<!-- keywords: tap, faucet, drinking water, water supply, plumbing, 水龙头, 自来水 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M10 46 H50 Q60 46 60 56 V68" fill="none" stroke="#1F2937" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30 40 V22" fill="none" stroke="#1F2937" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="16" y="10" width="28" height="10" rx="4" fill="#1F2937"/>
+<rect x="10" y="40" width="8" height="12" rx="2" fill="#1F2937"/>
+<path d="M53 72 H67 L64 92 H56 Z" fill="#4F8FC0"/>
+</svg>

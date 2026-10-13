@@ -1,0 +1,8 @@
+<!-- keywords: car, vehicle, traffic, exhaust, emission, roadway, 汽车, 尾气 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M6 70 Q6 58 16 56 L24 56 L34 40 L62 40 L72 56 L78 56 Q86 58 86 70 Z" fill="#1F2937"/>
+<rect x="38" y="44" width="10" height="10" fill="#FFFFFF"/><rect x="52" y="44" width="10" height="10" fill="#FFFFFF"/>
+<circle cx="24" cy="72" r="9" fill="#1F2937"/><circle cx="24" cy="72" r="3.5" fill="#FFFFFF"/>
+<circle cx="68" cy="72" r="9" fill="#1F2937"/><circle cx="68" cy="72" r="3.5" fill="#FFFFFF"/>
+<circle cx="86" cy="78" r="5" fill="#4F8FC0"/><circle cx="92" cy="68" r="4" fill="#4F8FC0"/><circle cx="90" cy="56" r="5" fill="#4F8FC0"/>
+</svg>

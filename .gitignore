@@ -12,3 +12,8 @@ demo/
 *.mp4
 *.avi
 *.mov
+
+# tocmaker
+tocmaker/assets/icons/external/
+tocmaker/db/reference/images/
+*_out/

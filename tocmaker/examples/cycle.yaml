@@ -1,0 +1,17 @@
+# Circular story (source -> environment -> exposure -> effect -> policy)
+journal: springer
+palette: calm
+template: cycle
+panels:
+  - role: exposure
+    label: Emissions
+    icons: [factory-smokestack]
+  - role: method
+    label: Monitoring
+    icons: [map-pin-region]
+  - role: organism
+    label: Exposure
+    icons: [human-adult]
+  - role: outcome
+    label: Health burden
+    icons: [lungs]

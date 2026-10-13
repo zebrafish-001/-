@@ -110,7 +110,7 @@ def cmd_vectorize(a):
             print(f"{k}: {v}")
         return 0
     info = vectorize(a.image, a.out or os.path.splitext(a.image)[0] + "_vec", a.name, preset, a.width_mm, opt, a.preview,
-                     text_mode=a.text, vocab_path=a.vocab)
+                     text_mode=a.text, vocab_path=a.vocab, lines=a.lines, line_threshold=a.line_threshold)
     for k, v in info.items():
         print(f"{k}: {v}")
     return 0
@@ -177,6 +177,7 @@ def main(argv=None):
     v.add_argument("--hybrid", action="store_true",
                    help="painterly/gradient art: keep the picture, lift text + dark line-art into editable objects")
     v.add_argument("--no-lines", action="store_true", help="hybrid: skip the traced line-art layer")
+    v.add_argument("--lines", action="store_true", help="full trace: add a binary-traced layer of thin dark strokes on top")
     v.add_argument("--line-threshold", type=int, default=90, help="hybrid: grey level below which pixels count as line art")
     v.add_argument("--vocab", help="text file (e.g. the manuscript) whose words help re-space merged OCR tokens")
     v.add_argument("--text", choices=["ocr", "trace", "none"], default="ocr",

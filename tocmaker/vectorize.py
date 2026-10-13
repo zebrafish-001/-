@@ -419,7 +419,8 @@ def _text_pptx(slide, boxes: List[TextBox], scale: float, width_mm: float, W: fl
 
 def vectorize(image_path: str, out_dir: str, name: str = "traced", preset: Optional[Preset] = None,
               width_mm: Optional[float] = None, opt: TraceOptions = TraceOptions(), preview: bool = False,
-              text_mode: str = "ocr", vocab_path: Optional[str] = None) -> dict:
+              text_mode: str = "ocr", vocab_path: Optional[str] = None, lines: bool = False,
+              line_threshold: int = 90) -> dict:
     """text_mode: 'ocr' = lift text into editable text objects (RapidOCR), 'trace' = keep text as shapes, 'none' = erase text."""
     from PIL import Image
     os.makedirs(out_dir, exist_ok=True)
@@ -444,6 +445,8 @@ def vectorize(image_path: str, out_dir: str, name: str = "traced", preset: Optio
             boxes = []
     svg_raw = trace_svg(src, os.path.join(out_dir, name + "_vtracer.svg"), opt)
     regions, W, H = svg_regions(svg_raw, opt)
+    if lines:   # thin dark strokes (axes, bonds, brackets) that colour quantisation swallows
+        regions += line_art_regions(src, out_dir, name, line_threshold, speckle=3)
     if preset is not None:
         width_mm = preset.width_mm
     width_mm = width_mm or (W / 300.0 * MM_PER_IN)
@@ -461,6 +464,32 @@ def vectorize(image_path: str, out_dir: str, name: str = "traced", preset: Optio
         pv = pptx_preview(pptx_path, os.path.join(out_dir, name + "_pptx_preview.png"), dpi=200)
         info["preview"] = pv
     return info
+
+
+def line_art_regions(bg_png: str, out_dir: str, name: str, line_threshold: int = 90, speckle: int = 6) -> List[Region]:
+    """Binary-trace dark strokes (axes, bonds, arrows, box outlines) and colour them from the source pixels."""
+    import cv2
+    import numpy as np
+    from PIL import Image
+    img = cv2.imread(bg_png)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ink = (gray < line_threshold).astype("uint8") * 255
+    ink = cv2.morphologyEx(ink, cv2.MORPH_OPEN, np.ones((2, 2), np.uint8))
+    line_png = os.path.join(out_dir, name + "_lines.png")
+    cv2.imwrite(line_png, 255 - ink)
+    opt = TraceOptions(colormode="binary", filter_speckle=speckle, mode="spline", drop_background=True)
+    svg_raw = trace_svg(line_png, os.path.join(out_dir, name + "_lines.svg"), opt)
+    regions, _w, _h = svg_regions(svg_raw, opt)
+    orig = np.asarray(Image.open(bg_png).convert("RGB"))
+    for r in regions:
+        x0, y0, x1, y1 = (int(max(0, v)) for v in r.bbox)
+        patch = orig[y0:y1 + 1, x0:x1 + 1].reshape(-1, 3)
+        g = gray[y0:y1 + 1, x0:x1 + 1].reshape(-1)
+        dark = patch[g < line_threshold] if len(g) else patch
+        if len(dark):
+            rr, gg, bb = (int(v) for v in np.median(dark, axis=0))
+            r.color = f"#{rr:02X}{gg:02X}{bb:02X}"
+    return regions
 
 
 # ----------------------------------------------------------------------------- hybrid route (painterly art)
@@ -485,26 +514,7 @@ def hybrid(image_path: str, out_dir: str, name: str = "hybrid", preset: Optional
     bg = mask_text(src, boxes, os.path.join(out_dir, name + "_background.png")) if boxes else src
     regions: List[Region] = []
     if line_layer:
-        # dark, saturated-or-black strokes -> binary mask -> trace; the same pixels are softened in the background
-        img = cv2.imread(bg)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        ink = (gray < line_threshold).astype("uint8") * 255
-        ink = cv2.morphologyEx(ink, cv2.MORPH_OPEN, np.ones((2, 2), np.uint8))
-        line_png = os.path.join(out_dir, name + "_lines.png")
-        cv2.imwrite(line_png, 255 - ink)
-        opt = TraceOptions(colormode="binary", filter_speckle=6, mode="spline", drop_background=True)
-        svg_raw = trace_svg(line_png, os.path.join(out_dir, name + "_lines.svg"), opt)
-        regions, _w, _h = svg_regions(svg_raw, opt)
-        # colour each line region with the median colour of the original pixels under it
-        orig = np.asarray(im)
-        for r in regions:
-            x0, y0, x1, y1 = (int(max(0, v)) for v in r.bbox)
-            patch = orig[y0:y1 + 1, x0:x1 + 1].reshape(-1, 3)
-            g = cv2.cvtColor(img[y0:y1 + 1, x0:x1 + 1], cv2.COLOR_BGR2GRAY).reshape(-1)
-            dark = patch[g < line_threshold] if len(g) else patch
-            if len(dark):
-                rr, gg, bb = (int(v) for v in np.median(dark, axis=0))
-                r.color = f"#{rr:02X}{gg:02X}{bb:02X}"
+        regions = line_art_regions(bg, out_dir, name, line_threshold)
     width_mm = (preset.width_mm if preset else None) or width_mm or (W / 300.0 * MM_PER_IN)
     height_mm = width_mm * H / W
     # ---- SVG

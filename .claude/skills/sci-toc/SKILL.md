@@ -84,6 +84,29 @@ arrows:                  # optional; defaults follow the template
 # split: left/center/right; hub: center + hub_direction in|out; two_row: rows + converge
 ```
 
+## Route B — the user draws, we vectorise (用户自己出图，我们描成矢量)
+
+When the user brings a finished raster TOC (BioRender export, AI illustration, hand drawing), do not
+redesign it. Run
+
+```bash
+python -m tocmaker.cli vectorize their_image.png -o out --journal acs --preview
+```
+
+which produces `out/traced.svg` (clean polygon SVG with the physical size of the journal preset),
+`out/traced.pptx` (slide 1: every colour region as a native freeform shape with holes preserved, grouped
+per colour; text lifted by offline OCR into real text boxes with colour and bold detected; slide 2: the
+raw traced SVG picture for *Convert to Shape*), and `out/traced_pptx_preview.png`. Look at the preview
+against the original and tune:
+- gradients/photos → thousands of regions: raise `--speckle 10 --color-precision 4 --layer-difference 48`,
+  or ask for a flat re-export (solid fills, no shading, PNG ≥ 2000 px wide, white background);
+- small text mangled: `--text none` (erase, re-type in PPT) or `--text trace` (keep as shapes);
+- thin outlines broken: lower `--speckle 2`, raise `--tolerance 0.3`;
+- JPEG ringing: ask for PNG.
+Report the aspect check (`aspect_note`) — ACS wants 1.86:1, Elsevier 2.5:1 — and the number of shapes.
+Journal policy reminder (say it once): ACS requires TOC art to be the coauthors' original work and asks
+for disclosure of generative-AI images; several journals ban them in figures.
+
 ## Reference material
 
 - `tocmaker/db/journal_specs.md` — sizes, text rules, required-or-optional, publisher design quotes.

@@ -95,6 +95,20 @@ def cmd_init(a):
     return 0
 
 
+def cmd_vectorize(a):
+    from .presets import find_preset
+    from .vectorize import TraceOptions, vectorize
+    opt = TraceOptions(colormode=a.mode, hierarchical=a.hierarchy, filter_speckle=a.speckle,
+                       color_precision=a.color_precision, layer_difference=a.layer_difference,
+                       max_shapes=a.max_shapes, flatten_tol=a.tolerance, drop_background=not a.keep_background)
+    preset = find_preset(a.journal) if a.journal else None
+    info = vectorize(a.image, a.out or os.path.splitext(a.image)[0] + "_vec", a.name, preset, a.width_mm, opt, a.preview,
+                     text_mode=a.text)
+    for k, v in info.items():
+        print(f"{k}: {v}")
+    return 0
+
+
 def cmd_harvest(a):
     from .harvest import main as harvest_main
     return harvest_main(a)
@@ -136,6 +150,26 @@ def main(argv=None):
     n.add_argument("--journal", default="acs")
     n.add_argument("-o", "--out")
     n.set_defaults(func=cmd_init)
+
+    v = sub.add_parser("vectorize", help="trace a finished raster TOC image into SVG + native PPTX shapes")
+    v.add_argument("image", help="PNG/JPG/TIF (or SVG, which is rasterised first)")
+    v.add_argument("-o", "--out")
+    v.add_argument("-n", "--name", default="traced")
+    v.add_argument("--journal", help="set the physical width from a journal preset (e.g. acs)")
+    v.add_argument("--width-mm", type=float, help="physical width of the output (default: 300 dpi of the pixels)")
+    v.add_argument("--mode", choices=["color", "binary"], default="color")
+    v.add_argument("--hierarchy", choices=["cutout", "stacked"], default="cutout",
+                   help="cutout: non-overlapping regions (editable); stacked: painter's layers (more faithful on soft edges)")
+    v.add_argument("--speckle", type=int, default=6, help="drop regions smaller than N px")
+    v.add_argument("--color-precision", type=int, default=6, help="colour bits kept (lower = fewer colours)")
+    v.add_argument("--layer-difference", type=int, default=24)
+    v.add_argument("--max-shapes", type=int, default=1500)
+    v.add_argument("--tolerance", type=float, default=0.6, help="curve flattening tolerance, px")
+    v.add_argument("--keep-background", action="store_true")
+    v.add_argument("--preview", action="store_true", help="render the PPTX with LibreOffice")
+    v.add_argument("--text", choices=["ocr", "trace", "none"], default="ocr",
+                   help="ocr: lift text into editable text objects; trace: keep as shapes; none: erase")
+    v.set_defaults(func=cmd_vectorize)
 
     h = sub.add_parser("harvest", help="download open-access graphical abstracts into the reference database")
     h.add_argument("--journal", action="append", help="journal name as in Europe PMC (repeatable)")

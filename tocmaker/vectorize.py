@@ -271,7 +271,57 @@ def _stroke_ratio(crop, lum) -> float:
         return 0.0
 
 
-def detect_text(image_path: str, min_score: float = 0.6) -> List[TextBox]:
+_COMMON = set("""the of and in to a is for with on by at from as or an be this that are was were which were it its into
+exposure exposures brain brains fish water behavior behaviour behavioral behavioural anxiety like memory impairment
+accumulation environmental occurrence metabolic rerouting pathway pathways serotonin kynurenine tryptophan supplementation
+attenuated deficits locomotion social exploratory neurobehavioral neurobehavioural ratio benzoate emamectin genes gene
+enters rescues rescue males females male female increased decreased reduced higher lower low high dose doses chronic
+larvae larval adult adults zebrafish mouse mice human cohort children prenatal placental birth weight hypertension
+microplastics microplastic pfas cadmium lead mercury arsenic pesticide pesticides pollution pollutant pollutants
+oxidative stress inflammation dysbiosis gut microbiome liver kidney lung heart thyroid hormone receptor dna rna
+to-water hpf dpf hours days weeks months years control treatment treated""".split())
+
+
+def load_vocab(path: Optional[str]) -> set:
+    vocab = set(_COMMON)
+    if path and os.path.exists(path):
+        with open(path, "r", encoding="utf-8", errors="ignore") as fh:
+            for w in re.findall(r"[A-Za-z][A-Za-z\-]{1,}", fh.read()):
+                if len(w) >= 2:
+                    vocab.add(w.lower())
+    return vocab
+
+
+def respace(token: str, vocab: set) -> str:
+    """Re-insert spaces OCR dropped ('Brainaccumulation' -> 'Brain accumulation') using a dictionary DP.
+    Only touches alphabetic runs of >= 9 chars that are not themselves in the vocabulary."""
+    def split_run(run: str) -> str:
+        if len(run) < 9 or run.lower() in vocab:
+            return run
+        n = len(run)
+        best: List[Optional[Tuple[int, int]]] = [None] * (n + 1)   # (cost, prev) ; cost = number of words + penalty
+        best[0] = (0, -1)
+        for i in range(1, n + 1):
+            for j in range(max(0, i - 24), i):
+                if best[j] is None:
+                    continue
+                piece = run[j:i].lower()
+                if piece in vocab and len(piece) >= 2:
+                    cand = (best[j][0] + 1, j)
+                    if best[i] is None or cand[0] < best[i][0]:
+                        best[i] = cand
+        if best[n] is None:
+            return run
+        parts, i = [], n
+        while i > 0:
+            j = best[i][1]
+            parts.append(run[j:i])
+            i = j
+        return " ".join(reversed(parts))
+    return re.sub(r"[A-Za-z]{9,}", lambda m: split_run(m.group(0)), token)
+
+
+def detect_text(image_path: str, min_score: float = 0.6, vocab: Optional[set] = None) -> List[TextBox]:
     """Offline OCR (RapidOCR, PP-OCR models). Returns axis-aligned boxes in source pixels."""
     try:
         from rapidocr_onnxruntime import RapidOCR
@@ -292,6 +342,8 @@ def detect_text(image_path: str, min_score: float = 0.6) -> List[TextBox]:
         if sc < min_score or not str(text).strip():
             continue
         txt = str(text).strip()
+        if vocab:
+            txt = respace(txt, vocab)
         if sum(ch.isalnum() for ch in txt) < 2:      # a lone glyph is more often artwork than text
             continue
         xs = [p[0] for p in box]
@@ -367,7 +419,7 @@ def _text_pptx(slide, boxes: List[TextBox], scale: float, width_mm: float, W: fl
 
 def vectorize(image_path: str, out_dir: str, name: str = "traced", preset: Optional[Preset] = None,
               width_mm: Optional[float] = None, opt: TraceOptions = TraceOptions(), preview: bool = False,
-              text_mode: str = "ocr") -> dict:
+              text_mode: str = "ocr", vocab_path: Optional[str] = None) -> dict:
     """text_mode: 'ocr' = lift text into editable text objects (RapidOCR), 'trace' = keep text as shapes, 'none' = erase text."""
     from PIL import Image
     os.makedirs(out_dir, exist_ok=True)
@@ -385,7 +437,7 @@ def vectorize(image_path: str, out_dir: str, name: str = "traced", preset: Optio
         im.convert("RGB").save(src)
     boxes: List[TextBox] = []
     if text_mode in ("ocr", "none"):
-        boxes = detect_text(src)
+        boxes = detect_text(src, vocab=load_vocab(vocab_path))
         if boxes:
             src = mask_text(src, boxes, os.path.join(out_dir, name + "_notext.png"))
         if text_mode == "none":
@@ -408,4 +460,111 @@ def vectorize(image_path: str, out_dir: str, name: str = "traced", preset: Optio
         from .export import pptx_preview
         pv = pptx_preview(pptx_path, os.path.join(out_dir, name + "_pptx_preview.png"), dpi=200)
         info["preview"] = pv
+    return info
+
+
+# ----------------------------------------------------------------------------- hybrid route (painterly art)
+def hybrid(image_path: str, out_dir: str, name: str = "hybrid", preset: Optional[Preset] = None,
+           width_mm: Optional[float] = None, line_layer: bool = True, preview: bool = False,
+           line_threshold: int = 90, min_score: float = 0.6, vocab_path: Optional[str] = None) -> dict:
+    """Keep painterly artwork as a picture layer; lift text (OCR) and dark line-art (chemical structures,
+    arrows, boxes) into editable vector objects on top. Output: PPTX (picture + freeform lines + text boxes)
+    and SVG (embedded PNG + paths + <text>)."""
+    import base64
+    import cv2
+    import numpy as np
+    from PIL import Image
+    from pptx import Presentation
+    from pptx.util import Emu
+    os.makedirs(out_dir, exist_ok=True)
+    im = Image.open(image_path).convert("RGB")
+    src = os.path.join(out_dir, name + "_src.png")
+    im.save(src)
+    W, H = im.size
+    boxes = detect_text(src, min_score=min_score, vocab=load_vocab(vocab_path))
+    bg = mask_text(src, boxes, os.path.join(out_dir, name + "_background.png")) if boxes else src
+    regions: List[Region] = []
+    if line_layer:
+        # dark, saturated-or-black strokes -> binary mask -> trace; the same pixels are softened in the background
+        img = cv2.imread(bg)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        ink = (gray < line_threshold).astype("uint8") * 255
+        ink = cv2.morphologyEx(ink, cv2.MORPH_OPEN, np.ones((2, 2), np.uint8))
+        line_png = os.path.join(out_dir, name + "_lines.png")
+        cv2.imwrite(line_png, 255 - ink)
+        opt = TraceOptions(colormode="binary", filter_speckle=6, mode="spline", drop_background=True)
+        svg_raw = trace_svg(line_png, os.path.join(out_dir, name + "_lines.svg"), opt)
+        regions, _w, _h = svg_regions(svg_raw, opt)
+        # colour each line region with the median colour of the original pixels under it
+        orig = np.asarray(im)
+        for r in regions:
+            x0, y0, x1, y1 = (int(max(0, v)) for v in r.bbox)
+            patch = orig[y0:y1 + 1, x0:x1 + 1].reshape(-1, 3)
+            g = cv2.cvtColor(img[y0:y1 + 1, x0:x1 + 1], cv2.COLOR_BGR2GRAY).reshape(-1)
+            dark = patch[g < line_threshold] if len(g) else patch
+            if len(dark):
+                rr, gg, bb = (int(v) for v in np.median(dark, axis=0))
+                r.color = f"#{rr:02X}{gg:02X}{bb:02X}"
+    width_mm = (preset.width_mm if preset else None) or width_mm or (W / 300.0 * MM_PER_IN)
+    height_mm = width_mm * H / W
+    # ---- SVG
+    with open(bg, "rb") as fh:
+        b64 = base64.b64encode(fh.read()).decode("ascii")
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{width_mm:.3f}mm" '
+             f'height="{height_mm:.3f}mm" viewBox="0 0 {W} {H}">',
+             f'<image id="artwork" x="0" y="0" width="{W}" height="{H}" xlink:href="data:image/png;base64,{b64}"/>',
+             '<g id="line-art">']
+    for reg in regions:
+        d = " ".join("M " + " L ".join(f"{x:.2f},{y:.2f}" for x, y in ring) + " Z" for ring in reg.polys)
+        parts.append(f'<path d="{d}" fill="{reg.color}" fill-rule="evenodd"/>')
+    parts.append("</g><g id=\"text\">")
+    parts.append(_text_svg(boxes, W, H))
+    parts.append("</g></svg>")
+    svg_path = os.path.join(out_dir, name + ".svg")
+    with open(svg_path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(parts))
+    # ---- PPTX
+    scale = width_mm / MM_PER_IN * 914400 / W
+    prs = Presentation()
+    prs.slide_width = Emu(int(W * scale))
+    prs.slide_height = Emu(int(H * scale))
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    pic = slide.shapes.add_picture(bg, 0, 0, prs.slide_width, prs.slide_height)
+    pic.name = "artwork (text removed)"
+    pptx_path = os.path.join(out_dir, name + ".pptx")
+    tmp_prs_path = pptx_path  # regions_to_pptx builds its own presentation; reuse its freeform code inline
+    from pptx.dml.color import RGBColor
+    n = 0
+    shapes = []
+    for reg in regions:
+        first = reg.polys[0]
+        fb = slide.shapes.build_freeform(Emu(int(first[0][0] * scale)), Emu(int(first[0][1] * scale)), scale=1.0)
+        fb.add_line_segments([(Emu(int(x * scale)), Emu(int(y * scale))) for x, y in first[1:]], close=True)
+        for ring in reg.polys[1:]:
+            fb.move_to(Emu(int(ring[0][0] * scale)), Emu(int(ring[0][1] * scale)))
+            fb.add_line_segments([(Emu(int(x * scale)), Emu(int(y * scale))) for x, y in ring[1:]], close=True)
+        shp = fb.convert_to_shape()
+        shp.fill.solid()
+        shp.fill.fore_color.rgb = RGBColor.from_string(reg.color.lstrip("#"))
+        shp.line.fill.background()
+        shp.shadow.inherit = False
+        style = shp._element.find("{http://schemas.openxmlformats.org/presentationml/2006/main}style")
+        if style is not None:
+            shp._element.remove(style)
+        shp.name = f"line {n} {reg.color}"
+        shapes.append(shp)
+        n += 1
+    if len(shapes) > 1:
+        try:
+            grp = slide.shapes.add_group_shape(shapes)
+            grp.name = "line art (ungroup to edit)"
+        except Exception:
+            pass
+    _text_pptx(slide, boxes, scale, width_mm, W)
+    prs.save(pptx_path)
+    info = dict(mode="hybrid", text_boxes=[(b.text, round(b.score, 2)) for b in boxes], line_regions=len(regions),
+                svg=svg_path, pptx=pptx_path, background=bg, width_mm=round(width_mm, 2), height_mm=round(height_mm, 2))
+    if preview:
+        from .export import pptx_preview
+        info["preview"] = pptx_preview(pptx_path, os.path.join(out_dir, name + "_pptx_preview.png"), dpi=200)
     return info

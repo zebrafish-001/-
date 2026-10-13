@@ -103,6 +103,11 @@ against the original and tune:
 - small text mangled: `--text none` (erase, re-type in PPT) or `--text trace` (keep as shapes);
 - thin outlines broken: lower `--speckle 2`, raise `--tolerance 0.3`;
 - JPEG ringing: ask for PNG.
+For painterly / watercolour / gradient AI art use the hybrid route instead:
+`python -m tocmaker.cli vectorize img.png -o out --hybrid --vocab manuscript.txt --preview` keeps the picture as a
+layer and lifts OCR text (re-spaced with the manuscript's vocabulary) plus dark line-art (chemical structures,
+arrows, boxes) into editable objects; `--line-threshold` tunes what counts as line art. Pass `--vocab` on every
+OCR run when the manuscript text is available — it fixes merged tokens like "Brainaccumulation".
 Report the aspect check (`aspect_note`) — ACS wants 1.86:1, Elsevier 2.5:1 — and the number of shapes.
 Journal policy reminder (say it once): ACS requires TOC art to be the coauthors' original work and asks
 for disclosure of generative-AI images; several journals ban them in figures.

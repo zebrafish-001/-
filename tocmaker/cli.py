@@ -102,8 +102,15 @@ def cmd_vectorize(a):
                        color_precision=a.color_precision, layer_difference=a.layer_difference,
                        max_shapes=a.max_shapes, flatten_tol=a.tolerance, drop_background=not a.keep_background)
     preset = find_preset(a.journal) if a.journal else None
+    if a.hybrid:
+        from .vectorize import hybrid
+        info = hybrid(a.image, a.out or os.path.splitext(a.image)[0] + "_vec", a.name, preset, a.width_mm,
+                      line_layer=not a.no_lines, preview=a.preview, line_threshold=a.line_threshold, vocab_path=a.vocab)
+        for k, v in info.items():
+            print(f"{k}: {v}")
+        return 0
     info = vectorize(a.image, a.out or os.path.splitext(a.image)[0] + "_vec", a.name, preset, a.width_mm, opt, a.preview,
-                     text_mode=a.text)
+                     text_mode=a.text, vocab_path=a.vocab)
     for k, v in info.items():
         print(f"{k}: {v}")
     return 0
@@ -167,6 +174,11 @@ def main(argv=None):
     v.add_argument("--tolerance", type=float, default=0.6, help="curve flattening tolerance, px")
     v.add_argument("--keep-background", action="store_true")
     v.add_argument("--preview", action="store_true", help="render the PPTX with LibreOffice")
+    v.add_argument("--hybrid", action="store_true",
+                   help="painterly/gradient art: keep the picture, lift text + dark line-art into editable objects")
+    v.add_argument("--no-lines", action="store_true", help="hybrid: skip the traced line-art layer")
+    v.add_argument("--line-threshold", type=int, default=90, help="hybrid: grey level below which pixels count as line art")
+    v.add_argument("--vocab", help="text file (e.g. the manuscript) whose words help re-space merged OCR tokens")
     v.add_argument("--text", choices=["ocr", "trace", "none"], default="ocr",
                    help="ocr: lift text into editable text objects; trace: keep as shapes; none: erase")
     v.set_defaults(func=cmd_vectorize)

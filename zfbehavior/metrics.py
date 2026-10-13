@@ -374,7 +374,7 @@ def analyze(raw: pd.DataFrame, arenas: Sequence[Arena], info: dict, cfg: Config,
     summary = pd.DataFrame(summ)
     summary["qc_pass"] = summary["valid_frac"] >= cfg.qc.min_valid_fraction
     summary["qc_note"] = np.select(
-        [summary["detected_frac"] == 0, ~summary["qc_pass"]],
+        [summary["detected_frac"] < 0.05, ~summary["qc_pass"]],
         ["never detected (empty well / immobile animal?)", "low tracking coverage"], "")
     bouts_df = (pd.concat(bout_frames, ignore_index=True) if bout_frames else pd.DataFrame())
     if len(bouts_df):

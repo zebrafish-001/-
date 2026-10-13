@@ -5,7 +5,7 @@ import math
 import sys
 import time
 from dataclasses import dataclass
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Tuple
 
 import cv2
 import numpy as np
@@ -50,6 +50,19 @@ def blob_features(diff: np.ndarray, labels: np.ndarray, i: int, stat: np.ndarray
     return np.array([cx, cy, area, length, heading, abs(skew)])
 
 
+def area_limits(det: DetectionConfig, arenas: List[Arena]) -> Tuple[int, int]:
+    """(min, max) blob area in px; mm² limits win when the arenas are calibrated."""
+    lo, hi = det.min_area_px, det.max_area_px
+    ppm = [a.px_per_mm for a in arenas if a.px_per_mm]
+    if ppm:
+        s2 = float(np.mean(ppm)) ** 2
+        if det.min_area_mm2 is not None:
+            lo = int(round(det.min_area_mm2 * s2))
+        if det.max_area_mm2 is not None:
+            hi = int(round(det.max_area_mm2 * s2))
+    return max(lo, 1), max(hi, lo + 1)
+
+
 class Detector:
     """Finds candidate animals in each arena of a frame."""
 
@@ -58,6 +71,7 @@ class Detector:
         self.arenas = arenas
         self.bg = background
         self.det = det
+        self.min_area, self.max_area = area_limits(det, arenas)
         self.threshold = float(threshold)
         self.label_img = arena_label_image(arenas, shape_hw, mask_scale)
         self.union = np.where(self.label_img > 0, 255, 0).astype(np.uint8)
@@ -93,7 +107,7 @@ class Detector:
         if n <= 1:
             return out
         area = stats[1:, cv2.CC_STAT_AREA]
-        comp = np.flatnonzero((area >= self.det.min_area_px) & (area <= self.det.max_area_px)) + 1
+        comp = np.flatnonzero((area >= self.min_area) & (area <= self.max_area)) + 1
         if comp.size == 0:
             return out
         h, w = labels.shape
@@ -246,6 +260,7 @@ def track_video(video_path, cfg: Config, progress: bool = True,
         "end_frame": int(frames[-1]) + 1, "frame_step": step,
         "n_processed": int(n_f), "threshold": float(thr), "noise_sigma": float(sigma),
         "animals_per_arena": N, "n_arenas": len(arenas),
+        "min_area_px": detector.min_area, "max_area_px": detector.max_area,
         "processing_s": round(time.time() - t0, 2),
     }
     if progress:

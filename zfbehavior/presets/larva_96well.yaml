@@ -24,7 +24,7 @@ calibration:
   px_per_mm: null      # 直接给定像素/毫米，会覆盖 arenas.size_mm 的标定
 
 background:
-  method: auto         # auto = 按极性取百分位背景（暗鱼取 90%，对长时间静止的鱼更稳健）；
+  method: auto         # auto = 按极性取百分位背景（暗鱼取 95%，对长时间静止的鱼更稳健）；
                        # median = 多帧中值；image = 使用 background.image 指定的空板/空缸图像
   n_frames: 60
 
@@ -36,8 +36,10 @@ detection:
   blur_ksize: 3
   morph_open_px: 0
   morph_close_px: 3    # 闭运算连接头部和半透明尾部
-  min_area_px: 4
+  min_area_px: 4         # 未标定时使用的像素面积范围
   max_area_px: 2000
+  min_area_mm2: 0.15     # 已标定时优先使用：5-7 dpf 幼鱼暗影面积约 0.5-1.5 mm²
+  max_area_mm2: 6.0
   animals_per_arena: 1
 
 postprocess:

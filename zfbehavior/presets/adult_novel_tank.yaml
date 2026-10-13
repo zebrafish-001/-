@@ -36,6 +36,8 @@ detection:
   morph_close_px: 5
   min_area_px: 50
   max_area_px: 50000
+  min_area_mm2: 15       # 成鱼侧视投影面积约 100-300 mm²
+  max_area_mm2: 1500
   animals_per_arena: 1   # 群游实验可设 >1（简单匈牙利匹配，鱼体重叠时身份可能互换）
 
 postprocess:

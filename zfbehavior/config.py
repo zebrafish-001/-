@@ -74,6 +74,9 @@ class DetectionConfig:
     morph_close_px: int = 0
     min_area_px: int = 4
     max_area_px: int = 5000
+    # when the arena is calibrated these take precedence over the px limits
+    min_area_mm2: Optional[float] = None
+    max_area_mm2: Optional[float] = None
     animals_per_arena: int = 1
 
 

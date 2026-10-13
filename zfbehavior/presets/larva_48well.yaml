@@ -5,5 +5,3 @@ arenas:
   rows: 6
   cols: 8
   size_mm: 11.0       # 孔内径（mm），请按所用板子规格修改
-detection:
-  max_area_px: 4000

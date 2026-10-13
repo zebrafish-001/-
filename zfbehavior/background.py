@@ -21,8 +21,8 @@ def compute_background(video: Video, cfg: BackgroundConfig, start: int,
 
     Frames spread over the analysed interval are combined pixel-wise:
 
-    * ``auto``: for dark animals the 90th percentile (light animals: 10th),
-      so an animal is removed unless it covers the same pixels in >90 % of
+    * ``auto``: for dark animals the 95th percentile (light animals: 5th),
+      so an animal is removed unless it covers the same pixels in >95 % of
       the sampled frames - robust to animals that rest a lot;
     * ``median``: classic median background;
     * ``image``: a recorded empty-arena image.
@@ -50,7 +50,7 @@ def compute_background(video: Video, cfg: BackgroundConfig, start: int,
     stack = np.stack(samples)
     q = 50.0
     if cfg.method == "auto":
-        q = {"dark": 90.0, "light": 10.0}.get(polarity, 50.0)
+        q = {"dark": 95.0, "light": 5.0}.get(polarity, 50.0)
     bg = np.percentile(stack, q, axis=0, method="nearest").astype(np.uint8)
     return bg, samples
 

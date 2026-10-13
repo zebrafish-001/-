@@ -115,3 +115,34 @@ journal_notes:
   cell: "方形 1200×1200 px，上下阅读；可以多一点文字（12–16 pt）"
   rsc: "8×4 cm + 20–30 词 TOC 句子，句子不能是图注"
   mdpi: "≥1100×560 px；不能与正文图相同；不能拼贴"
+
+# ---------------------------------------------------------------------------------------------
+# Observed conventions in the harvested reference set (146 Elsevier graphical abstracts,
+# Environ Int / JHM / STOTEN / EES / Environ Pollut / Chemosphere / Environ Res / Water Res /
+# EEH / ESE, 2022-2025; see db/reference/contact_sheet_*.png). Counts are from a visual pass
+# over the contact sheets plus pixel statistics; treat them as rough proportions, not a survey.
+observed_conventions:
+  sample: 146
+  aspect_ratio:
+    median: 1.88
+    bins: {"<1.5": 34, "1.5-2": 51, "2-2.5": 34, "2.5-3": 23, ">=3": 4}
+    note: "Only ~1/6 follow Elsevier's 2.5:1 (500:200) window; most authors submit ~1.6-2.2:1 and let ScienceDirect letterbox it. Our 'elsevier' preset keeps 2.5:1 so nothing is cropped."
+  width_px: {min: 639, median: 1660, max: 2213, note: "about 1/4 are below the 1328 px minimum"}
+  structures:
+    - "left->right exposure/source -> system -> effect flow with large arrows (most common, ~40%)"
+    - "two-box 'Research design | Results' or 'Methods | Findings' panels (~20%, epidemiology & intervention studies)"
+    - "central organism/map with radiating findings (~10%)"
+    - "mechanistic cell/organ cartoon with pathway arrows (toxicology, ~15%)"
+    - "data-heavy collage: maps, bar charts, Kaplan-Meier, heatmaps pasted in (~15%; allowed by Elsevier, never by ACS)"
+  text:
+    - "a title line across the top appears in roughly half of the EI/Environ Res/Chemosphere graphics"
+    - "key estimates are stated (HR, %, °C, n) in ~40%; Elsevier journals reward this, ACS discourages it"
+    - "labels are usually 2-4 words; sentence-length captions are rare and read badly at thumbnail size"
+  style:
+    - "flat cartoon icons (BioRender-like) dominate EI/EEH/ESE; JHM/Chemosphere/Water Res lean to chemistry schematics, photos and reaction arrows"
+    - "muted or two-hue palettes read best in the 500x200 thumbnail; saturated multi-colour collages become noise"
+    - "population-health graphics almost always show the population (n, place, map) in the first panel"
+  implications_for_tocmaker:
+    - "templates flow / cohort / split cover the first three structures; 'two_row' approximates design|results"
+    - "keep the key number in a badge rather than a pasted plot; use forest-plot-mini / dose-response-curve icons instead of data"
+    - "offer a title line (spec.title) for Elsevier targets; leave it off for ACS"

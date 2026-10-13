@@ -44,6 +44,9 @@
 但 PMC 全文接口只返回**纯文本**（没有图片文件名），而且容器仍然连不到 PMC / Elsevier 图片服务器（403）。
 所以"百来张 TOC 图"的落地方案改为两步：
 
+0. **已完成下载（2026-10-13，网络放行后在云端运行）**：146 张图文摘要落在 `tocmaker/db/reference/images/`（原图，38 MB，不入 git），
+   `index.csv/.jsonl` 与 5 张缩略图总览 `contact_sheet_1..5.png` 已入库；版式观察写在 `patterns.yaml` 的 `observed_conventions`。
+   原图随时可用 `toc harvest --seed ...` 在 3 分钟内重新拉取。
 1. **我这边（已做）**：用 PubMed 连接器在 Environ Int、JHM、STOTEN、EES、Environ Pollut、Chemosphere、Environ Res、Water Res、
    EEH、ESE 里检索 2023–2025 年开放获取论文，生成种子索引 `tocmaker/db/reference/seed_index.csv`
    （PMID、PMCID、DOI、PII、期刊、年份、题目、版权类型、图文摘要 URL）。

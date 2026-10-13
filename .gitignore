@@ -17,3 +17,5 @@ demo/
 tocmaker/assets/icons/external/
 tocmaker/db/reference/images/
 *_out/
+tocmaker/db/reference/images_web/
+toc_reference_images.zip

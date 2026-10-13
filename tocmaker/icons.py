@@ -117,6 +117,7 @@ def build_index() -> List[IconInfo]:
             attribution = json.load(fh)
     icons += _scan_dir(os.path.join(cur, "healthicons"), "healthicons", "MIT", False, True, attribution.get("healthicons"))
     icons += _scan_dir(os.path.join(cur, "bioicons"), "bioicons", "CC0", False, False, attribution.get("bioicons"))
+    icons += _scan_dir(os.path.join(cur, "reactome"), "reactome", "CC-BY-4.0", False, False, attribution.get("reactome"))
     for ext in (os.environ.get("TOCMAKER_ICON_PATHS") or "").split(os.pathsep):
         ext = ext.strip()
         if not ext:
@@ -124,6 +125,8 @@ def build_index() -> List[IconInfo]:
         base = os.path.basename(ext.rstrip("/\\")).lower()
         if "healthicons" in ext.lower():
             icons += _scan_dir(ext, "healthicons", "MIT", False, True)
+        elif "reactome" in ext.lower():
+            icons += _scan_dir(ext, "reactome", "CC-BY-4.0", False, False, _reactome_attribution(ext))
         elif "bioicons" in ext.lower():
             icons += _scan_dir(ext, "bioicons", "varies", False, False)
         else:
@@ -293,3 +296,22 @@ def icon_svg_bytes(info: IconInfo, primary: Optional[str] = None, accent: Option
     inner = placed_svg(info, 0, 0, 100, 100, primary, accent, tint_mode, flip=flip)
     svg = f'<svg xmlns="{SVG_NS}" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" width="100" height="100">{inner}</svg>'
     return svg.encode("utf-8")
+
+
+def _reactome_attribution(root: str) -> Dict[str, Dict]:
+    """Build keyword metadata for a full reactome_illustrations checkout (icons/R-ICO-xxxx.xml next to the SVGs)."""
+    out: Dict[str, Dict] = {}
+    for dirpath, _d, files in os.walk(root):
+        for fn in files:
+            if not fn.endswith(".xml"):
+                continue
+            try:
+                r = etree.parse(os.path.join(dirpath, fn)).getroot()
+            except Exception:
+                continue
+            name = (r.findtext("name") or "").strip()
+            cats = [c.text.strip().replace("_", " ") for c in r.iter("category") if c.text]
+            syn = [x.text.strip() for x in r.iter("synonym") if x.text]
+            rel = os.path.relpath(os.path.join(dirpath, fn[:-4] + ".svg"), root).replace(os.sep, "/")
+            out[rel] = dict(license="CC-BY-4.0", author="Reactome", keywords=[name] + syn + cats)
+    return out

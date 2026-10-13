@@ -8,10 +8,10 @@
 ```bash
 pip install -e .
 python -m tocmaker.cli init --template flow --journal acs -o toc.yaml   # 6 种模板：flow cohort split hub two_row cycle
-python -m tocmaker.cli icons search 斑马鱼 placenta cohort                 # 内置 200+ 图标（42 个自绘环境毒理图标 + Health Icons + Bioicons CC0）
+python -m tocmaker.cli icons search 斑马鱼 placenta cohort                 # 内置 1100+ 图标（42 个自绘环境毒理图标 + Health Icons + Bioicons CC0 + Reactome CC-BY）
 python -m tocmaker.cli render toc.yaml -o out --preview --tiff             # out/toc.{svg,pptx,png,pdf,tif} + toc_qa.json
 python -m tocmaker.cli presets --all                                       # 39 本期刊的画布规格（tocmaker/db/journal_specs.md）
-python -m tocmaker.cli harvest --n 120 --out tocmaker/db/reference         # 采集 OA 文献图文摘要作参考库（需联网 Europe PMC）
+python -m tocmaker.cli harvest --seed tocmaker/db/reference/seed_index.csv --out tocmaker/db/reference   # 下载种子索引里的图文摘要（需联网 ars.els-cdn.com）
 ```
 
 - 文档与待确认需求：`docs/toc_requirements.md`

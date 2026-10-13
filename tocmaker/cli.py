@@ -144,6 +144,9 @@ def main(argv=None):
     h.add_argument("--n", type=int, default=120, help="target number of images")
     h.add_argument("--out", default="tocmaker/db/reference")
     h.add_argument("--dry-run", action="store_true", help="only write metadata, do not download images")
+    h.add_argument("--source", choices=["europepmc", "pubmed"], default="pubmed",
+                   help="pubmed: NCBI E-utilities + Elsevier PII image pattern (default); europepmc: JATS XML graphical abstracts")
+    h.add_argument("--seed", help="download images for a prepared seed index (db/reference/seed_index.csv built via the PubMed connector)")
     h.add_argument("--sleep", type=float, default=0.34)
     h.set_defaults(func=cmd_harvest)
 

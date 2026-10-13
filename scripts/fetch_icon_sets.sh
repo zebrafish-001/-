@@ -14,3 +14,9 @@ if [ ! -d "$DST/healthicons" ]; then
 fi
 echo "Bioicons: $(find "$DST/bioicons/static/icons" -name '*.svg' | wc -l) SVGs (licence per icon: cc-0 / mit / cc-by / cc-by-sa folders)"
 echo "Health Icons: $(find "$DST/healthicons/public/icons/svg" -name '*.svg' | wc -l) SVGs (MIT)"
+if [ ! -d "$DST/reactome" ]; then
+  git clone --depth 1 --filter=blob:none --sparse https://github.com/reactome/reactome_illustrations "$DST/reactome"
+  (cd "$DST/reactome" && git sparse-checkout set icons)
+fi
+echo "Reactome: $(find "$DST/reactome/icons" -name '*.svg' | wc -l) SVGs (CC BY 4.0, attribution required)"
+echo "Add to TOCMAKER_ICON_PATHS: $DST/reactome/icons"

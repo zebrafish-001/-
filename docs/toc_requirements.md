@@ -37,21 +37,41 @@
 - `tocmaker/db/patterns.yaml`：12 种环境毒理/人群健康 TOC 叙事骨架 + 各出版社风格要点。
 - 6 个模板示例均已渲染核对（见 `tocmaker/examples/`）。
 
-## 3. 未完成 / 受阻项（需要你的环境或决定）
+## 3. 参考图库（TOC 图样本）与素材库接入现状
 
-1. **"下载百来张开源子刊以上 TOC 图"没有在本会话完成。** 这个云端容器的出站网络策略只放行 GitHub / PyPI，
-   ACS、Elsevier/ScienceDirect、Europe PMC、PMC、Nature、Wiley、RSC、Zenodo 等全部被拒（HTTP 403 CONNECT）。
-   已写好采集脚本 `toc harvest`：从 Europe PMC 检索目标期刊的 OA 全文 XML，识别 `abstract-type="graphical"` / `fig-type` /
-   "Graphical abstract" 图注 / `ga1|fx1` 文件名四种标记，下载图片并生成 `index.csv` + `contact_sheet.html`。
-   **两种办法任选**：
-   - 在环境设置的 Network access 里把 `www.ebi.ac.uk`、`europepmc.org` 加入允许域名（保留 package managers），然后运行
-     `python -m tocmaker.cli harvest --n 120 --out tocmaker/db/reference`；
-   - 或在你本机 `pip install -e .` 后运行同一命令（约 5–10 分钟，默认期刊：Environ Int、ES&T、ES&T Lett、EHP、JHM、STOTEN、EES、Environ Pollut、Environ Res、Chemosphere、Water Res、EEH、ESE、The Innovation、iScience、Toxics、Environment & Health）。
-   采集到的图只作版式学习与内部参考，`index.csv` 保留每篇的 DOI 与许可证字段。
-   注意："子刊以上"的 Nature 系列（Nat Commun、Nat Sustain 等）**本身不使用 TOC 图/图文摘要**（Sci Rep 明确禁止），
-   真正有 TOC 图且开放获取的高分期刊主要是 Environ Int、ES&T（OA 文章）、EHP、EEH、ESE、The Innovation、iScience。
-2. 期刊规格里 5 项未核实（Springer ESPR/Arch Toxicol 具体尺寸、ET&C 转 OUP 后规格、Environ Pollut/Environ Res 是否必交、EHP 2026 状态），见 `journal_specs.md` 末尾"未确认项"。
-3. 字体：容器内无 Arial，用度量兼容的 Liberation Sans 排版；SVG/PPTX 指定 Arial，在你机器上打开会自动用 Arial，行宽一致。
+### 3.1 PubMed 连接器能做什么、不能做什么
+已接入的 PubMed 连接器（search / metadata / copyright / PMC 全文）是**远程**服务，能查文献、拿 PMCID、DOI、PII 和版权信息，
+但 PMC 全文接口只返回**纯文本**（没有图片文件名），而且容器仍然连不到 PMC / Elsevier 图片服务器（403）。
+所以"百来张 TOC 图"的落地方案改为两步：
+
+1. **我这边（已做）**：用 PubMed 连接器在 Environ Int、JHM、STOTEN、EES、Environ Pollut、Chemosphere、Environ Res、Water Res、
+   EEH、ESE 里检索 2023–2025 年开放获取论文，生成种子索引 `tocmaker/db/reference/seed_index.csv`
+   （PMID、PMCID、DOI、PII、期刊、年份、题目、版权类型、图文摘要 URL）。
+   Elsevier 的图文摘要图片地址可以由 PII 直接推出：`https://ars.els-cdn.com/content/image/1-s2.0-<PII>-ga1_lrg.jpg`，
+   这正是这些期刊的"TOC 图"。
+2. **你本机一条命令下载图片**（或在环境设置里放行 `ars.els-cdn.com`、`eutils.ncbi.nlm.nih.gov` 后让我跑）：
+   `python -m tocmaker.cli harvest --seed tocmaker/db/reference/seed_index.csv --out tocmaker/db/reference`
+   会得到 `images/`、`index.csv` 和可浏览的 `contact_sheet.html`。
+   不用种子也行：`python -m tocmaker.cli harvest --source pubmed --n 120` 直接走 NCBI E-utilities + PII 规则；
+   `--source europepmc` 走 JATS XML（能覆盖 Cell Press / 其他出版社的图文摘要）。
+
+注意：PubMed 返回的多数 PMC 记录是作者手稿（"All rights reserved"），图片只作内部版式学习；`index.csv` 保留每条的许可证。
+"子刊以上"的 Nature 系列本身不用 TOC 图（Sci Rep 明确禁止），真正有图文摘要且开放获取的高分刊就是上面这批。
+
+### 3.2 免费素材库接入情况
+| 素材库 | 许可 | 接入方式 | 状态 |
+|---|---|---|---|
+| 自绘 envtox 图标集（42 个） | CC0 | 内置，按角色自动换色 | ✅ |
+| Health Icons（1500+，公共卫生/人群/器官） | MIT | 内置 94 个精选；全量 `scripts/fetch_icon_sets.sh` | ✅ |
+| Bioicons（2800+，按图标授权） | CC0/MIT/CC-BY/CC-BY-SA | 内置 76 个 CC0 精选；全量同上，QA 会标出 CC-BY/SA | ✅ |
+| Reactome Icon Library（2571 个：人体组织、细胞、细胞器、受体、化合物、箭头） | CC BY 4.0（需署名） | 内置 ~900 个精选（含"带器官的人体"）；全量同上 | ✅ |
+| NIH BioArt（公有领域）、PhyloPic（物种剪影）、Servier Medical Art（CC BY）、OpenClipart | 免费 | 站点被本环境网络策略拦截，且无 GitHub 镜像 | ❌ 需在你本机下载后放进 `tocmaker/assets/icons/external/<名字>/`，设置 `TOCMAKER_ICON_PATHS` 即可被检索 |
+
+检索示例：`python -m tocmaker.cli icons search 胎盘 placenta`、`... search "female body organs" --source reactome`。
+
+### 3.3 其他未完成项
+- 期刊规格里 5 项未核实（见 `journal_specs.md` 末尾"未确认项"）。
+- 容器内无 Arial，用度量兼容的 Liberation Sans 排版；SVG/PPTX 指定 Arial，你机器上打开自动用 Arial，行宽一致。
 
 ## 4. 需要你拍板的需求（我先按括号里的默认值做了）
 

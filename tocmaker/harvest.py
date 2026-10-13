@@ -209,14 +209,134 @@ def write_views(out: str):
         fh.write(html)
 
 
+# ----------------------------------------------------------------- PubMed / Elsevier route (no Europe PMC needed)
+EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+ELSEVIER_JOURNALS = ["Environ Int", "J Hazard Mater", "Sci Total Environ", "Ecotoxicol Environ Saf", "Environ Pollut",
+                     "Chemosphere", "Environ Res", "Water Res", "Eco Environ Health", "Environ Sci Ecotechnol"]
+
+
+def pii_code(pii: str) -> str:
+    return re.sub(r"[^0-9A-Za-z]", "", pii or "")
+
+
+def elsevier_ga_urls(pii: str):
+    code = pii_code(pii)
+    if not code:
+        return []
+    return [f"https://ars.els-cdn.com/content/image/1-s2.0-{code}-ga1_lrg.jpg",
+            f"https://ars.els-cdn.com/content/image/1-s2.0-{code}-ga1.jpg",
+            f"https://ars.els-cdn.com/content/image/1-s2.0-{code}-fx1_lrg.jpg",
+            f"https://ars.els-cdn.com/content/image/1-s2.0-{code}-fx1.jpg"]
+
+
+def pubmed_elsevier_candidates(sess, journals, years: str, want: int, sleep: float, topic: str = TOPIC, log=print):
+    """PubMed E-utilities: esearch (open access filter) -> esummary (pii, doi, title) for Elsevier journals."""
+    y0, y1 = (years.split("-") + [years])[:2]
+    out = []
+    per = max(10, want // max(1, len(journals)) + 5)
+    for j in journals:
+        q = f'"{j}"[Journal] AND ("open access"[filter] OR "free full text"[sb]) AND {y0}:{y1}[dp] AND {topic}'
+        r = sess.get(f"{EUTILS}/esearch.fcgi", params=dict(db="pubmed", term=q, retmax=per, retmode="json", sort="pub_date"), timeout=60)
+        r.raise_for_status()
+        ids = r.json().get("esearchresult", {}).get("idlist", [])
+        log(f"{j}: {len(ids)} candidates")
+        if not ids:
+            continue
+        time.sleep(sleep)
+        r = sess.get(f"{EUTILS}/esummary.fcgi", params=dict(db="pubmed", id=",".join(ids), retmode="json"), timeout=60)
+        r.raise_for_status()
+        res = r.json().get("result", {})
+        for pid in ids:
+            d = res.get(pid) or {}
+            aids = {x.get("idtype"): x.get("value") for x in d.get("articleids", [])}
+            out.append(dict(pmid=pid, pmcid=aids.get("pmc", ""), doi=aids.get("doi", ""), pii=aids.get("pii", ""),
+                            title=d.get("title", ""), journal=d.get("source", j), year=(d.get("pubdate", "") or "")[:4],
+                            article_type=";".join(d.get("pubtype", []) or [])))
+        time.sleep(sleep)
+    return out
+
+
+def download_from_index(records, out: str, sleep: float = 0.5, log=print) -> int:
+    """Download graphical abstracts for records that carry ga_url / pii (seed_index.csv from the PubMed MCP, or esummary)."""
+    sess = _session()
+    os.makedirs(os.path.join(out, "images"), exist_ok=True)
+    got = 0
+    index_path = os.path.join(out, "index.jsonl")
+    with open(index_path, "a", encoding="utf-8") as idx:
+        for rec in records:
+            urls = [u for u in [rec.get("ga_url"), rec.get("ga_url_small")] if u] or elsevier_ga_urls(rec.get("pii", ""))
+            if not urls:
+                continue
+            key = rec.get("pmcid") or rec.get("pmid") or pii_code(rec.get("pii", ""))
+            dest = os.path.join(out, "images", f"{key}.jpg")
+            if os.path.exists(dest):
+                continue
+            ok = False
+            for u in urls:
+                try:
+                    r = sess.get(u, timeout=120, headers={"Referer": "https://www.sciencedirect.com/"})
+                except Exception as e:
+                    log(f"  ! {key}: {e}")
+                    break
+                if r.status_code == 200 and r.headers.get("Content-Type", "").startswith("image") and len(r.content) > 2000:
+                    with open(dest, "wb") as fh:
+                        fh.write(r.content)
+                    rec = dict(rec, image=f"images/{key}.jpg", image_url=u, how="pii-pattern")
+                    ok = True
+                    break
+                time.sleep(sleep)
+            if ok:
+                got += 1
+                idx.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                idx.flush()
+                log(f"[{got}] {key} {rec.get('journal','')} {rec.get('year','')}")
+            else:
+                log(f"  - {key}: no graphical abstract at the Elsevier URL pattern")
+            time.sleep(sleep)
+    write_views(out)
+    return got
+
+
+def load_seed(path: str):
+    recs = []
+    if path.endswith(".jsonl"):
+        with open(path, "r", encoding="utf-8") as fh:
+            for line in fh:
+                if line.strip():
+                    recs.append(json.loads(line))
+    else:
+        with open(path, "r", newline="", encoding="utf-8") as fh:
+            recs = list(csv.DictReader(fh))
+    return recs
+
+
 def main(a) -> int:
     try:
+        if getattr(a, "seed", None):
+            recs = load_seed(a.seed)
+            got = download_from_index(recs, a.out, a.sleep)
+            print(f"downloaded {got} graphical abstracts from {len(recs)} seed records into {a.out}")
+            return 0
+        if getattr(a, "source", "europepmc") == "pubmed":
+            sess = _session()
+            recs = pubmed_elsevier_candidates(sess, a.journal or ELSEVIER_JOURNALS, a.years, a.n, a.sleep)
+            if a.dry_run:
+                os.makedirs(a.out, exist_ok=True)
+                with open(os.path.join(a.out, "pubmed_candidates.jsonl"), "w", encoding="utf-8") as fh:
+                    for r in recs:
+                        fh.write(json.dumps(dict(r, ga_url=(elsevier_ga_urls(r["pii"]) or [""])[0]), ensure_ascii=False) + "\n")
+                print(f"wrote {len(recs)} candidates")
+                return 0
+            got = download_from_index(recs[: a.n * 3], a.out, a.sleep)
+            print(f"downloaded {got} graphical abstracts into {a.out}")
+            return 0
         got = harvest(a.journal or DEFAULT_JOURNALS, a.years, a.n, a.out, a.dry_run, a.sleep, a.query)
     except Exception as e:
         msg = str(e)
         if "403" in msg or "CONNECT" in msg or "Name or service" in msg or "Max retries" in msg:
-            print("Network blocked: this harvester needs HTTPS access to www.ebi.ac.uk and europepmc.org "
-                  "(add them to the environment's allowed domains, or run on your own machine).", file=sys.stderr)
+            print("Network blocked: this harvester needs HTTPS access to ars.els-cdn.com (+ eutils.ncbi.nlm.nih.gov for "
+                  "--source pubmed, or www.ebi.ac.uk/europepmc.org for --source europepmc). Add them to the environment's "
+                  "allowed domains, or run on your own machine.", file=sys.stderr)
         print(f"harvest failed: {e}", file=sys.stderr)
         return 2
     print(f"harvested {got} graphical abstracts into {a.out}")

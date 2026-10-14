@@ -1,0 +1,29 @@
+{
+  "frgs": {
+    "source": "FerrDb ferroptosis preview (to 2023-12-31), Confidence=Validated, driver+suppressor+marker, HGNC-validated",
+    "n": 983,
+    "per_category": {
+      "driver": 447,
+      "suppressor": 625,
+      "marker": 30
+    }
+  },
+  "paes_targets": {
+    "chembl": 43,
+    "ctd": 2596,
+    "union": 2624,
+    "n_compounds": 12
+  },
+  "disease_targets": {
+    "opentargets_MONDO_0005311_score>=0.1": 625,
+    "kegg_hsa05417": 216,
+    "union": 820
+  },
+  "annotation_sets": {
+    "n_terms": 7348
+  },
+  "immune_signatures": {
+    "n_cell_types": 28,
+    "source": "Charoentong 2017 Table S6"
+  }
+}

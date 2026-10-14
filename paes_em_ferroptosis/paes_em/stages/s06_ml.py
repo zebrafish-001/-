@@ -102,12 +102,34 @@ def run(ctx: RunContext) -> dict:
     cv = StratifiedKFold(cfg["cv_folds"], shuffle=True, random_state=ctx.seed)
 
     # ---- benchmark all 12 algorithms by CV AUC -------------------------
+    vsets = {}
+    for d in ctx.cfg["datasets"]["validation"]:
+        vacc = d["accession"]
+        vexpr = pd.read_csv(ctx.processed / f"{vacc}_expr.csv", index_col=0)
+        vgroups = pd.read_csv(ctx.processed / f"{vacc}_groups.csv",
+                              index_col=0)["group"]
+        vsets[vacc] = (vexpr, (vgroups == "EM").astype(int).to_numpy())
+
+    scaler = StandardScaler().fit(expr.loc[feats].T.to_numpy())
     bench = []
     algs = _algorithms(ctx.seed)
     for name in cfg["algorithms"]:
         model = algs[name]
         auc = cross_val_score(model, x, y, cv=cv, scoring="roc_auc").mean()
-        bench.append({"algorithm": name, "cv_auc": round(float(auc), 4)})
+        row = {"algorithm": name, "cv_auc": round(float(auc), 4)}
+        model.fit(x, y)
+        for vacc, (vexpr, vy) in vsets.items():
+            common = [g for g in feats if g in vexpr.index]
+            if len(common) < len(feats):
+                row[f"auc_{vacc}"] = None
+                continue
+            vx = scaler.transform(vexpr.loc[feats].T.to_numpy())
+            if hasattr(model, "predict_proba"):
+                score = model.predict_proba(vx)[:, 1]
+            else:
+                score = model.decision_function(vx)
+            row[f"auc_{vacc}"] = round(float(roc_auc_score(vy, score)), 4)
+        bench.append(row)
     bench_df = pd.DataFrame(bench).sort_values("cv_auc", ascending=False)
     save_table(bench_df, ctx.results / "s06_algorithm_benchmark.csv",
                index=False)
@@ -141,6 +163,7 @@ def run(ctx: RunContext) -> dict:
 
     out = {
         "n_candidates": len(feats),
+        "candidate_genes": feats,
         "benchmark_top3": bench_df.head(3).to_dict("records"),
         "selector_rankings": {k_: v[:10] for k_, v in rankings.items()},
         "hub_genes": hub_genes,

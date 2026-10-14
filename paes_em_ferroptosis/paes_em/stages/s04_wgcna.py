@@ -73,22 +73,37 @@ def run(ctx: RunContext) -> dict:
         cor_abs, cfg["scale_free_r2_target"])
     tom = _tom(cor_abs ** beta)
 
-    # hierarchical modules on TOM dissimilarity
-    dist = 1 - tom
+    # background filter: low-connectivity genes go straight to grey
+    # (approximates WGCNA's dynamic tree cut, which prunes unassigned
+    # genes; noise genes otherwise chain the dendrogram together)
+    conn = tom.sum(axis=0) - 1
+    connected = conn > np.quantile(conn, 0.5)
+    sub_tom = tom[np.ix_(connected, connected)]
+    sub_genes = keep[connected]
+
+    dist = 1 - sub_tom
     link = hierarchy.linkage(dist[np.triu_indices_from(dist, 1)],
                              method="average")
-    min_size = min(cfg["min_module_size"], max(10, len(keep) // 20))
-    best_labels, best_n = None, -1
-    for t in np.linspace(0.99, 0.2, 40):
-        labels = hierarchy.fcluster(link, t=t, criterion="distance")
-        n_big = int((pd.Series(labels).value_counts() >= min_size).sum())
-        if n_big > best_n:
-            best_labels, best_n = labels, n_big
-        if n_big >= 3:
-            break
-    modules = pd.Series(best_labels, index=keep, name="module")
+    min_size = min(cfg["min_module_size"], max(10, len(sub_genes) // 20))
+    best_labels, best_score = None, (-1, -1)
+    for k in range(2, min(16, len(sub_genes) // min_size + 1)):
+        labels = hierarchy.fcluster(link, t=k, criterion="maxclust")
+        sizes = pd.Series(labels).value_counts()
+        # a cluster holding most genes is background noise, not a module
+        big = sizes[(sizes >= min_size) & (sizes <= 0.6 * len(sub_genes))]
+        score = (len(big), -k)          # most modules, then fewest cuts
+        if score > best_score:
+            best_labels, best_score = labels, score
+    modules = pd.Series(0, index=keep, name="module")
+    modules.loc[sub_genes] = best_labels
+    # relabel modules as 1..k ordered by size; 0 stays grey/background
+    order = [m for m in modules.value_counts().index if m != 0]
+    remap = {old: i + 1 for i, old in enumerate(order)}
+    remap[0] = 0
+    modules = modules.map(remap)
     big = modules.value_counts()
-    modules[~modules.isin(big[big >= min_size].index)] = 0  # grey
+    keep_ids = big[(big >= min_size) & (big <= 0.5 * len(keep))].index
+    modules[~modules.isin(keep_ids)] = 0  # grey / background
 
     # module eigengene = PC1; correlate with trait
     rows = []

@@ -90,10 +90,24 @@ paes-em compounds --resolve --class phthalate,citrate
 ## 计算图表
 
 `paes-em figures`（或 run-all 的 report 阶段自动执行）从 `data/results`
-渲染整套论文式图表：三集 Venn、火山图、12 算法 AUC 基准、免疫浸润
-哑铃图 + 关键基因相关棒棒糖图、单细胞 EMT 轴表达、对接结合能图
-（含 -5.0 kcal/mol 阈值线），外加第 9 阶段的空间表达图。配色为经
-色觉缺陷校验的参考调色板。
+渲染对标原论文 Fig 1-9 的 11 张多面板图：
+
+| 图 | 内容（对应原文） |
+|----|------------------|
+| fig01 | 12 阶段流程图 (Fig 1) |
+| fig02 | 双集 Venn、火山图、WGCNA 模块-表型热图、三集 Venn (Fig 2A-F) |
+| fig03 | 交集基因相关点阵、GO 点图、KEGG 条图 (Fig 2H-J) |
+| fig04 | 算法 x 数据集 AUC 热图、三算法共识 Venn (Fig 3A,E) |
+| fig05 | LASSO 路径 + CV 曲线、RF OOB 误差 + 重要性、XGBoost 重要性 (Fig 3B-D) |
+| fig06 | 免疫浸润哑铃图 + 关键基因相关棒棒糖图 (Fig S2) |
+| fig07 | 细胞嵌入、关键基因映射、marker 点图、分组细胞比例、小提琴 (Fig 4-5) |
+| fig08 | 干性箱线、ARF6~干性、拟时序轨迹、EMT 标志物趋势、ARF6~CDH2/SNAI1 (Fig 5,7) |
+| fig09 | 空间主导细胞型、多基因空间表达图、病灶富集箱线 (Fig 8) |
+| fig10 | 虚拟敲除扰动棒棒糖图 + 富集点图 (Fig 9A) |
+| fig11 | 对接结合能图 (Fig 9I)；3D 姿态需真跑 Vina+PyMOL 协议 |
+
+湿实验照片 (IHC/IF) 与对接 3D 姿态不在计算范围。配色为经色觉缺陷
+校验的参考调色板。
 
 ## Python-lite 与 R 钩子
 

@@ -69,6 +69,32 @@ paes-em stages      # 列出全部阶段
    准备受体 (PDB 2A5D) 与配体并运行；或把现成 Vina 日志放
    `data/raw/vina_logs/<化合物>_2A5D.log`。
 
+## 化合物目录（可扩展至几百种增塑剂）
+
+`config/plasticizers_catalog.csv` 预置 44 种、15 类增塑剂（邻苯二甲酸酯、
+对苯二甲酸酯、DINCH 型环己烷二羧酸酯、己二酸酯、癸二酸酯、柠檬酸酯、
+偏苯三酸酯、苯甲酸酯、磷酸酯、环氧油等）。向 CSV 追加行即可扩展到几百种；
+CID 由 PubChem 在线解析并本地缓存（当前目录 43/44 可解析，ESBO 为 UVCB
+混合物无单一 CID）：
+
+```bash
+paes-em compounds                          # 列目录
+paes-em compounds --resolve                # 解析全部 PubChem CID（带缓存）
+paes-em compounds --resolve --class phthalate,citrate
+```
+
+解析结果（`data/processed/compound_cids.json`）可替换 `pipeline.yaml` 里
+默认的 7 种 PAEs，供网络毒理学靶点收集与对接协议生成使用。CAS 号仅作
+参考，结构身份以 PubChem 名称解析为准，发表前请双重核对。
+
+## 计算图表
+
+`paes-em figures`（或 run-all 的 report 阶段自动执行）从 `data/results`
+渲染整套论文式图表：三集 Venn、火山图、12 算法 AUC 基准、免疫浸润
+哑铃图 + 关键基因相关棒棒糖图、单细胞 EMT 轴表达、对接结合能图
+（含 -5.0 kcal/mol 阈值线），外加第 9 阶段的空间表达图。配色为经
+色觉缺陷校验的参考调色板。
+
 ## Python-lite 与 R 钩子
 
 每个重计算阶段都有两档引擎：**python-lite**（零 R 依赖，原理同源，

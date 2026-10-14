@@ -40,12 +40,32 @@ def _parser() -> argparse.ArgumentParser:
         if name == "run":
             sp.add_argument("--stages", required=True,
                             help="comma list, e.g. intake,diffexp,ml")
+    sp = sub.add_parser("figures", help="render figures from existing results")
+    sp.add_argument("--config", default=None)
+    sp.add_argument("--root", default=None)
+    sp = sub.add_parser("compounds",
+                        help="list/resolve the plasticizer catalog")
+    sp.add_argument("--config", default=None)
+    sp.add_argument("--root", default=None)
+    sp.add_argument("--resolve", action="store_true",
+                    help="resolve PubChem CIDs (cached)")
+    sp.add_argument("--class", dest="cls", default=None,
+                    help="comma list of classes, e.g. phthalate,citrate")
     sub.add_parser("stages")
     return p
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.cmd == "compounds":
+        from . import compound_registry
+        return compound_registry.cli(args, make_context)
+    if args.cmd == "figures":
+        from . import figures as _figs
+        ctx = make_context(args.config, args.root)
+        for name in _figs.render_all(ctx):
+            print("rendered", name)
+        return 0
     if args.cmd == "stages":
         for name, mod in ORDER:
             print(f"{name:12s} {mod.__doc__.strip().splitlines()[0]}")

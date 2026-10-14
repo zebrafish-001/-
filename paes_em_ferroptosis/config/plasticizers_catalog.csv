@@ -1,0 +1,45 @@
+abbrev,name,class,cas,notes
+DEHP,bis(2-ethylhexyl) phthalate,phthalate,117-81-7,legacy high-production plasticizer
+DBP,dibutyl phthalate,phthalate,84-74-2,
+BBP,benzyl butyl phthalate,phthalate,85-68-7,
+DEP,diethyl phthalate,phthalate,84-66-2,common in PCPs/fragrance
+DMP,dimethyl phthalate,phthalate,131-11-3,
+DIBP,diisobutyl phthalate,phthalate,84-69-5,
+DINP,diisononyl phthalate,phthalate,28553-12-0,high-MW replacement
+DIDP,diisodecyl phthalate,phthalate,26761-40-0,high-MW replacement
+DNOP,di-n-octyl phthalate,phthalate,117-84-0,
+DPHP,bis(2-propylheptyl) phthalate,phthalate,53306-54-0,
+DNHP,di-n-hexyl phthalate,phthalate,84-75-3,
+DCHP,dicyclohexyl phthalate,phthalate,84-61-7,
+DPRP,dipropyl phthalate,phthalate,131-16-8,
+DUP,diundecyl phthalate,phthalate,,
+DTDP,ditridecyl phthalate,phthalate,,
+DEHT,bis(2-ethylhexyl) terephthalate,terephthalate,6422-86-2,DEHP drop-in substitute
+DBT,dibutyl terephthalate,terephthalate,,
+DINCH,"1,2-cyclohexanedicarboxylic acid, diisononyl ester",cyclohexanoate,166412-78-8,medical/toy substitute
+DEHA,bis(2-ethylhexyl) adipate,adipate,103-23-1,cling-film plasticizer
+DIBA,diisobutyl adipate,adipate,,
+DINA,diisononyl adipate,adipate,,
+DBS,dibutyl sebacate,sebacate,109-43-3,
+DOS,bis(2-ethylhexyl) sebacate,sebacate,122-62-3,
+DOZ,bis(2-ethylhexyl) azelate,azelate,,
+ATBC,acetyl tributyl citrate,citrate,77-90-7,food-contact/medical substitute
+TBC,tributyl citrate,citrate,77-94-1,
+TEC,triethyl citrate,citrate,77-93-0,
+ATEC,acetyl triethyl citrate,citrate,77-89-4,
+TOTM,tris(2-ethylhexyl) trimellitate,trimellitate,3319-31-1,medical-device substitute
+TIDTM,triisodecyl trimellitate,trimellitate,,
+ESBO,epoxidized soybean oil,epoxidized oil,8013-07-8,UVCB mixture - no single PubChem CID
+EHE,2-ethylhexyl epoxystearate,epoxidized oil,,
+DEGDB,diethylene glycol dibenzoate,benzoate,120-55-8,
+DPGDB,oxydipropyl dibenzoate,benzoate,27138-31-4,
+IDB,isodecyl benzoate,benzoate,,
+TXIB,"2,2,4-trimethyl-1,3-pentanediol diisobutyrate",isobutyrate,6846-50-0,
+TPP,triphenyl phosphate,phosphate,115-86-6,also flame retardant
+TCP,tri-o-cresyl phosphate,phosphate,78-30-8,o-isomer; mixed-isomer tricresyl phosphate is CAS 1330-78-5
+TBEP,tris(2-butoxyethyl) phosphate,phosphate,78-51-3,
+TEHP,tris(2-ethylhexyl) phosphate,phosphate,78-42-2,
+GTA,glyceryl triacetate,acetate,102-76-1,triacetin
+DAIP,diallyl isophthalate,isophthalate,,
+DMS,dimethyl sebacate,sebacate,,
+IPP,isopropyl palmitate,fatty ester,142-91-6,

@@ -118,7 +118,12 @@ def build_markdown(ctx: RunContext) -> str:
 
 
 def run(ctx: RunContext) -> dict:
+    from .. import figures as _figs
+    rendered = _figs.render_all(ctx)
     md = build_markdown(ctx)
+    if rendered:
+        md += "\n\n## 图表\n" + "\n".join(
+            f"- {name}" for name in rendered)
     md_path = ctx.results / "report.md"
     md_path.write_text(md, encoding="utf-8")
 
@@ -132,6 +137,7 @@ def run(ctx: RunContext) -> dict:
     )
     (ctx.results / "report.html").write_text(html_doc, encoding="utf-8")
 
-    out = {"markdown": str(md_path), "html": str(ctx.results / "report.html")}
+    out = {"markdown": str(md_path), "html": str(ctx.results / "report.html"),
+           "figures": rendered}
     save_json(out, ctx.results / "s12_report.json")
     return out

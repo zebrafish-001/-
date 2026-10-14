@@ -703,7 +703,7 @@ def singlecell(ctx: RunContext) -> str:
     # E: key-gene violin by type
     ax = axs["E"]
     _style(ax, False, True)
-    axis_types = {"Lumenal", "Ciliated", "Fibroblasts"}
+    axis_types = set(ctx.cfg["single_cell"].get("axis_types", ["Lumenal", "Ciliated", "Fibroblasts"]))
     data = [norm.loc[key, meta[meta["annotated"] == t]["cell"]].to_numpy()
             for t in types]
     vp = ax.violinplot(data, showmedians=True, widths=0.8)
@@ -739,7 +739,7 @@ def stemness_trajectory(ctx: RunContext) -> str:
     key = s8.get("key_gene", "gene")
     counts = counts[meta["cell"]]
     norm = np.log1p(counts / counts.sum(axis=0).replace(0, 1) * 1e4)
-    axis_types = ["Lumenal", "Ciliated", "Fibroblasts"]
+    axis_types = list(ctx.cfg["single_cell"].get("axis_types", ["Lumenal", "Ciliated", "Fibroblasts"]))
     meta_i = meta.set_index("cell")
     axis_cells = pt.index
     emb = PCA(n_components=2, random_state=ctx.seed).fit_transform(
@@ -817,7 +817,7 @@ def stemness_trajectory(ctx: RunContext) -> str:
                           alpha=0.85))
     ax.set_xlabel("component 1", color=INK2, fontsize=9)
     ax.set_ylabel("component 2", color=INK2, fontsize=9)
-    ax.set_title("Lumenal + Ciliated → Fibroblasts", fontsize=11,
+    ax.set_title(" + ".join(axis_types[:-1]) + " → " + axis_types[-1], fontsize=11,
                  color=INK, pad=6)
     _panel(ax, "D")
 
@@ -871,6 +871,8 @@ def stemness_trajectory(ctx: RunContext) -> str:
 
 # ================================================ fig09: spatial =========
 def spatial(ctx: RunContext) -> str:
+    if not (ctx.raw / "spatial_counts.csv").exists():
+        return ""
     counts = pd.read_csv(ctx.raw / "spatial_counts.csv", index_col=0)
     coords = pd.read_csv(ctx.raw / "spatial_coords.csv")
     comp = pd.read_csv(ctx.results / "s09_deconvolution_proxy.csv",
@@ -1027,20 +1029,274 @@ def docking(ctx: RunContext) -> str:
     return _save(fig, ctx, "fig11_docking.png")
 
 
-RENDERERS = [workflow, targets_de, intersection_genes, ml_benchmark,
-             ml_models, immune, singlecell, stemness_trajectory, spatial,
-             knockout, docking]
+def _has(ctx, *names):
+    return all((ctx.results / n).exists() for n in names)
 
 
 def render_all(ctx: RunContext) -> list[str]:
+    # pick single-cell / trajectory renderer by what the stage produced:
+    # real scanpy exports take precedence over the synthetic-demo path
+    sc_fig = (singlecell_real if _has(ctx, "s08_cells_viz.csv",
+                                      "s08_marker_dotplot.csv")
+              else singlecell)
+    traj_fig = (stemness_trajectory_real
+                if _has(ctx, "s08_cells_viz.csv", "s08_axis_cells.csv")
+                else stemness_trajectory)
+    renderers = [workflow, targets_de, intersection_genes, ml_benchmark,
+                 ml_models, immune, sc_fig, traj_fig, spatial, knockout,
+                 docking]
     out = []
-    for fn in RENDERERS:
+    for fn in renderers:
         try:
             name = fn(ctx)
             if name:
                 out.append(name)
         except FileNotFoundError as exc:
             print(f"[figures] skip {fn.__name__}: missing input {exc}")
+        except Exception as exc:
+            print(f"[figures] skip {fn.__name__}: {type(exc).__name__}: {exc}")
     (ctx.results / "figures_manifest.json").write_text(
         json.dumps(out, indent=2))
     return out
+
+
+# ================= real-data single-cell figures (precomputed) ===========
+def singlecell_real(ctx: RunContext) -> str:
+    """fig07 from scanpy exports (s08_cells_viz.csv + s08_marker_dotplot.csv)."""
+    viz = pd.read_csv(ctx.results / "s08_cells_viz.csv")
+    dot = pd.read_csv(ctx.results / "s08_marker_dotplot.csv")
+    s8 = load_json(ctx.results / "s08_singlecell.json")
+    key = s8.get("key_gene", "gene")
+    axis_types = set(ctx.cfg["single_cell"].get("axis_types", []))
+    types = sorted(viz["annotated"].unique())
+    tcol = {t: CAT[i % len(CAT)] for i, t in enumerate(types)}
+    # subsample for scatter legibility
+    rng = np.random.default_rng(0)
+    idx = (rng.choice(len(viz), 8000, replace=False)
+           if len(viz) > 8000 else np.arange(len(viz)))
+    v = viz.iloc[idx]
+
+    fig, axs = plt.subplot_mosaic(
+        [["A", "B", "C"], ["D", "E", "C"]], figsize=(13, 8),
+        facecolor=SURFACE, gridspec_kw={"width_ratios": [1, 1, 1.15]})
+
+    ax = axs["A"]
+    _style(ax, False, False)
+    for t in types:
+        m = (v["annotated"] == t).to_numpy()
+        ax.scatter(v["pc1"][m], v["pc2"][m], s=4, c=tcol[t], lw=0, alpha=0.6)
+    for t in types:
+        m = (viz["annotated"] == t).to_numpy()
+        ax.text(viz["pc1"][m].median(), viz["pc2"][m].median(), t,
+                fontsize=8, color=INK, fontweight="bold", ha="center",
+                bbox=dict(boxstyle="round,pad=0.12", fc=SURFACE, ec=GRID,
+                          alpha=0.85))
+    ax.set_xlabel("PC1", color=INK2, fontsize=9)
+    ax.set_ylabel("PC2", color=INK2, fontsize=9)
+    ax.set_title(f"Cell-type embedding (n={len(viz):,})", fontsize=11,
+                 color=INK, pad=6)
+    _panel(ax, "A")
+
+    ax = axs["B"]
+    _style(ax, False, False)
+    if "key_gene_expr" in v:
+        kg = v["key_gene_expr"].to_numpy()
+        order = np.argsort(kg)
+        sc = ax.scatter(v["pc1"].to_numpy()[order], v["pc2"].to_numpy()[order],
+                        s=4, c=kg[order], cmap=SEQ_CMAP, lw=0)
+        fig.colorbar(sc, ax=ax, shrink=0.75, label=f"{key} (log-norm)")
+    ax.set_xlabel("PC1", color=INK2, fontsize=9)
+    ax.set_ylabel("PC2", color=INK2, fontsize=9)
+    ax.set_title(f"{key} expression", fontsize=11, color=INK, pad=6)
+    _panel(ax, "B")
+
+    ax = axs["C"]
+    ax.set_facecolor(SURFACE)
+    mk = list(dict.fromkeys(dot["marker"]))
+    cts = sorted(dot["cell_type"].unique())
+    piv_mean = dot.pivot(index="cell_type", columns="marker", values="mean")
+    piv_pct = dot.pivot(index="cell_type", columns="marker", values="pct")
+    mz = (piv_mean - piv_mean.mean()) / (piv_mean.std() + 1e-9)
+    for ti, ct in enumerate(cts):
+        for mi, m in enumerate(mk):
+            ax.scatter(mi, len(cts) - 1 - ti,
+                       s=10 + 150 * float(piv_pct.loc[ct, m]),
+                       c=[SEQ_CMAP((np.clip(mz.loc[ct, m], -2, 2) + 2) / 4)],
+                       lw=0)
+    ax.set_xticks(range(len(mk)), mk, rotation=60, ha="right", fontsize=7.5)
+    ax.set_yticks(range(len(cts)), cts[::-1], fontsize=8.5)
+    ax.set_xlim(-0.6, len(mk) - 0.4)
+    for sp in ax.spines.values():
+        sp.set_color(GRID)
+    ax.set_title("Marker dotplot (size=pct, color=scaled mean)",
+                 fontsize=10.5, color=INK, pad=6)
+    _panel(ax, "C")
+
+    ax = axs["D"]
+    _style(ax, False, True)
+    prop = (viz.groupby("group")["annotated"]
+            .value_counts(normalize=True).unstack(fill_value=0))
+    bottoms = np.zeros(len(prop))
+    for t in types:
+        vals = prop.get(t, pd.Series(0, index=prop.index)).to_numpy()
+        ax.bar(prop.index, vals, bottom=bottoms, width=0.55, color=tcol[t],
+               label=t, edgecolor=SURFACE, linewidth=1.5)
+        bottoms += vals
+    ax.set_ylabel("proportion", color=INK2, fontsize=9)
+    ax.legend(frameon=False, fontsize=7, labelcolor=INK2,
+              loc="center left", bbox_to_anchor=(1.0, 0.5))
+    ax.set_title("Composition by group (DIS/HEA)", fontsize=11, color=INK,
+                 pad=6)
+    _panel(ax, "D")
+
+    ax = axs["E"]
+    _style(ax, False, True)
+    if "key_gene_expr" in viz:
+        data = [viz.loc[viz["annotated"] == t, "key_gene_expr"].to_numpy()
+                for t in types]
+        vp = ax.violinplot(data, showmedians=True, widths=0.8)
+        for body, t in zip(vp["bodies"], types):
+            body.set_facecolor(SEQ[5] if t in axis_types else SEQ[2])
+            body.set_alpha(0.75)
+            body.set_edgecolor(INK2)
+        for part in ("cmins", "cmaxes", "cbars", "cmedians"):
+            vp[part].set_color(INK2)
+            vp[part].set_linewidth(1)
+        ax.set_xticks(range(1, len(types) + 1), types, rotation=40,
+                      ha="right", fontsize=8)
+        for lbl in ax.get_xticklabels():
+            if lbl.get_text() in axis_types:
+                lbl.set_fontweight("bold")
+    ax.set_ylabel(f"{key} (log-norm)", color=INK2, fontsize=9)
+    ax.set_title(f"{key} by cell type (axis bold)", fontsize=11, color=INK,
+                 pad=6)
+    _panel(ax, "E")
+    fig.tight_layout()
+    return _save(fig, ctx, "fig07_singlecell.png")
+
+
+def stemness_trajectory_real(ctx: RunContext) -> str:
+    """fig08 from scanpy exports (s08_cells_viz + s08_axis_cells)."""
+    viz = pd.read_csv(ctx.results / "s08_cells_viz.csv")
+    ax_df = pd.read_csv(ctx.results / "s08_axis_cells.csv")
+    s8 = load_json(ctx.results / "s08_singlecell.json")
+    key = s8.get("key_gene", "gene")
+    axis_types = list(ctx.cfg["single_cell"].get("axis_types", []))
+    origin = set(ctx.cfg["single_cell"].get("axis_origin", axis_types[:-1]))
+    types = sorted(viz["annotated"].unique())
+
+    fig, axs = plt.subplot_mosaic(
+        [["A", "B", "C"], ["D", "E", "F"]], figsize=(13, 8),
+        facecolor=SURFACE)
+
+    ax = axs["A"]
+    _style(ax)
+    data = [viz.loc[viz["annotated"] == t, "stemness"].to_numpy()
+            for t in types]
+    bp = ax.boxplot(data, patch_artist=True, widths=0.55,
+                    medianprops=dict(color=INK2), showfliers=False)
+    for patch, t in zip(bp["boxes"], types):
+        patch.set_facecolor(SEQ[5] if t in axis_types else SEQ[2])
+        patch.set_alpha(0.8)
+        patch.set_edgecolor(INK2)
+    for el in ("whiskers", "caps"):
+        for line in bp[el]:
+            line.set_color(INK2)
+    ax.set_xticks(range(1, len(types) + 1), types, rotation=40, ha="right",
+                  fontsize=8)
+    for lbl in ax.get_xticklabels():
+        if lbl.get_text() in axis_types:
+            lbl.set_fontweight("bold")
+    ax.set_ylabel("stemness (CytoTRACE-style)", color=INK2, fontsize=9)
+    ax.set_title("Differentiation potential by subtype", fontsize=11,
+                 color=INK, pad=6)
+    _panel(ax, "A")
+
+    ax = axs["B"]
+    _style(ax)
+    if "key_gene_expr" in viz:
+        xg = viz["key_gene_expr"].to_numpy()
+        yg = viz["stemness"].to_numpy()
+        rho, pv = sps.spearmanr(xg, yg)
+        rng = np.random.default_rng(0)
+        idx = rng.choice(len(xg), min(6000, len(xg)), replace=False)
+        ax.scatter(xg[idx], yg[idx], s=5, c=SEQ[3], lw=0, alpha=0.4)
+        coef = np.polyfit(xg, yg, 1)
+        xs = np.linspace(xg.min(), xg.max(), 50)
+        ax.plot(xs, np.polyval(coef, xs), color=INK2, lw=1.6)
+        ax.text(0.04, 0.93, f"R={rho:.2f}, P={pv:.1e}",
+                transform=ax.transAxes, fontsize=9, color=INK)
+    ax.set_xlabel(f"{key} (log-norm)", color=INK2, fontsize=9)
+    ax.set_ylabel("stemness", color=INK2, fontsize=9)
+    ax.set_title(f"{key} vs stemness", fontsize=11, color=INK, pad=6)
+    _panel(ax, "B")
+
+    ax = axs["C"]
+    _style(ax, False, False)
+    sc = ax.scatter(ax_df["pc1"], ax_df["pc2"], s=7,
+                    c=ax_df["pseudotime"], cmap=SEQ_CMAP, lw=0)
+    fig.colorbar(sc, ax=ax, shrink=0.75, label="pseudotime")
+    ax.set_xlabel("component 1", color=INK2, fontsize=9)
+    ax.set_ylabel("component 2", color=INK2, fontsize=9)
+    ax.set_title("Phenotype-switch trajectory", fontsize=11, color=INK, pad=6)
+    _panel(ax, "C")
+
+    ax = axs["D"]
+    _style(ax, False, False)
+    for i, t in enumerate(axis_types):
+        m = (ax_df["annotated"] == t).to_numpy()
+        ax.scatter(ax_df["pc1"][m], ax_df["pc2"][m], s=7, c=CAT[i], lw=0,
+                   alpha=0.7)
+        if m.sum():
+            ax.text(ax_df["pc1"][m].median(), ax_df["pc2"][m].median(), t,
+                    fontsize=8, color=INK, fontweight="bold", ha="center",
+                    bbox=dict(boxstyle="round,pad=0.12", fc=SURFACE, ec=GRID,
+                              alpha=0.85))
+    ax.set_xlabel("component 1", color=INK2, fontsize=9)
+    ax.set_ylabel("component 2", color=INK2, fontsize=9)
+    ax.set_title(" + ".join(axis_types[:-1]) + " → " + axis_types[-1],
+                 fontsize=11, color=INK, pad=6)
+    _panel(ax, "D")
+
+    ax = axs["E"]
+    _style(ax)
+    order = np.argsort(ax_df["pseudotime"].to_numpy())
+    tvals = ax_df["pseudotime"].to_numpy()[order]
+    switch = [g for g in ("MYH11", "ACTA2", "TAGLN", "FN1", "LUM", "COL1A1")
+              if g in ax_df.columns][:4]
+    for gi, g in enumerate(switch):
+        vals = ax_df[g].to_numpy()[order]
+        sm = pd.Series(vals).rolling(max(20, len(vals) // 25),
+                                     center=True, min_periods=5).mean()
+        ax.plot(tvals, sm, color=CAT[gi], lw=2, label=g)
+    ax.legend(frameon=False, fontsize=8, labelcolor=INK2)
+    ax.set_xlabel("pseudotime", color=INK2, fontsize=9)
+    ax.set_ylabel("expression (smoothed)", color=INK2, fontsize=9)
+    ax.set_title("Phenotype markers along pseudotime", fontsize=11,
+                 color=INK, pad=6)
+    _panel(ax, "E")
+
+    ax = axs["F"]
+    _style(ax)
+    if key in ax_df.columns:
+        xg = ax_df[key].to_numpy()
+        txt = []
+        for gi, g in enumerate([m for m in ("FN1", "LUM", "COL1A1")
+                                if m in ax_df.columns][:2]):
+            yg = ax_df[g].to_numpy()
+            rho, pv = sps.spearmanr(xg, yg)
+            ax.scatter(xg, yg, s=7, c=CAT[gi], lw=0, alpha=0.4, label=g)
+            coef = np.polyfit(xg, yg, 1)
+            xs = np.linspace(xg.min(), xg.max(), 50)
+            ax.plot(xs, np.polyval(coef, xs), color=CAT[gi], lw=1.8)
+            txt.append(f"{g}: R={rho:.2f}, P={pv:.1e}")
+        ax.text(0.04, 0.95, "\n".join(txt), transform=ax.transAxes,
+                fontsize=8, color=INK, va="top")
+        ax.legend(frameon=False, fontsize=8, labelcolor=INK2,
+                  loc="lower right")
+    ax.set_xlabel(f"{key} (log-norm)", color=INK2, fontsize=9)
+    ax.set_ylabel("mesenchymal marker", color=INK2, fontsize=9)
+    ax.set_title(f"{key} vs switching markers", fontsize=11, color=INK, pad=6)
+    _panel(ax, "F")
+    fig.tight_layout()
+    return _save(fig, ctx, "fig08_stemness_trajectory.png")

@@ -84,13 +84,14 @@ def run(ctx: RunContext) -> dict:
     meta["stemness"] = stem.loc[meta["cell"]].to_numpy()
 
     # pseudotime: PC1 across the EMT axis cell types, origin at epithelium
-    axis_types = ["Lumenal", "Ciliated", "Fibroblasts"]
+    axis_types = cfg.get("axis_types", ["Lumenal", "Ciliated", "Fibroblasts"])
     axis_cells = meta[meta["annotated"].isin(axis_types)]["cell"]
     sub_pcs = PCA(n_components=2, random_state=ctx.seed).fit_transform(
         norm[axis_cells].T.to_numpy())
     pt = sub_pcs[:, 0]
+    origin = cfg.get("axis_origin", axis_types[:-1])
     epi = meta.set_index("cell").loc[axis_cells, "annotated"].isin(
-        ["Lumenal", "Ciliated"]).to_numpy()
+        origin).to_numpy()
     if pt[epi].mean() > pt[~epi].mean():
         pt = -pt
     pt = (pt - pt.min()) / (pt.max() - pt.min() + 1e-12)

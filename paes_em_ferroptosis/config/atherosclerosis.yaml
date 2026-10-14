@@ -1,0 +1,126 @@
+# ============================================================================
+# Plasticizers -> Ferroptosis -> Atherosclerosis pipeline configuration
+# Real-data study design (user-selected endpoint: atherosclerosis).
+# 12 compounds: 7 classic phthalates + 5 alternative plasticizers.
+# ============================================================================
+
+project:
+  name: plasticizers-athero-ferroptosis
+  exposure_name: "Plasticizers (7 PAEs + 5 alternatives)"
+  disease_name: "Atherosclerosis (AS)"
+  context_geneset_name: "Ferroptosis-related genes (FerrDb)"
+  key_gene_expected: null          # discovered, not planted
+
+paths:
+  raw: athero/raw
+  processed: athero/processed
+  results: athero/results
+
+datasets:
+  training:
+    - accession: GSE100927        # 69 atherosclerotic vs 35 control arteries
+      platform: GPL17077
+      role: train
+  validation:
+    - accession: GSE28829         # 16 advanced vs 13 early carotid plaque
+      platform: GPL570
+      role: validate
+    - accession: GSE43292         # 32 atheroma vs 32 paired intact tissue
+      platform: GPL6244
+      role: validate
+  single_cell:
+    accession: GSE159677          # 3 patients x (calcified core + adjacent)
+    n_samples: 6
+  spatial:
+    accession: none               # no public athero spatial with raw counts
+                                  # usable here; stage skipped on real run
+
+network_toxicology:
+  compounds:
+    - {name: DEHP,  cid: 8343}
+    - {name: DBP,   cid: 3026}
+    - {name: BBP,   cid: 2347}
+    - {name: DEP,   cid: 6781}
+    - {name: DMP,   cid: 8554}
+    - {name: DIBP,  cid: 6782}
+    - {name: DINP,  cid: 590836}
+    - {name: DEHT,  cid: 22932}
+    - {name: DINCH, cid: 11524680}
+    - {name: DEHA,  cid: 7641}
+    - {name: ATBC,  cid: 6505}
+    - {name: TOTM,  cid: 18725}
+  compound_target_sources: [ChEMBL, CTD]
+  disease_target_sources: [OpenTargets_MONDO_0005311, KEGG_hsa05417]
+  context_geneset:
+    source: FerrDb (driver+suppressor+marker)
+    expected_size: null
+  id_normalization: HGNC
+
+diffexp:
+  method: limma_moderated_t
+  logfc_threshold: 0.5
+  pvalue_threshold: 0.05
+  adjust: BH
+
+wgcna:
+  engine: python
+  top_mad_genes: 5000
+  soft_power: null
+  scale_free_r2_target: 0.85
+  min_module_size: 30
+  merge_cut_height: 0.25
+  trait: disease_status
+
+enrichment:
+  method: hypergeometric_ora
+  databases: [GO_BP, GO_CC, GO_MF, KEGG]
+  pvalue_threshold: 0.05
+  adjust: BH
+
+machine_learning:
+  cv_folds: 10
+  algorithms: [lasso, random_forest, xgboost, svm_rfe, elastic_net,
+               ridge, gbm, extra_trees, knn, naive_bayes, lda, mlp]
+  final_selectors: [random_forest, lasso, xgboost]
+  metric: auc
+  n_top_features: 20
+  consensus: intersection
+
+immune:
+  method: ssgsea
+  signature_set: charoentong_28    # Table S6, Charoentong et al. 2017
+  group_test: wilcoxon
+  correlation: spearman
+
+single_cell:
+  axis_types: ["SMC_contractile", "Fibromyocyte"]
+  axis_origin: ["SMC_contractile"]
+  engine: python                   # scanpy-based real processing
+  n_cell_types: 7
+  stemness: cytotrace_lite
+  trajectory: pca_pseudotime
+  qc: {min_genes: 200, max_mito_pct: 20}
+
+virtual_knockout:
+  method: grn_perturbation
+  target_cell_type: auto           # cell type with strongest hub expression
+  knockout_gene: from_ml
+  downstream_geneset: FRGs
+
+docking:
+  engine: autodock_vina
+  receptor_pdb: 5LGD               # CD36 ectodomain (chain A); ML hub = CD36
+  affinity_threshold_kcal_mol: -5.0
+  exhaustiveness: 8
+  visualization: pymol
+
+report:
+  formats: [markdown, html]
+  language: zh
+  wetlab_plan:
+    - "CEA plaque vs control artery specimens (>=5+5): IHC/IF of CD36,"
+    - "co-staining with CD68 (macrophage) and ACTA2 (SMC)"
+    - "Cell assays: ox-LDL macrophage/VSMC + DEHP/DBP gradient, +/- Fer-1;"
+    - "readouts: lipid ROS (C11-BODIPY), MDA/GSH, Fe2+, WB of GPX4/ACSL4/CD36"
+    - "Optional in vivo: high-fat zebrafish or ApoE-/- mice under plasticizer"
+    - "exposure; vascular lipid deposition + ferroptosis markers"

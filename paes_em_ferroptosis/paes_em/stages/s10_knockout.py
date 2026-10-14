@@ -36,6 +36,8 @@ def run(ctx: RunContext) -> dict:
     hub = load_json(ctx.processed / "hub_genes.json")
     key_gene = hub[0] if hub else "ARF6"
     target_ct = cfg["target_cell_type"]
+    if target_ct == "auto":
+        target_ct = meta["cell_type"].value_counts().index[0]
 
     cells = meta[meta["cell_type"] == target_ct]["cell"]
     sub = counts[cells]

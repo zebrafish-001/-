@@ -82,18 +82,21 @@ def run(ctx: RunContext) -> dict:
     sub_genes = keep[connected]
 
     dist = 1 - sub_tom
+    # Ward linkage approximates WGCNA's dynamic tree cut far better than
+    # average linkage on real TOMs (average linkage chains into one blob).
     link = hierarchy.linkage(dist[np.triu_indices_from(dist, 1)],
-                             method="average")
+                             method="ward")
     min_size = min(cfg["min_module_size"], max(10, len(sub_genes) // 20))
-    best_labels, best_score = None, (-1, -1)
-    for k in range(2, min(16, len(sub_genes) // min_size + 1)):
+    # deepest cut at which every cluster still clears the size floor
+    best_labels = None
+    for k in range(2, 16):
         labels = hierarchy.fcluster(link, t=k, criterion="maxclust")
         sizes = pd.Series(labels).value_counts()
-        # a cluster holding most genes is background noise, not a module
-        big = sizes[(sizes >= min_size) & (sizes <= 0.6 * len(sub_genes))]
-        score = (len(big), -k)          # most modules, then fewest cuts
-        if score > best_score:
-            best_labels, best_score = labels, score
+        if sizes.min() < min_size:
+            break
+        best_labels = labels
+    if best_labels is None:
+        best_labels = hierarchy.fcluster(link, t=2, criterion="maxclust")
     modules = pd.Series(0, index=keep, name="module")
     modules.loc[sub_genes] = best_labels
     # relabel modules as 1..k ordered by size; 0 stays grey/background

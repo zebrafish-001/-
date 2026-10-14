@@ -119,6 +119,8 @@ immune:
 # Stage 8 - single-cell analysis
 # ---------------------------------------------------------------------------
 single_cell:
+  axis_types: ["Lumenal", "Ciliated", "Fibroblasts"]
+  axis_origin: ["Lumenal", "Ciliated"]
   engine: auto                     # scanpy if installed, R/Seurat hook, else lite
   n_cell_types: 7
   stemness: cytotrace              # CytoTRACE (R hook) or lite correlation proxy

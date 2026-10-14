@@ -25,6 +25,11 @@ def run(ctx: RunContext) -> dict:
                        [str(ctx.raw), str(ctx.results)]):
             return {"engine": "R/SCTransform+RCTD", "see": "s09_* outputs"}
 
+    if not (ctx.raw / "spatial_counts.csv").exists():
+        out = {"engine": "skipped",
+               "reason": "no spatial dataset configured/available"}
+        save_json(out, ctx.results / "s09_spatial.json")
+        return out
     counts = pd.read_csv(ctx.raw / "spatial_counts.csv", index_col=0)
     coords = pd.read_csv(ctx.raw / "spatial_coords.csv")
     markers = load_json(ctx.raw / "sc_marker_truth.json")

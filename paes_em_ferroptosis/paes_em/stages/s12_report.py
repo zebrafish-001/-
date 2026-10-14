@@ -86,7 +86,7 @@ def build_markdown(ctx: RunContext) -> str:
         f"- 引擎 {s8.get('engine', '?')}, 细胞 {s8.get('n_cells', '?')}, "
         f"{s8.get('n_clusters', '?')} 个细胞亚型",
         f"- {key} 与干性相关 ρ={_r(s8.get('key_gene_rho_stemness'))}, "
-        f"与 (Lumenal+Ciliated→Fibroblasts) 伪时间相关 "
+        f"与表型转换轴伪时间相关 "
         f"ρ={_r(s8.get('key_gene_rho_pseudotime'))}, "
         f"EMT 轴富集 P={_r(s8.get('key_gene_axis_enrichment_p'))}",
         "",
@@ -106,9 +106,10 @@ def build_markdown(ctx: RunContext) -> str:
         f"{s11.get('n_strong_binders', '?')}/{s11.get('n_docked', '?')}",
         f"- 结合能: {json.dumps(s11.get('affinities', {}), ensure_ascii=False)}",
         "",
-        "## 11. 临床验证 (湿实验设计, 不由本流程执行)",
-        "- 论文方案: 10 例标本 (5 EM + 5 对照), IHC/IF 检测关键基因表达及",
-        "  其与 EMT 标志物 (CDH1/CDH2/VIM/SNAI1) 共定位; 需伦理批准。",
+        "## 11. 实验验证设计 (湿实验, 不由本流程执行)",
+        *[f"- {line}" for line in cfg.get("report", {}).get(
+            "wetlab_plan",
+            ["5+5 标本 IHC/IF 检测关键基因表达及 EMT 标志物共定位; 需伦理批准"])],
         "",
         "## 结论轴",
         f"**PAEs 暴露 → 铁死亡相关基因 {key} 失调 → 免疫微环境扰动 → "

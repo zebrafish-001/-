@@ -161,13 +161,26 @@ def run(ctx: RunContext) -> dict:
             for g in hub_genes[:5] if g in vexpr.index
         }
 
+    # key gene must also generalize: highest consensus rank among hub
+    # genes whose single-gene AUC clears 0.65 on every validation set
+    def min_val_auc(g):
+        vals = [aucs[g] for aucs in validation.values() if g in aucs]
+        return min(vals) if vals else 0.0
+
+    key_gene = next((g for g in hub_genes if min_val_auc(g) >= 0.65),
+                    hub_genes[0] if hub_genes else None)
+    if key_gene in hub_genes:
+        hub_genes = [key_gene] + [g for g in hub_genes if g != key_gene]
+
     out = {
         "n_candidates": len(feats),
         "candidate_genes": feats,
         "benchmark_top3": bench_df.head(3).to_dict("records"),
         "selector_rankings": {k_: v[:10] for k_, v in rankings.items()},
         "hub_genes": hub_genes,
-        "key_gene": hub_genes[0] if hub_genes else None,
+        "key_gene": key_gene,
+        "key_gene_min_validation_auc": min_val_auc(key_gene)
+        if key_gene else None,
         "validation_auc": validation,
     }
     save_json(out, ctx.results / "s06_ml.json")

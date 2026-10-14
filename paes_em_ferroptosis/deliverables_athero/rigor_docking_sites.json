@@ -1,0 +1,24 @@
+{
+  "n_compounds": 12,
+  "n_pairs": 66,
+  "pairs_over_8A": 41,
+  "median_pair_dist_A": 12.1,
+  "max_pair_dist_A": 22.0,
+  "DINCH_nearest_neighbor_A": 17.4,
+  "interpretation": "compounds occupy different surface sites; cross-site Vina scores are not comparable and cannot be ranked. The 26A box performed semi-blind docking.",
+  "controls": {
+    "positive_ligands": {
+      "linoleic_acid": -7.337,
+      "oleic_acid": -6.24
+    },
+    "negative_decoy": {
+      "glucose": -5.998
+    },
+    "plasticizer_range": [
+      -7.25,
+      -5.51
+    ],
+    "plasticizer_median": -6.22,
+    "discrimination": "FAILED: the non-binding decoy (glucose) scores -6.00, inside the plasticizer range and better than native oleic acid (-6.24). The semi-blind box cannot distinguish binders from non-binders; binding energies are NOT evidence of specific CD36 interaction."
+  }
+}

@@ -67,7 +67,7 @@ def _rigor_lines(ctx):
         return []
     sc = _j.loads(f.read_text())
     comp = sc.get("composition_decomposition", {})
-    out = ["## 严谨性复算 (对应补充图 S1-S3)"]
+    out = ["## 严谨性复算 (对应补充图 S1-S6)"]
     it = rp / "rigor_intersection_permutation.json"
     if it.exists():
         d = _j.loads(it.read_text())
@@ -88,6 +88,22 @@ def _rigor_lines(ctx):
         out.append(f"- 伪复制/组成控制(n=3病人): CD36全组织{comp['whole_tissue_fold_DIS_over_HEA']}× "
                    f"主要为组成效应(巨噬内仅{comp['within_macrophage_fold_DIS_over_HEA']}×, "
                    f"巨噬占比{comp['macrophage_prop_fold_DIS_over_HEA']}×); 细胞级P值不报告")
+    dk = rp / "rigor_docking_sites.json"
+    if dk.exists():
+        d = _j.loads(dk.read_text())
+        c = d.get("controls", {})
+        out.append(f"- 对接位点控制: {d['pairs_over_8A']}/{d['n_pairs']}对化合物"
+                   f"质心相距>8Å(中位{d['median_pair_dist_A']}Å), 结合在不同位点"
+                   f"→ 跨位点打分不可比; 诱饵(葡萄糖)得分"
+                   f"{c.get('negative_decoy',{}).get('glucose')}落在增塑剂区间内"
+                   f"→ 盒子无区分力, 结合能不支持特异结合")
+    gs = rp / "rigor_geneset_defense.json"
+    if gs.exists():
+        d = _j.loads(gs.read_text())
+        sm = d.get("summary", {})
+        out.append(f"- 铁死亡基因集(全983): 对表达匹配背景无DEG富集(3队列Fisher "
+                   f"p={list(sm.get('deg_proportion_fisher_p_per_cohort',{}).values())}); "
+                   f"全转录组背景虚高(混杂, 不单用)")
     out.append("")
     return out
 
@@ -171,10 +187,10 @@ def build_markdown(ctx: RunContext) -> str:
             else " (不显著; lite GRN 的局限, 建议用 scTenifoldKnk R 包复核)")),
         f"- 扰动基因富集通路: {'; '.join(s10.get('top_terms', [])[:3])}",
         "",
-        "## 10. 分子对接",
-        f"- 受体 {s11.get('receptor_pdb', '?')}, 阈值 "
-        f"{s11.get('threshold_kcal_mol', '?')} kcal/mol, 强结合 "
-        f"{s11.get('n_strong_binders', '?')}/{s11.get('n_docked', '?')}",
+        "## 10. 分子对接 (见严谨性复算: 仅为探索性, 不支持特异结合)",
+        f"- 受体 {s11.get('receptor_pdb', '?')}, 12化合物结合能 -5.5~-7.25 kcal/mol; "
+        f"但多位点+诱饵对照显示打分不可比且无区分力, 结论仅为'可与CD36表面结合'的"
+        f"探索性提示, 需定口袋+阳性对照重做",
         f"- 结合能: {json.dumps(s11.get('affinities', {}), ensure_ascii=False)}",
         "",
         "## 11. 实验验证设计 (湿实验, 不由本流程执行)",

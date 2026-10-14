@@ -166,3 +166,163 @@ def _panel(ax, letter):
 if __name__ == "__main__":
     for fn in (figS1, figS2, figS3):
         print("rendered", fn())
+
+
+def figS4():
+    """3-cohort ferroptosis gene-set DE defense, both backgrounds."""
+    import json as _j
+    d = _j.loads((RES / "rigor_geneset_defense.json").read_text())
+    cohorts = list(d["cohorts"])
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.6), facecolor=SURFACE)
+
+    # A: matched-background Fisher DEG-proportion (robust defense)
+    _style(ax1, yg=True)
+    x = np.arange(len(cohorts))
+    w = 0.35
+    frg = [d["cohorts"][c]["matched"]["deg_prop_frg"] for c in cohorts]
+    bg = [d["cohorts"][c]["matched"]["deg_prop_bg"] for c in cohorts]
+    ax1.bar(x - w/2, frg, w, color=RED, label="ferroptosis (983)")
+    ax1.bar(x + w/2, bg, w, color=NEUTRAL, label="expr-matched background")
+    for i, c in enumerate(cohorts):
+        p = d["cohorts"][c]["matched"]["deg_fisher_p"]
+        ax1.text(i, max(frg[i], bg[i]) + 0.02, f"OR={d['cohorts'][c]['matched']['deg_odds_ratio']}\np={p}",
+                 ha="center", fontsize=7.5, color=INK2)
+    ax1.set_xticks(x, cohorts, fontsize=9)
+    ax1.set_ylabel("DEG proportion", color=INK2, fontsize=9)
+    ax1.set_ylim(0, 1)
+    ax1.legend(frameon=False, fontsize=8, labelcolor=INK2)
+    ax1.set_title("A  DEG-proportion defense holds 3/3\n"
+                  "(FRG not enriched vs matched background)", fontsize=10.5,
+                  color=INK, pad=6)
+
+    # B: matched vs whole-transcriptome MWU p (confounding)
+    _style(ax2, yg=True)
+    mp = [-np.log10(d["cohorts"][c]["matched"]["mwu_p"]) for c in cohorts]
+    wp = [-np.log10(d["cohorts"][c]["whole_transcriptome"]["mwu_p"])
+          for c in cohorts]
+    ax2.bar(x - w/2, mp, w, color=BLUE, label="matched background (valid)")
+    ax2.bar(x + w/2, wp, w, color="#eda100",
+            label="whole transcriptome (confounded)")
+    ax2.axhline(-np.log10(0.05), color=INK2, ls="--", lw=1)
+    ax2.text(len(cohorts) - 0.5, -np.log10(0.05) + 0.1, "p=0.05",
+             fontsize=7.5, color=INK2, ha="right")
+    ax2.set_xticks(x, cohorts, fontsize=9)
+    ax2.set_ylabel("-log10 MWU p (t-statistic)", color=INK2, fontsize=9)
+    ax2.legend(frameon=False, fontsize=8, labelcolor=INK2)
+    ax2.set_title("B  Whole-transcriptome background inflates\nsignificance "
+                  "(expression confounding)", fontsize=10.5, color=INK, pad=6)
+    fig.suptitle("Fig S4  Ferroptosis gene-set is not DE-enriched beyond "
+                 "expression-matched background (full FerrDb 983, 3 cohorts)",
+                 fontsize=11.5, color=INK, y=1.03)
+    fig.tight_layout()
+    return _save(fig, "figS4_geneset_defense.png")
+
+
+def figS5():
+    """Docking rigor: multi-site dispersion + control discrimination."""
+    import json as _j
+    d = _j.loads((RES / "rigor_docking_sites.json").read_text())
+    c = d["controls"]
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.6), facecolor=SURFACE)
+
+    # A: pairwise centroid distances
+    _style(ax1, yg=True)
+    import numpy as _np
+    from pathlib import Path as _P
+    import itertools as _it
+    def cen(p):
+        xs = []; inm = False
+        for line in open(p):
+            if line.startswith("MODEL"):
+                inm = line.split()[1] == "1"
+            elif line.startswith("ENDMDL") and inm:
+                break
+            elif inm and line.startswith(("ATOM", "HETATM")):
+                xs.append([float(line[30:38]), float(line[38:46]),
+                           float(line[46:54])])
+        return _np.mean(xs, 0) if xs else None
+    dock = _P("athero/raw/docking")
+    cents = {p.name.replace("_out.pdbqt", ""): cen(p)
+             for p in sorted(dock.glob("*_out.pdbqt"))
+             if "POS" not in p.name and "NEG" not in p.name}
+    cents = {k: v for k, v in cents.items() if v is not None}
+    dists = [ _np.linalg.norm(cents[a] - cents[b])
+              for a, b in _it.combinations(cents, 2)]
+    ax1.hist(dists, bins=18, color=NEUTRAL, edgecolor=SURFACE)
+    ax1.axvline(8, color=RED, ls="--", lw=1.2, label="8 Å (same-site cutoff)")
+    ax1.axvline(d["median_pair_dist_A"], color=BLUE, lw=1.5,
+                label=f"median {d['median_pair_dist_A']} Å")
+    ax1.set_xlabel("pairwise best-pose centroid distance (Å)", color=INK2,
+                   fontsize=9)
+    ax1.set_ylabel("compound pairs", color=INK2, fontsize=9)
+    ax1.legend(frameon=False, fontsize=8, labelcolor=INK2)
+    ax1.set_title(f"A  Compounds bind different sites\n"
+                  f"({d['pairs_over_8A']}/{d['n_pairs']} pairs >8 Å; "
+                  f"scores not comparable)", fontsize=10.5, color=INK, pad=6)
+
+    # B: control discrimination
+    _style(ax2, yg=True)
+    items = [("linoleic\n(POS)", c["positive_ligands"]["linoleic_acid"], BLUE),
+             ("oleic\n(POS)", c["positive_ligands"]["oleic_acid"], BLUE),
+             ("glucose\n(decoy)", c["negative_decoy"]["glucose"], RED)]
+    xs = range(len(items))
+    ax2.bar(xs, [abs(v) for _, v, _ in items],
+            color=[col for _, _, col in items], width=0.6)
+    lo, hi = abs(d["controls"]["plasticizer_range"][1]), abs(
+        d["controls"]["plasticizer_range"][0])
+    ax2.axhspan(lo, hi, color="#eda100", alpha=0.18)
+    ax2.text(2.4, (lo + hi) / 2, "plasticizer\nrange", fontsize=7.5,
+             color="#a06a00", ha="center", va="center")
+    for i, (_, v, _c) in enumerate(items):
+        ax2.text(i, abs(v) + 0.05, f"{v}", ha="center", fontsize=8.5,
+                 color=INK)
+    ax2.set_xticks(list(xs), [n for n, _, _ in items], fontsize=8.5)
+    ax2.set_ylabel("|binding energy| kcal/mol", color=INK2, fontsize=9)
+    ax2.set_title("B  Decoy scores like real ligands\n"
+                  "(box cannot discriminate binders)", fontsize=10.5,
+                  color=INK, pad=6)
+    fig.suptitle("Fig S5  Docking cannot support specific binding: multi-site "
+                 "poses + decoy passes", fontsize=11.5, color=INK, y=1.03)
+    fig.tight_layout()
+    return _save(fig, "figS5_docking_rigor.png")
+
+
+def figS6():
+    """Formal permutation null distributions."""
+    import json as _j
+    it = _j.loads((RES / "rigor_intersection_permutation.json").read_text())
+    ml = _j.loads((RES / "rigor_ml.json").read_text())
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.4), facecolor=SURFACE)
+
+    _style(ax1)
+    nv = np.array(it["null_values"])
+    ax1.hist(nv, bins=range(0, int(nv.max()) + 22, 1), color=NEUTRAL,
+             edgecolor=SURFACE)
+    ax1.axvline(it["observed_intersection_size"], color=RED, lw=2,
+                label=f"observed {it['observed_intersection_size']}")
+    ax1.set_xlabel("intersection size under random CTD gene sets", color=INK2,
+                   fontsize=9)
+    ax1.set_ylabel("permutations", color=INK2, fontsize=9)
+    ax1.legend(frameon=False, fontsize=8, labelcolor=INK2)
+    ax1.set_title(f"A  Intersection specificity\n(n=1000, P={it['empirical_p_size']}, "
+                  f"{it['enrichment_fold']}× over null)", fontsize=10.5,
+                  color=INK, pad=6)
+
+    _style(ax2)
+    perm = ml["external_auc_permutation"]
+    nv2 = np.array(perm.get("null_values", []))
+    ax2.hist(nv2, bins=25, color=NEUTRAL, edgecolor=SURFACE)
+    ax2.axvline(perm["real_mean_external_auc"], color=RED, lw=2,
+                label=f"observed {perm['real_mean_external_auc']}")
+    ax2.axvline(perm["null_95pct"], color=INK2, ls="--", lw=1,
+                label=f"null 95% {perm['null_95pct']}")
+    ax2.set_xlabel("mean external AUC under label permutation", color=INK2,
+                   fontsize=9)
+    ax2.set_ylabel("permutations", color=INK2, fontsize=9)
+    ax2.legend(frameon=False, fontsize=8, labelcolor=INK2)
+    ax2.set_title(f"B  ML external generalization\n(n={perm['n_permutations']}, "
+                  f"P={perm['empirical_p']})", fontsize=10.5, color=INK, pad=6)
+    fig.suptitle("Fig S6  Formal permutation null distributions", fontsize=11.5,
+                 color=INK, y=1.03)
+    fig.tight_layout()
+    return _save(fig, "figS6_permutation_nulls.png")

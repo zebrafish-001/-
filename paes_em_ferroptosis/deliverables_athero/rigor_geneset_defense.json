@@ -1,0 +1,101 @@
+{
+  "full_ferrdb_n": 983,
+  "lfc": 0.5,
+  "padj": 0.05,
+  "note": "the matched-background test is the valid one; the whole-transcriptome test is confounded by the fact that ferroptosis genes are highly expressed and highly expressed genes are more often DE. Report both.",
+  "cohorts": {
+    "GSE100927": {
+      "matched": {
+        "background": "expression-matched",
+        "n_frg": 784,
+        "n_bg": 784,
+        "median_t_frg": 0.346,
+        "median_t_bg": 0.057,
+        "mwu_p": 0.329,
+        "deg_prop_frg": 0.161,
+        "deg_prop_bg": 0.136,
+        "deg_odds_ratio": 1.212,
+        "deg_fisher_p": 0.201
+      },
+      "whole_transcriptome": {
+        "background": "whole-transcriptome",
+        "n_frg": 784,
+        "n_bg": 29774,
+        "median_t_frg": 0.346,
+        "median_t_bg": -0.052,
+        "mwu_p": 0.015,
+        "deg_prop_frg": 0.161,
+        "deg_prop_bg": 0.083,
+        "deg_odds_ratio": 2.125,
+        "deg_fisher_p": 2.69e-12
+      }
+    },
+    "GSE28829": {
+      "matched": {
+        "background": "expression-matched",
+        "n_frg": 830,
+        "n_bg": 830,
+        "median_t_frg": 0.055,
+        "median_t_bg": -0.058,
+        "mwu_p": 0.0295,
+        "deg_prop_frg": 0.07,
+        "deg_prop_bg": 0.076,
+        "deg_odds_ratio": 0.915,
+        "deg_fisher_p": 0.706
+      },
+      "whole_transcriptome": {
+        "background": "whole-transcriptome",
+        "n_frg": 830,
+        "n_bg": 21359,
+        "median_t_frg": 0.055,
+        "median_t_bg": -0.005,
+        "mwu_p": 0.0961,
+        "deg_prop_frg": 0.07,
+        "deg_prop_bg": 0.05,
+        "deg_odds_ratio": 1.44,
+        "deg_fisher_p": 0.0119
+      }
+    },
+    "GSE43292": {
+      "matched": {
+        "background": "expression-matched",
+        "n_frg": 853,
+        "n_bg": 853,
+        "median_t_frg": 0.377,
+        "median_t_bg": -0.055,
+        "mwu_p": 0.000366,
+        "deg_prop_frg": 0.091,
+        "deg_prop_bg": 0.089,
+        "deg_odds_ratio": 1.029,
+        "deg_fisher_p": 0.933
+      },
+      "whole_transcriptome": {
+        "background": "whole-transcriptome",
+        "n_frg": 853,
+        "n_bg": 22454,
+        "median_t_frg": 0.377,
+        "median_t_bg": 0.043,
+        "mwu_p": 3.38e-06,
+        "deg_prop_frg": 0.091,
+        "deg_prop_bg": 0.056,
+        "deg_odds_ratio": 1.706,
+        "deg_fisher_p": 4.28e-05
+      }
+    }
+  },
+  "matched_nonsignificant_in_all_cohorts": false,
+  "summary": {
+    "deg_proportion_defense_holds_all_cohorts": true,
+    "deg_proportion_fisher_p_per_cohort": {
+      "GSE100927": 0.201,
+      "GSE28829": 0.706,
+      "GSE43292": 0.933
+    },
+    "tstat_mwu_p_per_cohort": {
+      "GSE100927": 0.329,
+      "GSE28829": 0.0295,
+      "GSE43292": 0.000366
+    },
+    "conclusion": "Primary (robust, 3/3): ferroptosis genes are NOT over-represented among DEGs beyond expression-matched background (Fisher p 0.20/0.71/0.93). Secondary (weak, cohort-dependent): median t-statistic modestly higher in 2/3 cohorts. Whole-transcriptome background inflates significance (confounded by expression level) and must not be used alone."
+  }
+}

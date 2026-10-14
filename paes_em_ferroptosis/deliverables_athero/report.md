@@ -39,8 +39,8 @@
 - 铁死亡基因在高扰动集中富集 P=0.881 (不显著; lite GRN 的局限, 建议用 scTenifoldKnk R 包复核)
 - 扰动基因富集通路: KEGG::Systemic lupus erythematosus; KEGG::Staphylococcus aureus infection; GO_CC::Collagen-Containing Extracellular Matrix
 
-## 10. 分子对接
-- 受体 5LGD, 阈值 -5.0 kcal/mol, 强结合 12/12
+## 10. 分子对接 (见严谨性复算: 仅为探索性, 不支持特异结合)
+- 受体 5LGD, 12化合物结合能 -5.5~-7.25 kcal/mol; 但多位点+诱饵对照显示打分不可比且无区分力, 结论仅为'可与CD36表面结合'的探索性提示, 需定口袋+阳性对照重做
 - 结合能: {"DEHP": -6.232, "DBP": -6.096, "BBP": -7.072, "DEP": -5.862, "DMP": -5.884, "DIBP": -6.375, "DINP": -7.065, "DEHT": -6.322, "DINCH": -7.25, "DEHA": -6.071, "ATBC": -5.506, "TOTM": -6.215}
 
 ## 11. 实验验证设计 (湿实验, 不由本流程执行)
@@ -51,11 +51,13 @@
 - Optional in vivo: high-fat zebrafish or ApoE-/- mice under plasticizer
 - exposure; vascular lipid deposition + ferroptosis markers
 
-## 严谨性复算 (对应补充图 S1-S3)
+## 严谨性复算 (对应补充图 S1-S6)
 - 交集特异性(置换): 观测40基因 vs 随机零分布均值8.4, 富集4.76×, P=0.001
 - 富集泛靶点控制: 关键基因仅在6.0%显著KEGG条目, 远低于枢纽(最高62.1%) → 通路特异
 - ML诚实评估: 内部CV AUC不可用; 外部平均AUC 0.767, 置换P=0.0149
 - 伪复制/组成控制(n=3病人): CD36全组织1.973× 主要为组成效应(巨噬内仅1.103×, 巨噬占比2.297×); 细胞级P值不报告
+- 对接位点控制: 41/66对化合物质心相距>8Å(中位12.1Å), 结合在不同位点→ 跨位点打分不可比; 诱饵(葡萄糖)得分-5.998落在增塑剂区间内→ 盒子无区分力, 结合能不支持特异结合
+- 铁死亡基因集(全983): 对表达匹配背景无DEG富集(3队列Fisher p=[0.201, 0.706, 0.933]); 全转录组背景虚高(混杂, 不单用)
 
 ## 结论轴
 **Plasticizers (7 PAEs + 5 alternatives) 暴露 → 铁死亡相关基因 CD36 上调 → 免疫微环境扰动 → Resident-like → Foam-like 细胞状态转换 → Atherosclerosis (AS)**

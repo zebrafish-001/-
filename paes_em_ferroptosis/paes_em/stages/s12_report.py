@@ -41,10 +41,15 @@ def build_markdown(ctx: RunContext) -> str:
     s10 = _get(ctx, "s10_knockout")
     s11 = _get(ctx, "s11_docking")
     key = s6.get("key_gene", "?")
+    import re as _re
+    _m = _re.search(r"\(([^)]+)\)", cfg["project"]["disease_name"])
+    dz = _m.group(1) if _m else cfg["project"]["disease_name"].split()[0]
+    axis_name = " → ".join(cfg.get("single_cell", {}).get(
+        "axis_types", ["表型转换"]))
 
     lines = [
-        f"# {cfg['project']['exposure_name']} → 铁死亡 → EMT → "
-        f"{cfg['project']['disease_name']} 分析报告",
+        f"# {cfg['project']['exposure_name']} → 铁死亡 → "
+        f"{cfg['project']['disease_name']} 网络毒理学与多组学分析报告",
         "",
         f"- 流程: paes-em-ferroptosis v0.1 ({'演示数据' if ctx.demo else '真实数据'})",
         f"- 生成时间: {datetime.date.today().isoformat()}",
@@ -52,7 +57,7 @@ def build_markdown(ctx: RunContext) -> str:
         "(doi:10.1016/j.jhazmat.2026.141670)",
         "",
         "## 1. 网络毒理学靶点交集",
-        f"- PAEs 靶点 {s2.get('n_paes_targets', '?')} 个; EM 靶点 "
+        f"- 增塑剂靶点 {s2.get('n_paes_targets', '?')} 个; {dz} 靶点 "
         f"{s2.get('n_em_targets', '?')} 个; 铁死亡基因 {s2.get('n_frgs', '?')} 个",
         f"- 三重交集 **{s2.get('intersection_size', '?')}** 个基因: "
         f"{', '.join(s2.get('intersection_genes', [])[:15])}"
@@ -85,20 +90,27 @@ def build_markdown(ctx: RunContext) -> str:
         "## 7. 单细胞分析",
         f"- 引擎 {s8.get('engine', '?')}, 细胞 {s8.get('n_cells', '?')}, "
         f"{s8.get('n_clusters', '?')} 个细胞亚型",
-        f"- {key} 与干性相关 ρ={_r(s8.get('key_gene_rho_stemness'))}, "
-        f"与表型转换轴伪时间相关 "
-        f"ρ={_r(s8.get('key_gene_rho_pseudotime'))}, "
-        f"EMT 轴富集 P={_r(s8.get('key_gene_axis_enrichment_p'))}",
+        f"- {key} 在病变 vs 正常组: {_r(s8.get('key_gene_mean_DIS'))} vs "
+        f"{_r(s8.get('key_gene_mean_HEA'))} (P={_r(s8.get('key_gene_DIS_vs_HEA_p'))})",
+        f"- {key} 与干性相关 ρ={_r(s8.get('key_gene_rho_stemness'))}; "
+        f"沿 {axis_name} 轨迹伪时间 "
+        f"ρ={_r(s8.get('key_gene_rho_pseudotime'))} "
+        f"(P={_r(s8.get('key_gene_rho_pseudotime_p'))})",
         "",
         "## 8. 空间转录组",
-        f"- 病灶区 {key} 富集 P={_r(s9.get('lesion_enrichment_p'))}; "
-        f"图: {s9.get('figure', '-')}",
+        ("- 本终点无可用的公共空间转录组原始计数数据, 该阶段跳过"
+         if s9.get("engine", "skipped") == "skipped" else
+         f"- 病灶区 {key} 富集 P={_r(s9.get('lesion_enrichment_p'))}; "
+         f"图: {s9.get('figure', '-')}"),
         "",
-        "## 9. 虚拟敲除 (成纤维细胞)",
-        f"- 敲除 {s10.get('knockout_gene', key)}, 扰动网络基因 "
-        f"{s10.get('n_network_genes', '?')} 个; 高扰动集中铁死亡基因富集 "
-        f"P={_r(s10.get('frg_enrichment_p'))}",
-        f"- 扰动基因富集: {'; '.join(s10.get('top_terms', [])[:3])}",
+        f"## 9. 虚拟敲除 ({s10.get('cell_type', '?')})",
+        f"- 敲除 {s10.get('knockout_gene', key)}, GRN 网络基因 "
+        f"{s10.get('n_network_genes', '?')} 个; 高扰动基因: "
+        f"{', '.join(s10.get('top_perturbed', [])[:6])}",
+        (f"- 铁死亡基因在高扰动集中富集 P={_r(s10.get('frg_enrichment_p'))}"
+         + ("" if (s10.get('frg_enrichment_p') or 1) < 0.05
+            else " (不显著; lite GRN 的局限, 建议用 scTenifoldKnk R 包复核)")),
+        f"- 扰动基因富集通路: {'; '.join(s10.get('top_terms', [])[:3])}",
         "",
         "## 10. 分子对接",
         f"- 受体 {s11.get('receptor_pdb', '?')}, 阈值 "
@@ -113,7 +125,7 @@ def build_markdown(ctx: RunContext) -> str:
         "",
         "## 结论轴",
         f"**{cfg['project']['exposure_name']} 暴露 → 铁死亡相关基因 {key} "
-        f"失调 → 免疫微环境扰动 → 关键细胞状态转换 → "
+        f"上调 → 免疫微环境扰动 → {axis_name} 细胞状态转换 → "
         f"{cfg['project']['disease_name']}**",
     ]
     return "\n".join(lines)

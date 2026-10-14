@@ -66,6 +66,14 @@ DIV_CMAP = matplotlib.colors.LinearSegmentedColormap.from_list(
     "divbr", [DIV_NEG, "#f0efec", DIV_POS])
 
 
+def _disease_short(ctx):
+    """Short disease label for axis/legend text (e.g. 'AS', 'EM')."""
+    name = ctx.cfg["project"]["disease_name"]
+    import re as _re
+    m = _re.search(r"\(([^)]+)\)", name)
+    return m.group(1) if m else name.split()[0]
+
+
 def _style(ax, xgrid=False, ygrid=True):
     ax.set_facecolor(SURFACE)
     for side in ("top", "right"):
@@ -204,13 +212,14 @@ def targets_de(ctx: RunContext) -> str:
     mt = pd.read_csv(ctx.results / "s04_module_trait.csv")
     cfg = ctx.cfg["diffexp"]
     lfc, pth = cfg["logfc_threshold"], cfg["pvalue_threshold"]
+    dz = _disease_short(ctx)
 
     fig, axs = plt.subplot_mosaic(
         [["A", "B"], ["C", "D"]], figsize=(11, 9), facecolor=SURFACE)
 
     # A: 2-set Venn exposure vs disease targets
     _venn2(axs["A"], paes, em, [f"PAEs targets\nn={len(paes)}",
-                                f"EM targets\nn={len(em)}"])
+                                f"{dz} targets\nn={len(em)}"])
     axs["A"].set_title("Exposure ∩ disease targets", fontsize=11,
                        color=INK, pad=6)
     _panel(axs["A"], "A")
@@ -238,7 +247,7 @@ def targets_de(ctx: RunContext) -> str:
             ax.annotate(g, (x[g], y[g]), xytext=offsets[i % len(offsets)],
                         textcoords="offset points", fontsize=8.5, color=INK,
                         fontweight="bold" if g in hub else "normal")
-    ax.set_xlabel("log2 fold change (EM vs Control)", color=INK2, fontsize=9)
+    ax.set_xlabel(f"log2 fold change ({dz} vs Control)", color=INK2, fontsize=9)
     ax.set_ylabel("-log10 adjusted P", color=INK2, fontsize=9)
     ax.legend(frameon=False, fontsize=8.5, labelcolor=INK2)
     ax.set_title("Differential expression (training set)", fontsize=11,
@@ -251,7 +260,7 @@ def targets_de(ctx: RunContext) -> str:
     mods = mt.sort_values("trait_cor", ascending=False)
     mat = np.column_stack([mods["trait_cor"], -mods["trait_cor"]])
     im = ax.imshow(mat, cmap=DIV_CMAP, vmin=-1, vmax=1, aspect="auto")
-    ax.set_xticks([0, 1], ["EM", "Control"], fontsize=9, color=INK2)
+    ax.set_xticks([0, 1], [dz, "Control"], fontsize=9, color=INK2)
     ax.set_yticks(range(len(mods)),
                   [f"M{int(m)} (n={int(n)})" for m, n in
                    zip(mods["module"], mods["n_genes"])],
@@ -271,9 +280,9 @@ def targets_de(ctx: RunContext) -> str:
 
     # D: 3-set Venn
     _venn3(axs["D"], (paes, em, frg),
-           [f"PAEs\nn={len(paes)}", f"EM\nn={len(em)}",
+           [f"PAEs\nn={len(paes)}", f"{dz}\nn={len(em)}",
             f"FRGs\nn={len(frg)}"], show_center_genes=True)
-    axs["D"].set_title("PAEs ∩ EM ∩ ferroptosis genes", fontsize=11,
+    axs["D"].set_title(f"PAEs ∩ {dz} ∩ ferroptosis genes", fontsize=11,
                        color=INK, pad=6)
     _panel(axs["D"], "D")
     fig.tight_layout()
@@ -565,7 +574,7 @@ def immune(ctx: RunContext) -> str:
     ax1.scatter(top["median_Control"], ypos, s=50, color=CAT[1], zorder=2,
                 label="Control")
     ax1.scatter(top["median_EM"], ypos, s=50, color=CAT[0], zorder=2,
-                label="EM")
+                label=_disease_short(ctx))
     ax1.set_yticks(ypos)
     ax1.set_yticklabels(
         [f"{ct} *" if p < 0.05 else ct
@@ -1264,8 +1273,8 @@ def stemness_trajectory_real(ctx: RunContext) -> str:
     _style(ax)
     order = np.argsort(ax_df["pseudotime"].to_numpy())
     tvals = ax_df["pseudotime"].to_numpy()[order]
-    switch = [g for g in ("MYH11", "ACTA2", "TAGLN", "FN1", "LUM", "COL1A1")
-              if g in ax_df.columns][:4]
+    switch = [g for g in ("CD36", "SPP1", "TREM2", "GPNMB", "APOE",
+                          "LYVE1", "MRC1") if g in ax_df.columns][:4]
     for gi, g in enumerate(switch):
         vals = ax_df[g].to_numpy()[order]
         sm = pd.Series(vals).rolling(max(20, len(vals) // 25),
@@ -1274,7 +1283,7 @@ def stemness_trajectory_real(ctx: RunContext) -> str:
     ax.legend(frameon=False, fontsize=8, labelcolor=INK2)
     ax.set_xlabel("pseudotime", color=INK2, fontsize=9)
     ax.set_ylabel("expression (smoothed)", color=INK2, fontsize=9)
-    ax.set_title("Phenotype markers along pseudotime", fontsize=11,
+    ax.set_title("Foam/resident markers along pseudotime", fontsize=11,
                  color=INK, pad=6)
     _panel(ax, "E")
 
@@ -1283,8 +1292,8 @@ def stemness_trajectory_real(ctx: RunContext) -> str:
     if key in ax_df.columns:
         xg = ax_df[key].to_numpy()
         txt = []
-        for gi, g in enumerate([m for m in ("FN1", "LUM", "COL1A1")
-                                if m in ax_df.columns][:2]):
+        for gi, g in enumerate([m for m in ("SPP1", "TREM2", "GPNMB")
+                                if m in ax_df.columns and m != key][:2]):
             yg = ax_df[g].to_numpy()
             rho, pv = sps.spearmanr(xg, yg)
             ax.scatter(xg, yg, s=7, c=CAT[gi], lw=0, alpha=0.4, label=g)
@@ -1297,7 +1306,7 @@ def stemness_trajectory_real(ctx: RunContext) -> str:
         ax.legend(frameon=False, fontsize=8, labelcolor=INK2,
                   loc="lower right")
     ax.set_xlabel(f"{key} (log-norm)", color=INK2, fontsize=9)
-    ax.set_ylabel("mesenchymal marker", color=INK2, fontsize=9)
+    ax.set_ylabel("foam-cell marker", color=INK2, fontsize=9)
     ax.set_title(f"{key} vs switching markers", fontsize=11, color=INK, pad=6)
     _panel(ax, "F")
     fig.tight_layout()

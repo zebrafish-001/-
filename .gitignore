@@ -21,3 +21,7 @@ paes_em_ferroptosis/data/results/*
 !paes_em_ferroptosis/data/raw/.gitkeep
 !paes_em_ferroptosis/data/processed/.gitkeep
 !paes_em_ferroptosis/data/results/.gitkeep
+plasticizers_atherosclerosis_ferroptosis.zip
+1_analysis.zip
+2_raw_inputs.zip
+3_processed_data.zip

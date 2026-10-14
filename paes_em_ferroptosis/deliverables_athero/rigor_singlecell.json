@@ -1,0 +1,86 @@
+{
+  "n_patients": 3,
+  "design": "3 patients x (DIS core + HEA adjacent)",
+  "note": "patient is the independent unit; cell-level p-values are pseudoreplicated and are NOT reported",
+  "min_possible_signed_rank_p_at_n3": 0.25,
+  "macrophage_proportion": {
+    "per_patient_delta": [
+      0.3823,
+      0.0599,
+      0.0017
+    ],
+    "n_consistent": 3,
+    "n_patients": 3,
+    "direction": "DIS>HEA",
+    "signed_rank_p": 0.25,
+    "mean_DIS": 0.2621,
+    "mean_HEA": 0.1141
+  },
+  "foam_like_proportion": {
+    "per_patient_delta": [
+      0.6046,
+      0.2249,
+      0.2315
+    ],
+    "n_consistent": 3,
+    "n_patients": 3,
+    "direction": "DIS>HEA",
+    "signed_rank_p": 0.25,
+    "mean_DIS": 0.4632,
+    "mean_HEA": 0.1096
+  },
+  "CD36_whole_tissue": {
+    "per_patient_delta": [
+      0.5388,
+      0.0569,
+      -0.1407
+    ],
+    "n_consistent": 2,
+    "n_patients": 3,
+    "direction": "DIS>HEA",
+    "signed_rank_p": 0.75,
+    "mean_DIS": 0.3076,
+    "mean_HEA": 0.1559
+  },
+  "CD36_within_macrophage": {
+    "per_patient_delta": [
+      0.7389,
+      0.0746,
+      -0.581
+    ],
+    "n_consistent": 2,
+    "n_patients": 3,
+    "direction": "DIS>HEA",
+    "signed_rank_p": 0.75,
+    "mean_DIS": 0.8283,
+    "mean_HEA": 0.7508
+  },
+  "composition_decomposition": {
+    "whole_tissue_fold_DIS_over_HEA": 1.973,
+    "within_macrophage_fold_DIS_over_HEA": 1.103,
+    "macrophage_prop_fold_DIS_over_HEA": 2.297,
+    "interpretation": "most of the whole-tissue CD36 increase is a composition effect (more macrophages), not higher per-macrophage CD36"
+  },
+  "trajectory_rho_per_patient": {
+    "per_patient": {
+      "P1": 0.685,
+      "P2": -0.007,
+      "P3": -0.204
+    },
+    "sign_consistent": false,
+    "note": "pooled rho is driven by the patient contributing the most macrophages; per-patient signs flip, so the trajectory claim does not generalize"
+  },
+  "cd36_celltype_specificity": {
+    "macrophage_is_top_in_samples": 6,
+    "n_samples": 6,
+    "per_sample_fold_vs_2nd": [
+      10.04,
+      2.96,
+      3.37,
+      3.86,
+      5.19,
+      8.73
+    ],
+    "note": "CD36 macrophage-specificity is consistent across all samples; this is the robust headline, not the disease-vs-control magnitude"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "n_sig_kegg_terms": 182,
+  "pan_target_genes_gt25pct": [
+    "AKT1",
+    "IL6",
+    "MAPK1",
+    "MAPK3",
+    "MAPK8",
+    "PIK3CA",
+    "PRKCA",
+    "RELA",
+    "TNF",
+    "TP53"
+  ],
+  "cd36_n_kegg_terms": 11,
+  "cd36_pct_terms": 6.0,
+  "max_pan_gene": "MAPK3",
+  "max_pan_pct": 62.1,
+  "n_specific_genes_after_filter": 30,
+  "note": "CD36 appears in a small fraction of enriched KEGG terms (not a pan-target hub); enrichment breadth is dominated by signalling hubs like MAPK1/3, AKT1"
+}

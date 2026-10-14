@@ -1,0 +1,13 @@
+{
+  "observed_intersection_size": 40,
+  "null_mean": 8.4,
+  "null_95pct": 13.0,
+  "null_max": 18,
+  "enrichment_fold": 4.76,
+  "empirical_p_size": 0.001,
+  "cd36_in_random_set_freq": 0.104,
+  "cd36_observed": true,
+  "n_permutations": 1000,
+  "method": "draw PAEs-sized random gene set from CTD human universe, intersect with disease\u2229FRG background",
+  "note": "PAEs targets are enriched in the atherosclerosis-ferroptosis gene space beyond a size-matched random CTD gene set"
+}

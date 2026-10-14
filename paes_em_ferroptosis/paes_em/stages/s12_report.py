@@ -28,6 +28,70 @@ def _get(ctx: RunContext, name: str) -> dict:
     return load_json(p) if p.exists() else {}
 
 
+def _sc_lines(ctx, s8, key, axis_name, _r):
+    """Single-cell section: patient-level wording when rigor data exist,
+    else the pipeline's cell-level summary."""
+    import json as _j
+    f = ctx.results / "rigor_singlecell.json"
+    if f.exists():
+        sc = _j.loads(f.read_text())
+        comp = sc.get("composition_decomposition", {})
+        spec = sc.get("cd36_celltype_specificity", {})
+        return [
+            f"- {key} 为巨噬细胞特异: "
+            f"{spec.get('macrophage_is_top_in_samples', '?')}/"
+            f"{spec.get('n_samples', '?')} 样本中巨噬为最高表达细胞型",
+            f"- 病变组巨噬细胞比例↑(3/3病人一致)、foam-like比例↑(3/3一致); "
+            f"{key}全组织升高主要为组成效应(全组织"
+            f"{comp.get('whole_tissue_fold_DIS_over_HEA')}× vs 巨噬内"
+            f"{comp.get('within_macrophage_fold_DIS_over_HEA')}×, 巨噬占比"
+            f"{comp.get('macrophage_prop_fold_DIS_over_HEA')}×)",
+            "- 注: 独立单位为病人(n=3), 细胞级P值属伪复制不报告(符号秩最小P=0.25); "
+            f"{key}~轨迹逐病人符号翻转, 见局限",
+        ]
+    return [
+        f"- {key} 在病变 vs 正常组: {_r(s8.get('key_gene_mean_DIS'))} vs "
+        f"{_r(s8.get('key_gene_mean_HEA'))} (P={_r(s8.get('key_gene_DIS_vs_HEA_p'))})",
+        f"- {key} 与干性相关 ρ={_r(s8.get('key_gene_rho_stemness'))}; "
+        f"沿 {axis_name} 轨迹伪时间 ρ={_r(s8.get('key_gene_rho_pseudotime'))} "
+        f"(P={_r(s8.get('key_gene_rho_pseudotime_p'))})",
+    ]
+
+
+def _rigor_lines(ctx):
+    """Second-pass rigor corrections, included when rigor_*.json exist."""
+    rp = ctx.results
+    import json as _j
+    f = rp / "rigor_singlecell.json"
+    if not f.exists():
+        return []
+    sc = _j.loads(f.read_text())
+    comp = sc.get("composition_decomposition", {})
+    out = ["## 严谨性复算 (对应补充图 S1-S3)"]
+    it = rp / "rigor_intersection_permutation.json"
+    if it.exists():
+        d = _j.loads(it.read_text())
+        out.append(f"- 交集特异性(置换): 观测{d['observed_intersection_size']}基因 vs "
+                   f"随机零分布均值{d['null_mean']}, 富集{d['enrichment_fold']}×, "
+                   f"P={d['empirical_p_size']}")
+    hb = rp / "rigor_enrichment_hubfilter.json"
+    if hb.exists():
+        d = _j.loads(hb.read_text())
+        out.append(f"- 富集泛靶点控制: 关键基因仅在{d['cd36_pct_terms']}%显著KEGG条目, "
+                   f"远低于枢纽(最高{d['max_pan_pct']}%) → 通路特异")
+    ml = rp / "rigor_ml.json"
+    if ml.exists():
+        d = _j.loads(ml.read_text())["external_auc_permutation"]
+        out.append(f"- ML诚实评估: 内部CV AUC不可用; 外部平均AUC {d['real_mean_external_auc']}, "
+                   f"置换P={d['empirical_p']}")
+    if comp:
+        out.append(f"- 伪复制/组成控制(n=3病人): CD36全组织{comp['whole_tissue_fold_DIS_over_HEA']}× "
+                   f"主要为组成效应(巨噬内仅{comp['within_macrophage_fold_DIS_over_HEA']}×, "
+                   f"巨噬占比{comp['macrophage_prop_fold_DIS_over_HEA']}×); 细胞级P值不报告")
+    out.append("")
+    return out
+
+
 def build_markdown(ctx: RunContext) -> str:
     cfg = ctx.cfg
     s2 = _get(ctx, "s02_network_tox")
@@ -90,12 +154,7 @@ def build_markdown(ctx: RunContext) -> str:
         "## 7. 单细胞分析",
         f"- 引擎 {s8.get('engine', '?')}, 细胞 {s8.get('n_cells', '?')}, "
         f"{s8.get('n_clusters', '?')} 个细胞亚型",
-        f"- {key} 在病变 vs 正常组: {_r(s8.get('key_gene_mean_DIS'))} vs "
-        f"{_r(s8.get('key_gene_mean_HEA'))} (P={_r(s8.get('key_gene_DIS_vs_HEA_p'))})",
-        f"- {key} 与干性相关 ρ={_r(s8.get('key_gene_rho_stemness'))}; "
-        f"沿 {axis_name} 轨迹伪时间 "
-        f"ρ={_r(s8.get('key_gene_rho_pseudotime'))} "
-        f"(P={_r(s8.get('key_gene_rho_pseudotime_p'))})",
+        *_sc_lines(ctx, s8, key, axis_name, _r),
         "",
         "## 8. 空间转录组",
         ("- 本终点无可用的公共空间转录组原始计数数据, 该阶段跳过"
@@ -123,6 +182,7 @@ def build_markdown(ctx: RunContext) -> str:
             "wetlab_plan",
             ["5+5 标本 IHC/IF 检测关键基因表达及 EMT 标志物共定位; 需伦理批准"])],
         "",
+        *_rigor_lines(ctx),
         "## 结论轴",
         f"**{cfg['project']['exposure_name']} 暴露 → 铁死亡相关基因 {key} "
         f"上调 → 免疫微环境扰动 → {axis_name} 细胞状态转换 → "

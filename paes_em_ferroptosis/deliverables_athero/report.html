@@ -27,8 +27,9 @@
 
 ## 7. 单细胞分析
 - 引擎 scanpy, 细胞 49562, 20 个细胞亚型
-- CD36 在病变 vs 正常组: 0.28 vs 0.14 (P=0.00e+00)
-- CD36 与干性相关 ρ=0.354; 沿 Resident-like → Foam-like 轨迹伪时间 ρ=0.445 (P=0.00e+00)
+- CD36 为巨噬细胞特异: 6/6 样本中巨噬为最高表达细胞型
+- 病变组巨噬细胞比例↑(3/3病人一致)、foam-like比例↑(3/3一致); CD36全组织升高主要为组成效应(全组织1.973× vs 巨噬内1.103×, 巨噬占比2.297×)
+- 注: 独立单位为病人(n=3), 细胞级P值属伪复制不报告(符号秩最小P=0.25); CD36~轨迹逐病人符号翻转, 见局限
 
 ## 8. 空间转录组
 - 本终点无可用的公共空间转录组原始计数数据, 该阶段跳过
@@ -49,6 +50,12 @@
 - readouts: lipid ROS (C11-BODIPY), MDA/GSH, Fe2+, WB of GPX4/ACSL4/CD36
 - Optional in vivo: high-fat zebrafish or ApoE-/- mice under plasticizer
 - exposure; vascular lipid deposition + ferroptosis markers
+
+## 严谨性复算 (对应补充图 S1-S3)
+- 交集特异性(置换): 观测40基因 vs 随机零分布均值8.4, 富集4.76×, P=0.001
+- 富集泛靶点控制: 关键基因仅在6.0%显著KEGG条目, 远低于枢纽(最高62.1%) → 通路特异
+- ML诚实评估: 内部CV AUC不可用; 外部平均AUC 0.767, 置换P=0.0149
+- 伪复制/组成控制(n=3病人): CD36全组织1.973× 主要为组成效应(巨噬内仅1.103×, 巨噬占比2.297×); 细胞级P值不报告
 
 ## 结论轴
 **Plasticizers (7 PAEs + 5 alternatives) 暴露 → 铁死亡相关基因 CD36 上调 → 免疫微环境扰动 → Resident-like → Foam-like 细胞状态转换 → Atherosclerosis (AS)**

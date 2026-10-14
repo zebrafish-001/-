@@ -1,0 +1,30 @@
+{
+  "GSE46798_paraquat_vs_vehicle_DAneurons": {
+    "design": {
+      "Veh": 6,
+      "PQ": 6
+    },
+    "n_degs_adj": 3,
+    "n_degs_nominal": 1478,
+    "ferroptosis": {
+      "n": 839,
+      "median_absT_set": 0.701,
+      "median_absT_bg": 0.664,
+      "mwu_absT_greater_p": 0.0933,
+      "deg_prop_set": 0.037,
+      "deg_prop_bg": 0.039,
+      "deg_or": 0.937,
+      "deg_fisher_p": 0.899
+    },
+    "oxidative_stress": {
+      "n": 244,
+      "median_absT_set": 0.611,
+      "median_absT_bg": 0.676,
+      "mwu_absT_greater_p": 0.782,
+      "deg_prop_set": 0.049,
+      "deg_prop_bg": 0.053,
+      "deg_or": 0.919,
+      "deg_fisher_p": 1.0
+    }
+  }
+}

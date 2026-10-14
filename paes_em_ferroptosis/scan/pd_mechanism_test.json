@@ -1,0 +1,58 @@
+{
+  "GSE7621": {
+    "n_samples": 25,
+    "groups": {
+      "PD": 16,
+      "Control": 9
+    },
+    "n_degs": 2,
+    "ferroptosis": {
+      "n_in_set": 830,
+      "median_t_set": 0.179,
+      "median_t_bg": -0.039,
+      "mwu_p": 0.0137,
+      "deg_prop_set": 0.0,
+      "deg_prop_bg": 0.0,
+      "deg_or": NaN,
+      "deg_fisher_p": 1.0
+    },
+    "oxidative_stress": {
+      "n_in_set": 244,
+      "median_t_set": 0.213,
+      "median_t_bg": -0.066,
+      "mwu_p": 0.0217,
+      "deg_prop_set": 0.0,
+      "deg_prop_bg": 0.0,
+      "deg_or": NaN,
+      "deg_fisher_p": 1.0
+    }
+  },
+  "GSE20292": {
+    "n_samples": 29,
+    "groups": {
+      "Control": 18,
+      "PD": 11
+    },
+    "n_degs": 0,
+    "ferroptosis": {
+      "n_in_set": 700,
+      "median_t_set": -1.444,
+      "median_t_bg": -1.447,
+      "mwu_p": 0.72,
+      "deg_prop_set": 0.0,
+      "deg_prop_bg": 0.0,
+      "deg_or": NaN,
+      "deg_fisher_p": 1.0
+    },
+    "oxidative_stress": {
+      "n_in_set": 214,
+      "median_t_set": -1.444,
+      "median_t_bg": -1.442,
+      "mwu_p": 0.9,
+      "deg_prop_set": 0.0,
+      "deg_prop_bg": 0.0,
+      "deg_or": NaN,
+      "deg_fisher_p": 1.0
+    }
+  }
+}

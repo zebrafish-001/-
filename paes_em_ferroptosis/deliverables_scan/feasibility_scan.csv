@@ -1,0 +1,14 @@
+exposure,disease,mechanism,n_exposure,n_disease,n_mech,intersection,null_mean,fold,perm_p
+Chlorpyrifos,Parkinson disease,oxidative_stress,199,1269,262,14,0.4,34.91,0.001
+Paraquat,Parkinson disease,oxidative_stress,813,1269,262,29,1.72,16.87,0.001
+Paraquat,Parkinson disease,ferroptosis,813,1269,957,43,4.0,10.76,0.001
+Benzene,acute myeloid leukemia,apoptosis,694,1208,1179,55,5.9,9.32,0.001
+PFOA,non-alcoholic fatty liver disease,ferroptosis,2484,415,957,41,6.58,6.23,0.001
+Rotenone,Parkinson disease,mito_dysfunction,3033,1269,50,6,1.01,5.96,0.001
+Cadmium,osteoporosis,ferroptosis,4752,134,957,9,1.64,5.5,0.001
+Rotenone,Parkinson disease,ferroptosis,3033,1269,957,58,14.75,3.93,0.001
+DEHP(baseline),atherosclerosis,ferroptosis,2423,616,957,17,4.83,3.52,0.001
+Cadmium,chronic kidney disease,ferroptosis,4752,708,957,37,11.23,3.3,0.001
+Arsenic,urinary bladder cancer,oxidative_stress,7776,881,262,27,9.43,2.86,0.001
+Arsenic,hepatocellular carcinoma,ferroptosis,7776,2087,957,255,106.78,2.39,0.001
+Bisphenol A,polycystic ovary syndrome,oxidative_stress,11658,278,262,11,5.34,2.06,0.003

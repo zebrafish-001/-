@@ -1,0 +1,39 @@
+{
+  "GSE9476": {
+    "groups": {
+      "Control": 38,
+      "AML": 26
+    },
+    "n_degs": 1111,
+    "apoptosis": {
+      "n": 959,
+      "median_t_set": 0.487,
+      "median_t_bg": 0.58,
+      "mwu_p": 0.398,
+      "deg_prop_set": 0.116,
+      "deg_prop_bg": 0.105,
+      "deg_or": 1.112,
+      "deg_fisher_p": 0.512
+    },
+    "oxidative_stress": {
+      "n": 214,
+      "median_t_set": 0.301,
+      "median_t_bg": 0.575,
+      "mwu_p": 0.0609,
+      "deg_prop_set": 0.131,
+      "deg_prop_bg": 0.065,
+      "deg_or": 2.151,
+      "deg_fisher_p": 0.0336
+    },
+    "ferroptosis": {
+      "n": 700,
+      "median_t_set": 0.505,
+      "median_t_bg": 0.559,
+      "mwu_p": 0.829,
+      "deg_prop_set": 0.116,
+      "deg_prop_bg": 0.083,
+      "deg_or": 1.448,
+      "deg_fisher_p": 0.049
+    }
+  }
+}

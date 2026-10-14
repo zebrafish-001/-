@@ -1,3 +1,7 @@
 athero/raw/
 athero/processed/
 athero/results/
+scan/pd_geo/
+scan/aml_geo/
+scan/pq_geo/
+scan/genesets/

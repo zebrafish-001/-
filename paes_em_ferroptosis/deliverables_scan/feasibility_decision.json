@@ -1,0 +1,101 @@
+{
+  "summary": "Across 5 pollutant-disease pairs and 4 datasets: intersection specificity is easy (fold 3.5-35x, p=0.001), but the mechanism gene set almost never shows DE enrichment above an expression-matched background. The gap is where network-toxicology papers overclaim.",
+  "specificity_top": [
+    {
+      "exposure": "Chlorpyrifos",
+      "disease": "Parkinson disease",
+      "mechanism": "oxidative_stress",
+      "n_exposure": 199,
+      "n_disease": 1269,
+      "n_mech": 262,
+      "intersection": 14,
+      "null_mean": 0.4,
+      "fold": 34.91,
+      "perm_p": 0.001
+    },
+    {
+      "exposure": "Paraquat",
+      "disease": "Parkinson disease",
+      "mechanism": "oxidative_stress",
+      "n_exposure": 813,
+      "n_disease": 1269,
+      "n_mech": 262,
+      "intersection": 29,
+      "null_mean": 1.72,
+      "fold": 16.87,
+      "perm_p": 0.001
+    },
+    {
+      "exposure": "Paraquat",
+      "disease": "Parkinson disease",
+      "mechanism": "ferroptosis",
+      "n_exposure": 813,
+      "n_disease": 1269,
+      "n_mech": 957,
+      "intersection": 43,
+      "null_mean": 4.0,
+      "fold": 10.76,
+      "perm_p": 0.001
+    },
+    {
+      "exposure": "Benzene",
+      "disease": "acute myeloid leukemia",
+      "mechanism": "apoptosis",
+      "n_exposure": 694,
+      "n_disease": 1208,
+      "n_mech": 1179,
+      "intersection": 55,
+      "null_mean": 5.9,
+      "fold": 9.32,
+      "perm_p": 0.001
+    },
+    {
+      "exposure": "PFOA",
+      "disease": "non-alcoholic fatty liver disease",
+      "mechanism": "ferroptosis",
+      "n_exposure": 2484,
+      "n_disease": 415,
+      "n_mech": 957,
+      "intersection": 41,
+      "null_mean": 6.58,
+      "fold": 6.23,
+      "perm_p": 0.001
+    },
+    {
+      "exposure": "Rotenone",
+      "disease": "Parkinson disease",
+      "mechanism": "mito_dysfunction",
+      "n_exposure": 3033,
+      "n_disease": 1269,
+      "n_mech": 50,
+      "intersection": 6,
+      "null_mean": 1.01,
+      "fold": 5.96,
+      "perm_p": 0.001
+    }
+  ],
+  "mechanism_reality": {
+    "Paraquat_PD_bulk_GSE7621": {
+      "ferroptosis": 0.0137,
+      "oxidative_stress": 0.0217
+    },
+    "Paraquat_PD_bulk_GSE20292": {
+      "ferroptosis": 0.72,
+      "oxidative_stress": 0.9
+    },
+    "Benzene_AML_GSE9476_fisher_p": {
+      "apoptosis": 0.512,
+      "oxidative_stress": 0.0336,
+      "ferroptosis": 0.049
+    },
+    "Paraquat_DAneurons_GSE46798": {
+      "ferroptosis": 0.0933,
+      "oxidative_stress": 0.782
+    }
+  },
+  "verdict": "No tested pair passes BOTH specificity and matched-background mechanism-reality cleanly in multiple cohorts. The ferroptosis/oxidative/apoptosis mechanism-gene-set angle is not defensible on bioinformatics alone.",
+  "recommendations": [
+    "A (data ready): methodological/cautionary paper - specificity does not imply mechanism dysregulation; empirical audit + matched-vs-whole-transcriptome confounding + docking decoy failure.",
+    "B (positive paper): pivot from disease-association to direct exposure dose-response with a NARROW directly-perturbed target process (e.g. metal-response genes for cadmium) AND real wet-lab dose-response from your lab."
+  ]
+}

@@ -123,16 +123,32 @@ def main(sc_dir: Path, raw: Path, results: Path, hub: str):
     stem = (stem - stem.min()) / (stem.max() - stem.min() + 1e-12)
     ad.obs["stemness"] = stem
 
-    # ---- SMC phenotype-switching pseudotime ----
-    axis_mask = ad.obs.annotated.isin(AXIS).to_numpy()
+    # ---- macrophage foam-cell differentiation pseudotime ----
+    # CD36 is a macrophage/foam-cell scavenger receptor, so the relevant
+    # trajectory in atherosclerosis is the resident/monocyte-like ->
+    # lipid-laden foam-cell transition within the macrophage compartment.
+    FOAM = ["CD36", "TREM2", "SPP1", "GPNMB", "FABP5", "CTSD", "APOE"]
+    RESIDENT = ["LYVE1", "F13A1", "FOLR2", "SELENOP", "MRC1"]
+    axis_mask = (ad.obs.annotated == "Macrophage").to_numpy()
     sub = ad[axis_mask].copy()
-    pt = sub.obsm["X_pca"][:, 0].astype(float)
-    con = (sub.obs.annotated == "SMC_contractile").to_numpy()
-    if pt[con].mean() > pt[~con].mean():
+    for nm, genes in [("foam_score", FOAM), ("resident_score", RESIDENT)]:
+        gi = [g for g in genes if g in ad.raw.var_names]
+        sc.tl.score_genes(sub, gi, score_name=nm)
+    sub.obs["mac_state"] = np.where(
+        sub.obs["foam_score"] > sub.obs["foam_score"].median(),
+        "Foam-like", "Resident-like")
+    # pseudotime along the foam-cell axis (PC most correlated with foam score)
+    pcs = sub.obsm["X_pca"]
+    fc = sub.obs["foam_score"].to_numpy()
+    corrs = [abs(np.corrcoef(pcs[:, i], fc)[0, 1]) for i in range(pcs.shape[1])]
+    axpc = int(np.argmax(corrs))
+    pt = pcs[:, axpc].astype(float)
+    if np.corrcoef(pt, fc)[0, 1] < 0:
         pt = -pt
     pt = (pt - pt.min()) / (pt.max() - pt.min() + 1e-12)
     sub.obs["pseudotime"] = pt
-    sub.obs[["pseudotime"]].to_csv(results / "s08_pseudotime.csv")
+    sub.obs[["pseudotime", "mac_state", "foam_score",
+             "resident_score"]].to_csv(results / "s08_pseudotime.csv")
 
     # ---- hub-gene statistics ----
     def gvec(adata, g):
@@ -155,6 +171,10 @@ def main(sc_dir: Path, raw: Path, results: Path, hub: str):
         rho_s, p_s = spearmanr(kg, ad.obs["stemness"])
         out["key_gene_rho_stemness"] = float(rho_s)
         kg_axis = gvec(sub, hub)
+        out["foam_vs_resident_hub_p"] = float(mannwhitneyu(
+            kg_axis[(sub.obs.mac_state == "Foam-like").to_numpy()],
+            kg_axis[(sub.obs.mac_state == "Resident-like").to_numpy()],
+            alternative="greater")[1])
         rho_pt, p_pt = spearmanr(kg_axis, pt)
         out["key_gene_rho_pseudotime"] = float(rho_pt)
         out["key_gene_rho_pseudotime_p"] = float(p_pt)
@@ -197,12 +217,12 @@ def main(sc_dir: Path, raw: Path, results: Path, hub: str):
                               index=False)
 
     # axis cells: embedding + pseudotime + switching markers
-    axis_genes = [g for g in ("MYH11", "ACTA2", "TAGLN", "FN1", "LUM",
-                              "COL1A1", hub) if g in sub.raw.var_names]
+    axis_genes = [g for g in ("CD36", "TREM2", "SPP1", "GPNMB", "APOE",
+                              "LYVE1", "MRC1", hub) if g in sub.raw.var_names]
     ax_df = pd.DataFrame({
         "cell": sub.obs_names,
         "pc1": sub.obsm["X_pca"][:, 0], "pc2": sub.obsm["X_pca"][:, 1],
-        "annotated": sub.obs.annotated.to_numpy(),
+        "annotated": sub.obs["mac_state"].to_numpy(),
         "pseudotime": pt,
     })
     for g in axis_genes:
@@ -219,7 +239,7 @@ def main(sc_dir: Path, raw: Path, results: Path, hub: str):
 
     # ---- export subset for the virtual-knockout stage ----
     # target cell type: the modulated SMC/fibromyocyte population
-    tgt = "Fibromyocyte"
+    tgt = "Macrophage"
     cells = ad.obs_names[(ad.obs.annotated == tgt).to_numpy()]
     rng = np.random.default_rng(0)
     if len(cells) > 1500:

@@ -112,8 +112,9 @@ def build_markdown(ctx: RunContext) -> str:
             ["5+5 标本 IHC/IF 检测关键基因表达及 EMT 标志物共定位; 需伦理批准"])],
         "",
         "## 结论轴",
-        f"**PAEs 暴露 → 铁死亡相关基因 {key} 失调 → 免疫微环境扰动 → "
-        "上皮-间质转化 (Lumenal+Ciliated → Fibroblasts) → 子宫内膜异位症**",
+        f"**{cfg['project']['exposure_name']} 暴露 → 铁死亡相关基因 {key} "
+        f"失调 → 免疫微环境扰动 → 关键细胞状态转换 → "
+        f"{cfg['project']['disease_name']}**",
     ]
     return "\n".join(lines)
 

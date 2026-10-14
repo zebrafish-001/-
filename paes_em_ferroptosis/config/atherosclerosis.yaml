@@ -93,8 +93,8 @@ immune:
   correlation: spearman
 
 single_cell:
-  axis_types: ["SMC_contractile", "Fibromyocyte"]
-  axis_origin: ["SMC_contractile"]
+  axis_types: ["Resident-like", "Foam-like"]
+  axis_origin: ["Resident-like"]
   engine: python                   # scanpy-based real processing
   n_cell_types: 7
   stemness: cytotrace_lite

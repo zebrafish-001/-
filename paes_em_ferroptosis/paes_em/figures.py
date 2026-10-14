@@ -157,7 +157,7 @@ def workflow(ctx: RunContext) -> str:
                        "GO / KEGG\nenrichment",
                        "12-algorithm ML\n→ key FRG"]),
         ("Mechanism", ["ssGSEA immune\ninfiltration",
-                       "scRNA-seq: stemness\n+ pseudotime (EMT)",
+                       "scRNA-seq: stemness\n+ state trajectory",
                        "Spatial transcriptome\ndeconvolution",
                        "Virtual knockout\n(GRN perturbation)"]),
         ("Validation", ["Molecular docking\nPAEs vs key protein",
@@ -188,8 +188,10 @@ def workflow(ctx: RunContext) -> str:
             ax.add_patch(FancyArrow(5.25, y - 0.18, 0, -0.26, width=0.012,
                                     head_width=0.12, head_length=0.1,
                                     color=INK2))
-    ax.set_title("PAEs → Ferroptosis → EMT → Endometriosis analysis "
-                 "pipeline", fontsize=13, color=INK, pad=12)
+    exp = ctx.cfg["project"]["exposure_name"].split("(")[0].strip()
+    dis = ctx.cfg["project"]["disease_name"].split("(")[0].strip()
+    ax.set_title(f"{exp} → Ferroptosis → {dis} analysis pipeline",
+                 fontsize=13, color=INK, pad=12)
     return _save(fig, ctx, "fig01_workflow.png")
 
 

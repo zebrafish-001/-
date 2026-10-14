@@ -12,3 +12,12 @@ demo/
 *.mp4
 *.avi
 *.mov
+
+# paes_em_ferroptosis
+.venv-paes/
+paes_em_ferroptosis/data/raw/*
+paes_em_ferroptosis/data/processed/*
+paes_em_ferroptosis/data/results/*
+!paes_em_ferroptosis/data/raw/.gitkeep
+!paes_em_ferroptosis/data/processed/.gitkeep
+!paes_em_ferroptosis/data/results/.gitkeep

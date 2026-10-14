@@ -1,0 +1,160 @@
+# ============================================================================
+# PAEs -> Ferroptosis -> EMT -> Endometriosis analysis pipeline configuration
+#
+# Reproduces the computational workflow of:
+#   Wang H, Wu F, Li Y, et al. "Mechanism study of phthalate exposure
+#   promoting endometriosis: Based on the ferroptosis perspective."
+#   J Hazard Mater. 2026;507:141670. doi:10.1016/j.jhazmat.2026.141670
+#
+# All thresholds below default to the values described in that paper.
+# Edit this file (or pass --config) to adapt the pipeline to other
+# exposures / diseases / gene-set contexts.
+# ============================================================================
+
+project:
+  name: paes-em-ferroptosis
+  exposure_name: "Phthalates (PAEs)"
+  disease_name: "Endometriosis (EM)"
+  context_geneset_name: "Ferroptosis-related genes (FRGs)"
+  key_gene_expected: ARF6          # used only for demo assertions / reporting
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  results: data/results
+
+# ---------------------------------------------------------------------------
+# Stage 1 - transcriptome datasets (bulk RNA, GEO)
+# ---------------------------------------------------------------------------
+datasets:
+  training:
+    - accession: GSE51981
+      platform: GPL570
+      role: train          # DE + WGCNA + ML discovery
+  validation:
+    - accession: GSE7305
+      platform: GPL570
+      role: validate
+    - accession: GSE7846
+      platform: GPL96
+      role: validate
+  single_cell:
+    accession: local_or_GEO       # 6 scRNA-seq samples in the paper
+    n_samples: 6
+  spatial:
+    accession: local_or_GEO
+
+# ---------------------------------------------------------------------------
+# Stage 2 - network toxicology sources
+# ---------------------------------------------------------------------------
+network_toxicology:
+  compounds:                       # 7 PAEs analysed in the paper
+    - {name: DEHP, cid: 8343}      # di(2-ethylhexyl) phthalate
+    - {name: DBP,  cid: 3026}      # dibutyl phthalate
+    - {name: BBP,  cid: 2347}      # benzyl butyl phthalate
+    - {name: DEP,  cid: 6781}      # diethyl phthalate
+    - {name: DMP,  cid: 8554}      # dimethyl phthalate
+    - {name: DINP, cid: 590836}    # diisononyl phthalate
+    - {name: DIBP, cid: 6782}      # diisobutyl phthalate
+  compound_target_sources: [ChEMBL, CTD, PharmMapper, SwissTargetPrediction]
+  disease_target_sources: [GeneCards, TTD, DrugBank, OMIM]
+  context_geneset:
+    source: FerrDb
+    expected_size: 471             # driver + suppressor + marker, deduplicated
+  id_normalization: UniProt        # map all symbols via UniProt
+
+# ---------------------------------------------------------------------------
+# Stage 3 - differential expression (limma-style moderated t-test)
+# ---------------------------------------------------------------------------
+diffexp:
+  method: limma_moderated_t        # Python reimplementation; R hook available
+  logfc_threshold: 0.5
+  pvalue_threshold: 0.05
+  adjust: BH
+
+# ---------------------------------------------------------------------------
+# Stage 4 - WGCNA
+# ---------------------------------------------------------------------------
+wgcna:
+  engine: auto                     # auto -> R WGCNA if Rscript present, else python-lite
+  top_mad_genes: 5000
+  soft_power: null                 # null -> pick first power reaching r2 target
+  scale_free_r2_target: 0.85
+  min_module_size: 30
+  merge_cut_height: 0.25
+  trait: disease_status
+
+# ---------------------------------------------------------------------------
+# Stage 5 - functional enrichment
+# ---------------------------------------------------------------------------
+enrichment:
+  method: hypergeometric_ora       # clusterProfiler hook available via R/
+  databases: [GO_BP, GO_CC, GO_MF, KEGG]
+  pvalue_threshold: 0.05
+  adjust: BH
+
+# ---------------------------------------------------------------------------
+# Stage 6 - machine learning hub-gene selection
+# ---------------------------------------------------------------------------
+machine_learning:
+  cv_folds: 10
+  algorithms: [lasso, random_forest, xgboost, svm_rfe, elastic_net,
+               ridge, gbm, extra_trees, knn, naive_bayes, lda, mlp]
+  # the paper screens 12 algorithms / 82 combinations then keeps:
+  final_selectors: [random_forest, lasso, xgboost]
+  metric: auc
+  n_top_features: 20
+  consensus: intersection          # hub gene = intersection of final_selectors
+
+# ---------------------------------------------------------------------------
+# Stage 7 - immune infiltration
+# ---------------------------------------------------------------------------
+immune:
+  method: ssgsea
+  signature_set: 28_cell_types     # Charoentong et al. 28 immune signatures
+  group_test: wilcoxon
+  correlation: spearman
+
+# ---------------------------------------------------------------------------
+# Stage 8 - single-cell analysis
+# ---------------------------------------------------------------------------
+single_cell:
+  engine: auto                     # scanpy if installed, R/Seurat hook, else lite
+  n_cell_types: 7
+  stemness: cytotrace              # CytoTRACE (R hook) or lite correlation proxy
+  trajectory: monocle2             # R hook; lite PCA-pseudotime fallback
+  qc: {min_genes: 200, max_mito_pct: 20}
+
+# ---------------------------------------------------------------------------
+# Stage 9 - spatial transcriptomics
+# ---------------------------------------------------------------------------
+spatial:
+  normalization: sctransform       # R hook
+  deconvolution: rctd              # R hook
+  feature_plots: [ARF6]
+
+# ---------------------------------------------------------------------------
+# Stage 10 - virtual knockout
+# ---------------------------------------------------------------------------
+virtual_knockout:
+  method: sctenifoldknk            # R hook; lite GRN-perturbation fallback
+  target_cell_type: Fibroblasts
+  knockout_gene: from_ml           # use the ML hub gene
+  downstream_geneset: FRGs
+
+# ---------------------------------------------------------------------------
+# Stage 11 - molecular docking
+# ---------------------------------------------------------------------------
+docking:
+  engine: autodock_vina
+  receptor_pdb: 2A5D               # ARF6 structure used in the paper
+  affinity_threshold_kcal_mol: -5.0
+  exhaustiveness: 8
+  visualization: pymol
+
+# ---------------------------------------------------------------------------
+# Stage 12 - report
+# ---------------------------------------------------------------------------
+report:
+  formats: [markdown, html]
+  language: zh                     # zh | en

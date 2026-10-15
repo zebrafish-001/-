@@ -1,0 +1,88 @@
+{
+  "researcher": {
+    "field": "环境毒理学",
+    "model_systems": ["zebrafish larvae", "adult zebrafish"],
+    "focus": [
+      "新污染物（NBFR 新型溴代阻燃剂、苯并噻唑类如 136-BCZ 等）毒性机制",
+      "RNA-seq 驱动的机制与靶点发现",
+      "网络毒理学 / AOP（有害结局通路）",
+      "干湿实验结合（转录组 + qPCR/行为/心功能/组织病理验证）"
+    ],
+    "capabilities": {
+      "wet": [
+        "斑马鱼暴露实验（急性/慢性/剂量-响应）",
+        "qPCR（Livak，多内参）",
+        "行为学（明暗场、旷场、novel tank，自研追踪软件 zfbehavior）",
+        "多普勒心脏功能（Vevo）",
+        "组织病理与定量"
+      ],
+      "dry": [
+        "bulk RNA-seq 全流程（DESeq2/富集/GSEA）",
+        "网络传播排序（STRING PPI + RWR）、虚拟敲除、TF 主调控（decoupler/CollecTRI）",
+        "斑马鱼→人同源映射 + 可成药性注释（Open Targets/ChEMBL）",
+        "分子对接 / 网络毒理 / 毒性结构预警",
+        "公共单细胞数据复用（GEO/CELLxGENE，外部验证）",
+        "机器学习特征筛选（小样本诚实评估协议）"
+      ],
+      "missing_but_outsourceable": [
+        "自产单细胞/空间转录组测序",
+        "代谢组/脂质组/蛋白组",
+        "16S/宏基因组测序",
+        "透射电镜、特殊染色"
+      ]
+    },
+    "target_journals": [
+      "Environmental Science & Technology",
+      "Journal of Hazardous Materials",
+      "Water Research",
+      "Environment International",
+      "Environmental Health Perspectives",
+      "ES&T Letters",
+      "Chemosphere",
+      "Ecotoxicology and Environmental Safety"
+    ]
+  },
+  "env_corpus": {
+    "journals_pubmed": [
+      "Environ Sci Technol",
+      "J Hazard Mater",
+      "Water Res",
+      "Environ Int",
+      "Environ Health Perspect",
+      "Environ Sci Technol Lett",
+      "Chemosphere",
+      "Ecotoxicol Environ Saf",
+      "Sci Total Environ",
+      "Environ Pollut",
+      "Aquat Toxicol"
+    ],
+    "topic_filter": "(pollutant OR pollution OR \"environmental exposure\" OR ecotoxicology OR \"environmental contaminant\" OR microplastic OR \"flame retardant\" OR pesticide OR PFAS)"
+  },
+  "source_fields": {
+    "medicine_pharmacology": {
+      "journals_pubmed": [
+        "Nature", "Science", "Cell", "N Engl J Med", "Nat Med",
+        "Sci Transl Med", "Cell Metab", "Immunity", "Nat Rev Drug Discov",
+        "Pharmacol Rev", "Trends Pharmacol Sci", "Annu Rev Pharmacol Toxicol"
+      ]
+    },
+    "methods_technology": {
+      "journals_pubmed": [
+        "Nat Methods", "Nat Biotechnol", "Nat Protoc", "Genome Biol",
+        "Nat Mach Intell", "Cell Syst"
+      ]
+    },
+    "distant_fields": {
+      "journals_pubmed": [
+        "Nat Neurosci", "Neuron", "Nat Immunol", "Nat Aging",
+        "Cell Host Microbe", "Nat Metab", "Trends Cell Biol",
+        "Trends Immunol", "Trends Neurosci"
+      ]
+    }
+  },
+  "scan": {
+    "years_back": 5,
+    "golden_window_max_env_hits": 5,
+    "crowded_min_env_hits": 30
+  }
+}

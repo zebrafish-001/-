@@ -1,0 +1,213 @@
+<title>范式迁移雷达</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* 布局：顶部雷达标头 + 统计条 → 过滤栏 → 自适应卡片网格，卡片可展开精研迁移卡 */
+:root{
+  --bg:#f5f7f6; --card:#ffffff; --fg:#1c2b2c; --muted:#5d6f6f; --line:#dde5e3;
+  --accent:#176a6d; --accent-soft:#e3efee;
+  --st-blank:#54718f; --st-golden:#a8761c; --st-emerging:#2e7d4f; --st-crowded:#b0403a;
+  --mark-int:#176a6d; --mark-act:#7a4a9e; --mark-drop:#8a8f8e;
+  --serif:"Noto Serif SC",serif; --sans:"Noto Sans SC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1818; --card:#172221; --fg:#dde8e6; --muted:#93a5a3; --line:#263433;
+  --accent:#53b5b1; --accent-soft:#1c2f2e;
+  --st-blank:#8aa7c4; --st-golden:#e0ab45; --st-emerging:#5cb886; --st-crowded:#e0796f;
+  --mark-int:#53b5b1; --mark-act:#b08ad4; --mark-drop:#7d8584;
+  color-scheme: dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0f1818; --card:#172221; --fg:#dde8e6; --muted:#93a5a3; --line:#263433;
+  --accent:#53b5b1; --accent-soft:#1c2f2e;
+  --st-blank:#8aa7c4; --st-golden:#e0ab45; --st-emerging:#5cb886; --st-crowded:#e0796f;
+  --mark-int:#53b5b1; --mark-act:#b08ad4; --mark-drop:#7d8584;
+  color-scheme: dark;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 48px;}
+.wrap{max-width:1180px;margin:0 auto;}
+header{padding:28px 0 14px;border-bottom:1px solid var(--line);}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(1.5rem,3.5vw,2.1rem);margin:0;text-wrap:balance;}
+h1 .en{display:block;font-family:var(--sans);font-weight:400;font-size:.78rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:4px;}
+.subtitle{color:var(--muted);font-size:.9rem;margin:8px 0 0;max-width:68ch;}
+.statrow{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:.82rem;color:var(--muted);}
+.stat b{display:block;font-size:1.25rem;color:var(--fg);font-variant-numeric:tabular-nums;font-family:var(--serif);}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px 0;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;border-bottom:1px solid var(--line);}
+.filters .lbl{font-size:.78rem;color:var(--muted);letter-spacing:.08em;}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:4px 13px;font-size:.82rem;cursor:pointer;font-family:var(--sans);}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:500;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;margin-top:18px;}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:9px;min-width:0;}
+.pcard.deep{border-left:3px solid var(--accent);}
+.ptop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.pname{font-family:var(--serif);font-weight:600;font-size:1.08rem;margin:0;}
+.pname .en{display:block;font-family:var(--sans);font-weight:400;font-size:.75rem;color:var(--muted);}
+.gap{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1;text-align:right;}
+.gap small{display:block;font-family:var(--sans);font-size:.62rem;color:var(--muted);font-weight:400;letter-spacing:.1em;}
+.badges{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.pill{font-size:.72rem;padding:2px 9px;border-radius:999px;border:1px solid currentColor;line-height:1.5;}
+.pill.blank{color:var(--st-blank);} .pill.golden{color:var(--st-golden);}
+.pill.emerging{color:var(--st-emerging);} .pill.crowded{color:var(--st-crowded);}
+.origin{font-size:.72rem;color:var(--muted);}
+.oneline{font-size:.86rem;margin:0;}
+.hint{font-size:.82rem;color:var(--muted);margin:0;border-left:2px solid var(--accent-soft);padding-left:9px;}
+.sparkrow{display:flex;align-items:center;gap:10px;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+.sparkrow svg{flex:none;}
+.marks{display:flex;gap:6px;margin-top:auto;padding-top:6px;border-top:1px dashed var(--line);flex-wrap:wrap;}
+.mbtn{border:1px solid var(--line);background:none;color:var(--muted);border-radius:6px;padding:3px 11px;font-size:.78rem;cursor:pointer;font-family:var(--sans);}
+.mbtn.on-interested{background:var(--mark-int);border-color:var(--mark-int);color:var(--bg);}
+.mbtn.on-active{background:var(--mark-act);border-color:var(--mark-act);color:var(--bg);}
+.mbtn.on-dropped{background:var(--mark-drop);border-color:var(--mark-drop);color:var(--bg);}
+.expander{border:none;background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:4px 11px;font-size:.78rem;cursor:pointer;font-family:var(--sans);font-weight:500;}
+.deepbody{border-top:1px solid var(--line);padding-top:10px;font-size:.84rem;display:grid;gap:8px;}
+.deepbody h4{margin:0;font-size:.74rem;color:var(--accent);letter-spacing:.1em;font-weight:700;}
+.deepbody p{margin:0;white-space:pre-wrap;}
+.pioneers{font-size:.78rem;color:var(--muted);}
+.pioneers a{color:var(--accent);text-decoration:none;}
+.pioneers a:hover{text-decoration:underline;}
+.pioneers li{margin:3px 0;}
+.empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--muted);}
+.empty h2{font-family:var(--serif);color:var(--fg);font-weight:600;}
+.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);
+  background:var(--fg);color:var(--bg);padding:8px 18px;border-radius:8px;font-size:.84rem;opacity:0;transition:opacity .25s;pointer-events:none;max-width:88vw;}
+.toast.show{opacity:1;}
+button:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){ .toast{transition:none;} }
+@media (max-width:460px){ .grid{grid-template-columns:1fr;} }
+</style>
+
+<div class="wrap">
+<header>
+  <h1>范式迁移雷达<span class="en">Paradigm Transfer Radar · 医学/药理 → 环境毒理</span></h1>
+  <p class="subtitle">缺口分 = 源学科热度 × 增速 × 环境语料稀缺度。每周一自动扫描更新；点卡片上的标记按钮（关注 / 立项 / 放弃），下一轮扫描会读取你的标记来调整口味。</p>
+  <div class="statrow" id="stats"></div>
+</header>
+
+<div class="filters" id="filters">
+  <span class="lbl">占坑状态</span>
+  <button class="chip" data-f="status" data-v="all" aria-pressed="true">全部</button>
+  <button class="chip" data-f="status" data-v="blank" aria-pressed="false">空白</button>
+  <button class="chip" data-f="status" data-v="golden" aria-pressed="false">黄金窗口</button>
+  <button class="chip" data-f="status" data-v="emerging" aria-pressed="false">起步期</button>
+  <button class="chip" data-f="status" data-v="crowded" aria-pressed="false">拥挤</button>
+  <span class="lbl">我的标记</span>
+  <button class="chip" data-f="mark" data-v="all" aria-pressed="true">全部</button>
+  <button class="chip" data-f="mark" data-v="interested" aria-pressed="false">已关注</button>
+  <button class="chip" data-f="mark" data-v="active" aria-pressed="false">已立项</button>
+  <button class="chip" data-f="mark" data-v="none" aria-pressed="false">未标记</button>
+</div>
+
+<div class="grid" id="grid">
+  <div class="empty"><h2>雷达待命中</h2><p>首轮扫描写入后，范式卡会出现在这里。<br>每周一早晨自动更新。</p></div>
+</div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const STATUS_ZH = {blank:"⬜ 空白", golden:"🟡 黄金窗口", emerging:"🟢 起步期", crowded:"🔴 拥挤"};
+const MARK_LABEL = {interested:"关注", active:"立项", dropped:"放弃"};
+const DEEP_SECTIONS = [["hypothesis","环境版科学假设"],["design","干湿结合实验设计"],["significance","环境意义（so what）"],["novelty","新颖性检查"],["journal","建议目标期刊"],["competition","竞争预警"]];
+let db=null, canWrite=false, rows=[], filt={status:"all", mark:"all"}, expanded=new Set();
+
+function esc(s){const d=document.createElement("div");d.textContent=s==null?"":String(s);return d.innerHTML;}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2600);}
+
+function spark(yc){
+  if(!yc) return "";
+  const years=Object.keys(yc).sort(), vals=years.map(y=>yc[y]), mx=Math.max(...vals,1);
+  const W=90,H=24,n=vals.length;
+  const pts=vals.map((v,i)=>`${(i/(n-1))*W},${H-2-(v/mx)*(H-5)}`).join(" ");
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-label="近${n}年发文趋势">
+    <polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+    <circle cx="${W}" cy="${H-2-(vals[n-1]/mx)*(H-5)}" r="2.4" fill="var(--accent)"/></svg>
+    <span>${esc(years[0])}–${esc(years[n-1])}：${vals.map(v=>v.toLocaleString()).join(" · ")}</span>`;
+}
+
+function render(){
+  const grid=document.getElementById("grid");
+  const list=rows.filter(r=>{
+    if(filt.status!=="all" && r.env_status!==filt.status) return false;
+    if(filt.mark==="none" && r.mark) return false;
+    if(filt.mark!=="all" && filt.mark!=="none" && r.mark!==filt.mark) return false;
+    return true;
+  }).sort((a,b)=>(b.gap_score||0)-(a.gap_score||0));
+
+  const st=document.getElementById("stats");
+  const by=s=>rows.filter(r=>r.env_status===s).length;
+  st.innerHTML = rows.length ? `
+    <div class="stat"><b>${rows.length}</b>在库范式</div>
+    <div class="stat"><b>${by("golden")+by("blank")}</b>空白+黄金窗口</div>
+    <div class="stat"><b>${rows.filter(r=>r.deep).length}</b>精研迁移卡</div>
+    <div class="stat"><b>${rows.filter(r=>r.mark==="interested"||r.mark==="active").length}</b>已关注/立项</div>
+    <div class="stat"><b>${esc(rows.map(r=>r.scan_date||"").sort().pop()||"—")}</b>最近扫描</div>` : "";
+
+  if(!list.length){
+    grid.innerHTML = rows.length
+      ? `<div class="empty"><p>当前筛选条件下没有范式卡。</p></div>`
+      : `<div class="empty"><h2>雷达待命中</h2><p>首轮扫描写入后，范式卡会出现在这里。<br>每周一早晨自动更新。</p></div>`;
+    return;
+  }
+  grid.innerHTML = list.map(r=>{
+    const isOpen=expanded.has(r.id);
+    const marks=["interested","active","dropped"].map(m=>
+      `<button class="mbtn ${r.mark===m?("on-"+m):""}" data-id="${esc(r.id)}" data-mark="${m}" ${canWrite?"":"disabled title='只读视图'"}>${MARK_LABEL[m]}</button>`).join("");
+    const deepBtn = r.deep?`<button class="expander" data-exp="${esc(r.id)}">${isOpen?"收起迁移卡":"展开精研迁移卡 ▾"}</button>`:"";
+    const pioneers = (r.env_pioneers&&r.env_pioneers.length)?`
+      <details class="pioneers"><summary>环境领域先行者（${r.env_hits} 篇）</summary><ul>${
+        r.env_pioneers.map(p=>`<li>${esc(p.title)} — <i>${esc(p.journal)}</i>, ${esc(p.pubdate)}
+          <a href="https://pubmed.ncbi.nlm.nih.gov/${esc(p.pmid)}/">PMID:${esc(p.pmid)}</a></li>`).join("")}</ul></details>`:"";
+    const deepBody = (r.deep&&isOpen)?`<div class="deepbody">${
+      DEEP_SECTIONS.filter(([k])=>r.card&&r.card[k]).map(([k,zh])=>`<div><h4>${zh}</h4><p>${esc(r.card[k])}</p></div>`).join("")}</div>`:"";
+    return `<article class="pcard ${r.deep?"deep":""}">
+      <div class="ptop">
+        <h3 class="pname">${esc(r.name_zh)}<span class="en">${esc(r.name_en||"")}</span></h3>
+        <div class="gap">${r.gap_score??"—"}<small>缺口分</small></div>
+      </div>
+      <div class="badges">
+        <span class="pill ${esc(r.env_status||"blank")}">${STATUS_ZH[r.env_status]||esc(r.env_status||"")} · 环境期刊 ${r.env_hits??"?"} 篇</span>
+        <span class="origin">源：${esc(r.origin||"")}</span>
+      </div>
+      <p class="oneline">${esc(r.one_line||"")}</p>
+      <p class="hint">${esc(r.transfer_hint||"")}</p>
+      <div class="sparkrow">${spark(r.yearly_counts)}</div>
+      ${pioneers}
+      ${deepBody}
+      <div class="marks">${marks}${deepBtn}</div>
+    </article>`;
+  }).join("");
+}
+
+document.getElementById("filters").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  filt[b.dataset.f]=b.dataset.v;
+  document.querySelectorAll(`.chip[data-f="${b.dataset.f}"]`).forEach(c=>c.setAttribute("aria-pressed",c===b?"true":"false"));
+  render();
+});
+
+document.getElementById("grid").addEventListener("click",async e=>{
+  const ex=e.target.closest("[data-exp]");
+  if(ex){const id=ex.dataset.exp; expanded.has(id)?expanded.delete(id):expanded.add(id); render(); return;}
+  const mb=e.target.closest(".mbtn"); if(!mb||mb.disabled) return;
+  const id=mb.dataset.id, mark=mb.dataset.mark;
+  const row=rows.find(r=>r.id===id); if(!row) return;
+  const next = row.mark===mark ? null : mark;
+  try{
+    await db.doc("paradigms/"+id).update({mark: next, marked_at: new Date().toISOString()});
+    toast(next?`已标记「${MARK_LABEL[next]}」，下轮扫描会参考`:"已取消标记");
+  }catch(err){ toast("写入失败：当前视图无修改权限"); }
+});
+
+(async()=>{
+  db = await claude.use("db");
+  if(!db){ return; } // 维持设计好的空态
+  const user = await claude.use("user");
+  canWrite = user ? (user.can("data.write") ?? true) : false;
+  db.collection("paradigms").onSnapshot(snap=>{
+    rows = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    render();
+  }, err=>{ toast("数据订阅失败，稍后刷新重试"); });
+})();
+</script>

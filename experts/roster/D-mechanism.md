@@ -83,4 +83,53 @@
 - 交叉引用：完整简卡见 `A-aquatic-tox.md`（两栖/哺乳模型的内分泌干扰机制与筛评体系）。D 册视角补充：其异噻唑啉酮雄性生殖毒性筛评（ES&T 2025, [10.1021/acs.est.5c00652](https://doi.org/10.1021/acs.est.5c00652)）体现"人体相关浓度 + 机制筛评"的 D 领域方法论。
 - **建议层级**：扩展层（同 A 册）
 
-<!-- PENDING-D-GAP：刘思金、曲广波、汪海林、周群芳 四卡与【领域 D 观察】由补缺代理产出后插入 -->
+### 9. 刘思金（Liu Sijin）— 中科院生态环境研究中心，环境化学与生态毒理学国家重点实验室（兼山东第一医科大学医学科技创新中心）
+- **方向标签**：纳米材料/新污染物毒性、免疫毒性、细胞死亡机制（焦亡、乳酸化）、肺与肝毒理
+- **影响力依据**：2023–2026 以 RCEES 单位命中 56 篇，多篇为通讯作者。机制工作覆盖从分子靶点到人群暴露的完整链条——PFOS 直接结合 IRF3 抑制抗病毒天然免疫（PNAS 2026，通讯）、低剂量 PFOS 经 SIRT2-PAD4 轴诱导巨噬细胞焦亡加重类风湿关节炎（JHM 2026，通讯）、PM2.5 经乳酸/组蛋白乳酸化稳定 TGF-β1 促肺纤维化（J Adv Res 2025，通讯）。机制深度与期刊层级（PNAS、Nat Commun）在本领域突出。
+- **近期代表作**：
+  - Perfluorooctane sulfonate directly interacts with IRF3 to attenuate antiviral innate immunity | PNAS | 2026 | [10.1073/pnas.2536274123](https://doi.org/10.1073/pnas.2536274123)
+  - Low-dose PFOS exposure exacerbates rheumatoid arthritis via SIRT2-PAD4-mediated macrophage pyroptosis | J Hazard Mater | 2026 | [10.1016/j.jhazmat.2026.142354](https://doi.org/10.1016/j.jhazmat.2026.142354)
+  - Elevated lactate production exacerbates PM2.5-induced pulmonary fibrosis by stabilizing TGF-β1 | J Adv Res | 2025 | [10.1016/j.jare.2025.07.057](https://doi.org/10.1016/j.jare.2025.07.057)
+- **建议层级**：**核心层候选**（高产且通讯频次高，PNAS/Nat Commun 级机制工作，覆盖免疫毒性+细胞死亡两条本领域主线）
+- 证据说明：早年"铁死亡"方向未在本次抽样文献中直接命中，已改用实证看到的焦亡/乳酸化等细胞死亡机制表述。
+
+### 10. 曲广波（Qu Guangbo）— 中科院生态环境研究中心，环境化学与生态毒理学国家重点实验室（兼国科大杭州高等研究院环境学院）
+- **方向标签**：新污染物暴露-效应、成组/组学毒理、机器学习驱动的毒性组分归因、非靶向筛查
+- **影响力依据**：2023–2026 以 RCEES 单位命中 83 篇（本批四人中最高），多为资深/通讯作者。方法学特色鲜明——用可解释机器学习（随机森林+SHAP）将 PM2.5 分子扰动归因到少数毒性组分（EST 2026）、数据驱动筛查+网络毒理学锁定生物柴油尾气中甲醛为肺纤维化主控毒物（Environ Int 2026），并延伸到金属纳米颗粒口罩、OLED 屏释放等新兴暴露源。
+- **近期代表作**：
+  - Attribution of PM2.5-Induced Transcriptomic Perturbation to Toxic Components | Environ Sci Technol | 2026 | [10.1021/acs.est.6c05482](https://doi.org/10.1021/acs.est.6c05482)
+  - Identification of priority gaseous component in biodiesel exhaust and its potential pulmonary hazards: a data-driven screening and validation strategy | Environ Int | 2026 | [10.1016/j.envint.2026.110558](https://doi.org/10.1016/j.envint.2026.110558)
+  - Washable Face Masks: An Emerging Source of Metal and Nanoparticle Contamination in Aquatic Environments | Environ Health (Wash) | 2026 | [10.1021/envhealth.5c00834](https://doi.org/10.1021/envhealth.5c00834)
+- **建议层级**：**核心层候选**（产出量与期刊层级俱佳，"组学+AI+毒性组分归因"方法学恰为本领域前沿范式）
+- 备注：第三篇与史建波（B 册）为同篇合作论文，体现 RCEES 内部合作网络。
+
+### 11. 汪海林（Wang Hailin）— 中科院生态环境研究中心，环境化学与生态毒理学国家重点实验室（通讯邮箱 hlwang@rcees.ac.cn，已排除川北医学院同名者）
+- **方向标签**：DNA 损伤与表观遗传（5hmC/TET、6mA）、毒理化学生物学、核酸修饰的色谱-质谱/毛细管电泳分析方法
+- **影响力依据**：2023–2026 以 RCEES 单位命中 49 篇，多为通讯作者。核心是把高灵敏分析方法与表观遗传毒性机制结合——银纳米颗粒经 ROS 激活 TET 引起胚胎干细胞全基因组 DNA 羟甲基化（5hmC）改变（Chem Res Toxicol 2026，通讯）、建立痕量基因组脱氧尿苷的 HPLC-MS/MS 定量以解析 DNA 损伤（J Chromatogr B 2026，通讯），并参与 LSD1 调控 DNA 甲基化的国际合作（Nat Commun 2024）。
+- **近期代表作**：
+  - Silver Nanoparticles Induce TET-Dependent Genome-Wide DNA Hydroxymethylation Alterations in Mouse Embryonic Stem Cells via Reactive Oxygen Species Signaling | Chem Res Toxicol | 2026 | [10.1021/acs.chemrestox.6c00061](https://doi.org/10.1021/acs.chemrestox.6c00061)
+  - HPLC-MS/MS quantification of genomic deoxyuridine via differential protonation | J Chromatogr B | 2026 | [10.1016/j.jchromb.2026.125188](https://doi.org/10.1016/j.jchromb.2026.125188)
+  - The scaffolding function of LSD1 controls DNA methylation in mouse ESCs | Nat Commun | 2024 | [10.1038/s41467-024-51966-7](https://doi.org/10.1038/s41467-024-51966-7)
+- **建议层级**：**核心层候选**（"5hmC/TET 表观遗传 + 核酸损伤分析方法"在分子机制毒理中定位独特、不可替代）
+
+### 12. 周群芳（Zhou Qunfang）— 中科院生态环境研究中心，环境化学与生态毒理学国家重点实验室（通讯邮箱 zhouqf@rcees.ac.cn，已核实为 RCEES 本人）
+- **方向标签**：新污染物神经毒性与行为（斑马鱼）、生殖/发育毒性、暴露标志物与代谢转化
+- **影响力依据**：2023–2026 以 RCEES 单位命中 43 篇，多为通讯作者。机制工作聚焦新污染物的神经-代谢毒性——2,4,6-三溴酚在斑马鱼幼鱼经扰乱脑脂代谢（LXR 通路）导致运动与神经递质异常（Environ Int 2026，通讯）；同时开展人血清合成抗氧化剂转化产物内暴露筛查（Food Chem 2026）与农药毒代动力学（Ecotox Environ Saf 2025，通讯）。
+- **近期代表作**：
+  - Lipid metabolic disruption: A potential mechanistic pathway for 2,4,6-tribromophenol-induced neurotoxicity in zebrafish | Environ Int | 2026 | [10.1016/j.envint.2026.110355](https://doi.org/10.1016/j.envint.2026.110355)
+  - Novel transformation products of synthetic antioxidants in serum samples from general population | Food Chem | 2026 | [10.1016/j.foodchem.2026.150529](https://doi.org/10.1016/j.foodchem.2026.150529)
+  - Characteristics of toxicokinetics and metabolic transformation of flonicamid in rats | Ecotoxicol Environ Saf | 2025 | [10.1016/j.ecoenv.2025.119511](https://doi.org/10.1016/j.ecoenv.2025.119511)
+- **建议层级**：核心层候选（新污染物神经毒性+行为的机制主线清晰，通讯频次稳定）；若核心层名额有限亦可置扩展层。
+- 备注：第一篇与江桂斌档案第 4 节条目 3 为同一篇论文（TBP 斑马鱼神经毒性），显示其为该工作的通讯作者——评审本库行为毒理问题时她是 RCEES 体系内最对口人选。
+
+---
+
+## 三、领域观察（2024–2026 共同趋势，均以实证论文支撑）
+
+1. **多组学 + AI/机器学习驱动的机制解析与"毒性组分归因"成为新范式**：从复杂混合暴露中用可解释模型锁定关键分子驱动者。曲广波用随机森林+SHAP 将 PM2.5 的转录组扰动归因到不足 5% 的毒性组分（EST 2026, [10.1021/acs.est.6c05482](https://doi.org/10.1021/acs.est.6c05482)）；刘思金团队用单细胞基础模型+GWAS 揭示 PM 暴露经 NPC1 调控 SARS-CoV-2 易感性（Nat Commun 2026, [10.1038/s41467-026-71196-3](https://doi.org/10.1038/s41467-026-71196-3)）；Villeneuve 牵头"AI 加速 AOP 开发"路线图（EST 2026, [10.1021/acs.est.6c05148](https://doi.org/10.1021/acs.est.6c05148)）。
+
+2. **新污染物毒性机制向"精细分子通路"纵深**——细胞死亡方式、表观遗传与代谢轴成为机制落点：刘思金揭示 PFOS 经 SIRT2-PAD4 诱导巨噬细胞焦亡（JHM 2026）；汪海林揭示银纳米颗粒经 ROS-TET 改变 5hmC 表观遗传格局（Chem Res Toxicol 2026）；周群芳揭示溴酚经脑脂代谢紊乱致神经毒性（Environ Int 2026）；Blumberg 把跨代遗传推进到染色质三维接触层面（Nat Commun 2026）。
+
+3. **机制实验与人群内暴露标志物双向印证**，推动毒理机制向健康风险评估闭环：刘思金将 PFOS-IRF3 分子机制与患者血清 PFOS—病毒载量/疫苗抗体相关性（含 NHANES）联动（PNAS 2026）；周群芳在普通人群血清中筛查合成抗氧化剂转化产物以刻画内暴露（Food Chem 2026）；行为端（Tal、Raldúa）则把斑马鱼行为表型向受体级靶点与跨物种验证闭环（Toxicol Sci 2025 GABA 工作等）。
+
+> 传输说明：本册由原领域 D 检索代理的两段报告与一次补缺检索合并而成（原代理两次被模型安全机制的生物类误报中断）；全部条目仍遵守"仅收录 PubMed 实证核实文献"的证据纪律。

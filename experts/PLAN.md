@@ -14,7 +14,7 @@
 "已入库名单"（避免重复提名）= profiles/ 下 5 人 + first-batch-candidates.md 中 12 人 + 已完成的 roster/ 各分册内所有人。
 
 - [x] D1：领域 A 水生毒理与模式生物（12 人：国内 8 + 国际 4）→ `roster/A-aquatic-tox.md`（完成于 2026-10-16，经恢复原检索代理产出，核心层候选 6 人）
-- [ ] D2：领域 B 新污染物筛查与环境分析化学（10–14 人）→ `roster/B-analytical.md`
+- [x] D2：领域 B 新污染物筛查与环境分析化学（12 人：国内 8 + 国际 4）→ `roster/B-analytical.md`（完成于 2026-10-20，经恢复原检索代理产出，核心层候选 7 人。注：10-17/18/19 三次触发因容器休眠积压，按"单日一步"原则仅执行本步，后续顺延）
 - [ ] D3：领域 C 计算毒理 / NAMs / AI（8–12 人）→ `roster/C-comptox-nams.md`
 - [ ] D4：领域 D 分子机制毒理（10–14 人，神经行为机制 ≥3 人）→ `roster/D-mechanism.md`
 - [ ] D5：领域 E 环境组学 / eDNA / EDA（6–10 人）→ `roster/E-omics-edna.md`

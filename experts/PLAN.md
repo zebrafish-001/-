@@ -34,7 +34,7 @@
 优先级依据各领域简卡中"核心层候选"标记，初步排序（执行时可据 D10 结果调整）：
 
 - [x] D11：胡建英 → `profiles/hu-jianying.md`（完成于 2026-10-27，Sonnet 检索+基金档案；重要发现：2025.04 已转任复旦大学，检索式已更新；NSFC 结题摘要因共享服务网不可达未取得，留待补查）
-- [ ] D12：Robyn Tanguay（俄勒冈州立，斑马鱼高通量筛查）
+- [x] D12：Robyn Tanguay → `profiles/tanguay-robyn.md`（完成于 2026-10-28，Sonnet 检索+NIH RePORTER 基金档案；勘误两处：标准流程为 4 hpf 脱膜、2019 年前署名 Robert L.）
 - [ ] D13：Beate Escher（UFZ，效应导向分析/混合物）
 - [ ] D14：戴家银（上交大，PFAS 毒理与健康）
 - [ ] D15：庄树林（浙大，AI 计算毒理）

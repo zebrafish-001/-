@@ -36,7 +36,7 @@
 - [x] D11：胡建英 → `profiles/hu-jianying.md`（完成于 2026-10-27，Sonnet 检索+基金档案；重要发现：2025.04 已转任复旦大学，检索式已更新；NSFC 结题摘要因共享服务网不可达未取得，留待补查）
 - [x] D12：Robyn Tanguay → `profiles/tanguay-robyn.md`（完成于 2026-10-28，Sonnet 检索+NIH RePORTER 基金档案；勘误两处：标准流程为 4 hpf 脱膜、2019 年前署名 Robert L.）
 - [x] D13：Beate Escher → `profiles/escher-beate.md`（完成于 2026-10-29，Sonnet 检索+CORDIS/DFG 基金档案；重要情报：2026 年获 ERC Advanced Grant "ToxSick"（混合物→疾病）与德国动物保护研究奖）
-- [ ] D14：戴家银（上交大，PFAS 毒理与健康）
+- [x] D14：戴家银 → `profiles/dai-jiayin.md`（完成于 2026-10-30，Sonnet 检索+Europe PMC 基金号反查；NSFC 官方库仍不可达，基金清单来自机构主页；档案文本由代理转录直接提取落盘）
 - [ ] D15：庄树林（浙大，AI 计算毒理）
 - [ ] D16：刘倩（RCEES，新污染物分析，标注与江桂斌同源）
 - [ ] D17：姚蒙（北大，eDNA 方法学）

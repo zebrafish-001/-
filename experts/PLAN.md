@@ -39,7 +39,7 @@
 - [x] D14：戴家银 → `profiles/dai-jiayin.md`（完成于 2026-10-30，Sonnet 检索+Europe PMC 基金号反查；NSFC 官方库仍不可达，基金清单来自机构主页；档案文本由代理转录直接提取落盘）
 - [x] D15：庄树林 → `profiles/zhuang-shulin.md`（完成于 2026-10-31，Sonnet 检索并由代理直接写盘；AI 平台群盘点 ai4environ.cn；NSFC 5 项（2 项全信息+3 项反查）；斑马鱼行为终点尚未入其平台——潜在合作窗口）
 - [x] D16：刘倩 → `profiles/liu-qian.md`（完成于 2026-11-01，Sonnet 检索并直接写盘；同名严重，已排除周群芳组的 Qian S. Liu 等；杰青 2018 有官方名单佐证，其余基金号为致谢推断；NSFC 官方库仍不可达）
-- [ ] D17：姚蒙（北大，eDNA 方法学）
+- [x] D17：姚蒙 → `profiles/yao-meng.md`（完成于 2026-11-02，Sonnet 检索并直接写盘；NSFC 4 项，其中 2 项面上**结题摘要已从 LetPub 摘录**（本库首次）；PubMed 漏检严重，用 OpenAlex/Crossref 补齐 2025–2026 文献）
 - [ ] D18–D25：依 D10 名册中其余"核心层候选"逐日建档（每天 1 人），直至核心层达 15–20 人
 
 ## 阶段三：常态运行（阶段二完成后自动切换）

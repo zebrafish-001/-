@@ -42,7 +42,7 @@
 - [x] D17：姚蒙 → `profiles/yao-meng.md`（完成于 2026-11-02，Sonnet 检索并直接写盘；NSFC 4 项，其中 2 项面上**结题摘要已从 LetPub 摘录**（本库首次）；PubMed 漏检严重，用 OpenAlex/Crossref 补齐 2025–2026 文献）
 - [x] D18：陈联国（原误写"陈连国"）→ `profiles/chen-lianguo.md`（完成于 2026-11-03，Sonnet 检索并直接写盘；104 篇本人论文核实、36 篇同名排除；NSFC 2 项（LetPub）；勘误：姓名为"陈联国"，其 TRβ 靶谱/DCOIT/PFBS 甲状腺首作用的是海洋青鳉而非斑马鱼；2023 STOTEN PFBS 鳃论文 2026-08 撤稿已标注）
 - [x] D19：Tamara Tal → `profiles/tal-tamara.md`（完成于 2026-11-04，Sonnet 检索并直接写盘；26 篇核实；履历 OSU→EPA（2011–19）→UFZ（2019–）；行为平台参数从 EHP 2026 全文读出（ZebraBox/96 方孔/200 μL/7.5 klux/300 Hz 声刺激/bootstrap+SSMD）；基金 7–8 项（Helmholtz W2、MibiTox、PARC WP5、EPA Pathfinder 等）
-- [ ] D20：周群芳（RCEES，新污染物神经行为毒性；⚭江桂斌）
+- [x] D20：周群芳 → `profiles/zhou-qunfang.md`（完成于 2026-11-05，Sonnet 检索并直接写盘；约 60 篇核实；NSFC 主持 4 项（RCEES 机构页）；方向修正：2019 年后主线为核受体内分泌干扰/脂代谢致肥胖/血液毒理/干细胞毒性，斑马鱼神经行为仅 2 篇（2023 对羟基苯甲酸酯、2026 TBP）——本库 D 册对其"神经行为最对口"的定位应下调为"兼做"）
 - [ ] D21：刘春生（地大武汉，代际毒性/Science 2026；⚭周炳升）
 - [ ] D22：董光辉（中山大学，PFAS 人群+斑马鱼行为互证）
 - [ ] D23：游静（暨南大学，EDA+6PPD-Q 鱼类毒理）

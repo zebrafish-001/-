@@ -9,7 +9,7 @@
 
 ### 1. Daniel L. Villeneuve — 美国环保署（US EPA），Duluth（Great Lakes Toxicology and Ecology Division / OCSPP）
 - **方向标签**：AOP 框架奠基与运营（AOP-Wiki）、多组学点位偏离（tPOD/mPOD）、内分泌干扰通路、NAMs 监管转化
-- **影响力依据**：AOP 框架创立者之一（Ankley & Villeneuve 等 2010 年 ETC 奠基性论文的核心作者），现为 OECD AOP 计划与 AOP-Wiki 社区的核心推动者；2026 年牵头发布"AI 加速 AOP 开发"社区路线图，持续主导 AOP 334 等具体通路的构建与监管落地。
+- **影响力依据**：AOP 框架创立者之一（Ankley & Villeneuve 等 2010 年 ETC 奠基性论文的核心作者），现为 OECD AOP 计划与 AOP-Wiki 社区的核心推动者；2026 年参与发表"AI 加速 AOP 开发"社区路线图（第 4 作者，牵头为 Song/Wittwehr；深档案勘误），持续主导 AOP 334 等具体通路的构建与监管落地。
 - **近期代表作**：
   - Accelerating AOP Development in the AOP-Wiki with AI: A Practical Road Map for the Community | Environ. Sci. Technol. | 2026 | [10.1021/acs.est.6c05148](https://doi.org/10.1021/acs.est.6c05148)
   - Adverse Outcome Pathway (AOP) Coaching Program—how it functions and contributes to a more harmonized approach to AOP development… | Environ. Toxicol. Chem. | 2025 | [10.1093/etojnl/vgaf173](https://doi.org/10.1093/etojnl/vgaf173)

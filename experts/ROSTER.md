@@ -6,7 +6,7 @@
 ## 统计
 
 - **全库唯一人数：110**（国内 60、国际 49、思想遗产席 1）
-- 核心层已建档 17；核心层候选 46；扩展层/观察 46；思想遗产席 1
+- 核心层已建档 18；核心层候选 45；扩展层/观察 46；思想遗产席 1
 - 分册：A 水生毒理 12｜B 分析化学 12｜C 计算毒理 10｜D 机制毒理 12｜E 组学/eDNA 9｜F 环境健康 12｜G 环境化学 11｜H 监管 6 + I 经典 9｜J 创新交叉 11｜首批候选 12（跨册去重后合计 110）
 
 ## A 水生毒理与模式生物
@@ -22,7 +22,7 @@
 | 郭良宏 | 中国计量大学/国科大杭高院 | 核候 | 另见 D 册；⚭RCEES |
 | David Volz | UC Riverside | 核候 | 测试标准化"守门人" |
 | Tamara Tal | UFZ | **核** | profiles/tal-tamara.md；VAMR 行为电池（另见 D 册） |
-| Daniel Villeneuve | US EPA Duluth | 核候 | 另见 D/HI 册；AOP/tPOD |
+| Daniel Villeneuve | US EPA Duluth | **核** | profiles/villeneuve-daniel.md；AOP/tPOD（另见 D/HI 册） |
 | 涂文清 | 江西农业大学 | 观察 | 首批候选册 |
 | 秦占芬 | RCEES | 扩 | 另见 D 册；⚭江桂斌 |
 | 杨丽华 | 中科院水生所 | 扩 | ⚭周炳升 |

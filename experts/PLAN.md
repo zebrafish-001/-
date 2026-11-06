@@ -46,7 +46,7 @@
 - [x] D21：刘春生 → `profiles/liu-chunsheng.md`（完成于 2026-11-06，Sonnet 检索并直接写盘；约 30 篇精核；NSFC 4 项（LetPub，2 项含结题摘要）+ 2026 年新获"青年基金 A 类"；查重：3 篇与周炳升档案重合仅补本人视角；勘误：2022-07 起在地大武汉而非华中农大——周炳升档案 §1 相应文字待下次更新修正）
 - [x] D22：董光辉 → `profiles/dong-guanghui.md`（完成于 2026-11-06，用户要求当日连做；约 40 篇引用；NSFC 6 项（LetPub），3 项面上有结题摘要已蒸馏，4 项 Europe PMC 产出反查；关键发现：81872582 结题摘要指出氯化石蜡/PAH/PFAS 为糖尿病优控组分→解释其 2024 后转向 CPs/F-53B 并走"人群+斑马鱼"双轨）
 - [ ] D23：游静（暨南大学，EDA+6PPD-Q 鱼类毒理）
-- [ ] D24：Daniel Villeneuve（US EPA，AOP/tPOD；⚭Ankley）
+- [x] D24：Daniel Villeneuve → `profiles/villeneuve-daniel.md`（完成于 2026-11-06，用户要求连跑；约 51 篇核实；EPA 内部计划/工具 6 项 + ScienceHub 数据集 3 个；勘误：2026 AI-AOP 路线图他为第 4 作者非牵头，D 册已改；行为锚点：AOP 334 含 KE 1005 "游泳能力下降"→AO 种群增长率下降）
 - [ ] D25：靳远祥（浙江工业大学，污染物×肠-脑轴×斑马鱼行为）
 - [ ] D26–D30：为既有 5 份档案补写"基金档案"节（周炳升、史薇、张效伟、江桂斌、陈景文，每天 1 人；优先用 LetPub 结题摘要 + Europe PMC 基金号反查）
 - [ ] D31+：按 ROSTER.md 优先序续建（阮挺、Ankley、施华宏、Patisaul、Brack、Hollert、刘思金…），核心层达 20 人后转入阶段三

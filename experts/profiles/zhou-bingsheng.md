@@ -5,7 +5,7 @@
 - **姓名/单位**：周炳升（Zhou Bingsheng），研究员、博士生导师，中国科学院水生生物研究所（武汉），淡水生态与生物技术国家重点实验室（State Key Laboratory of Freshwater Ecology and Biotechnology）；通讯邮箱 bszhou@ihb.ac.cn（见多篇论文通讯作者信息）。
 - **教育/经历**（据水生所导师页面，[ihb.cas.cn](https://ihb.cas.cn/edu/dsdw/bsds/202103/t20210304_7921540.html)）：本科、硕士毕业于武汉大学；1997–2000 香港城市大学生物与化学系环境毒理学博士（与 Paul K.S. Lam、Rudolf S.S. Wu 等长期合作可互证）；1989 年起任职水生所，2005 年起任研究员。
 - **研究方向**：水环境典型有机污染物（溴代/有机磷阻燃剂、全氟及多氟化合物、微纳塑料、抗菌剂/防污剂等新污染物）对鱼类的毒性效应、分子机制与生态风险评价；主持国家自然科学基金重点项目"新兴溴代阻燃剂的水环境暴露、毒性效应及分子机制"。
-- **PubMed 可检出论文**：以 "Zhou Bingsheng + Institute of Hydrobiology" 检索得 191 条（2026-10）。核心长期合作者/出身团队成员：杨丽华（Yang L）、韩健（Han J）、郭永勇（Guo Y）、刘春生（Chunsheng Liu，现华中农大）、王强伟（Qiangwei Wang，现浙大）、陈连国（Lianguo Chen，现水生所独立PI）、石雄杰（Xiongjie Shi，现武大）等——其课题组是中国鱼类毒理领域重要的人才源头。
+- **PubMed 可检出论文**：以 "Zhou Bingsheng + Institute of Hydrobiology" 检索得 191 条（2026-10）。核心长期合作者/出身团队成员：杨丽华（Yang L）、韩健（Han J）、郭永勇（Guo Y）、刘春生（Chunsheng Liu，2022-07 起在中国地质大学（武汉），原华中农大）、王强伟（Qiangwei Wang，现浙大）、陈连国（Lianguo Chen，现水生所独立PI）、石雄杰（Xiongjie Shi，现武大）等——其课题组是中国鱼类毒理领域重要的人才源头。
 
 ## 2. 学术思想蒸馏
 ### 2.1 核心主张

@@ -54,7 +54,7 @@
 - **近期代表作**：
   - Chronic exposure to environmentally relevant diazepam alters behaviour, gut microbiome, and offspring phenotype in zebrafish (Danio rerio) | Environ. Pollut. | 2026 | [10.1016/j.envpol.2026.128837](https://doi.org/10.1016/j.envpol.2026.128837)（通讯）
   - Polyethylene microplastics differently induced gut microbiota dysbiosis and hepatic metabolism in male and female adult zebrafish | Comp. Biochem. Physiol. C | 2026 | [10.1016/j.cbpc.2026.110545](https://doi.org/10.1016/j.cbpc.2026.110545)（通讯）
-- **建议层级**：**核心层候选**（"肠道菌群×污染物"子方向上与本库斑马鱼平台互补性最强）
+- **建议层级**：**核心层候选**（"肠道菌群×污染物"子方向上与本库斑马鱼平台互补性最强）。深档案勘误（2026-11-06）：2023–2026 含行为终点的斑马鱼论文仅 4 篇，"肠-脑轴介导"系相关性推断、未见 FMT/无菌鱼/抗生素清除的因果设计；主页所称"杰青"为浙江省杰青而非国家杰青。
 
 ### 7. 丁剑楠（Ding Jiannan）— 江南大学 环境与生态学院
 - **方向标签**：生物膜定殖微塑料的生态真实性毒理｜微/纳塑料—藻类相互作用｜鱼类肠道效应

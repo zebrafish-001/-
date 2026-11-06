@@ -44,7 +44,7 @@
 - [x] D19：Tamara Tal → `profiles/tal-tamara.md`（完成于 2026-11-04，Sonnet 检索并直接写盘；26 篇核实；履历 OSU→EPA（2011–19）→UFZ（2019–）；行为平台参数从 EHP 2026 全文读出（ZebraBox/96 方孔/200 μL/7.5 klux/300 Hz 声刺激/bootstrap+SSMD）；基金 7–8 项（Helmholtz W2、MibiTox、PARC WP5、EPA Pathfinder 等）
 - [x] D20：周群芳 → `profiles/zhou-qunfang.md`（完成于 2026-11-05，Sonnet 检索并直接写盘；约 60 篇核实；NSFC 主持 4 项（RCEES 机构页）；方向修正：2019 年后主线为核受体内分泌干扰/脂代谢致肥胖/血液毒理/干细胞毒性，斑马鱼神经行为仅 2 篇（2023 对羟基苯甲酸酯、2026 TBP）——本库 D 册对其"神经行为最对口"的定位应下调为"兼做"）
 - [x] D21：刘春生 → `profiles/liu-chunsheng.md`（完成于 2026-11-06，Sonnet 检索并直接写盘；约 30 篇精核；NSFC 4 项（LetPub，2 项含结题摘要）+ 2026 年新获"青年基金 A 类"；查重：3 篇与周炳升档案重合仅补本人视角；勘误：2022-07 起在地大武汉而非华中农大——周炳升档案 §1 相应文字待下次更新修正）
-- [ ] D22：董光辉（中山大学，PFAS 人群+斑马鱼行为互证）
+- [x] D22：董光辉 → `profiles/dong-guanghui.md`（完成于 2026-11-06，用户要求当日连做；约 40 篇引用；NSFC 6 项（LetPub），3 项面上有结题摘要已蒸馏，4 项 Europe PMC 产出反查；关键发现：81872582 结题摘要指出氯化石蜡/PAH/PFAS 为糖尿病优控组分→解释其 2024 后转向 CPs/F-53B 并走"人群+斑马鱼"双轨）
 - [ ] D23：游静（暨南大学，EDA+6PPD-Q 鱼类毒理）
 - [ ] D24：Daniel Villeneuve（US EPA，AOP/tPOD；⚭Ankley）
 - [ ] D25：靳远祥（浙江工业大学，污染物×肠-脑轴×斑马鱼行为）

@@ -6,7 +6,7 @@
 ## 统计
 
 - **全库唯一人数：110**（国内 60、国际 49、思想遗产席 1）
-- 核心层已建档 18；核心层候选 45；扩展层/观察 46；思想遗产席 1
+- 核心层已建档 19；核心层候选 44；扩展层/观察 46；思想遗产席 1
 - 分册：A 水生毒理 12｜B 分析化学 12｜C 计算毒理 10｜D 机制毒理 12｜E 组学/eDNA 9｜F 环境健康 12｜G 环境化学 11｜H 监管 6 + I 经典 9｜J 创新交叉 11｜首批候选 12（跨册去重后合计 110）
 
 ## A 水生毒理与模式生物
@@ -91,7 +91,7 @@
 | Beate Escher | UFZ | **核** | profiles/escher-beate.md；EDA/EBT 定义者 |
 | 詹爱滨 | RCEES | 核候 | eDNA/eRNA 标准化 |
 | 杨江华 | 南京师范大学 | 核候 | ⚭张效伟 |
-| 游静 | 暨南大学 | 核候 | 另见 J 册（6PPD-Q）；EDA+斑马鱼 |
+| 游静 | 暨南大学 | **核** | profiles/you-jing.md；EDA/TIE/NTS+斑马鱼胚胎（6PPD-Q 虹鳟工作为同组李慧珍通讯，另见 J 册） |
 | Florian Altermatt | 苏黎世大学/Eawag | 核候 | 全球河流 eDNA |
 | Werner Brack | UFZ | 核候 | EDA 奠基人；⚭Escher |
 | Henner Hollert | 法兰克福歌德大学 | 核候 | EthoCRED 行为证据框架 |

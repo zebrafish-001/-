@@ -41,7 +41,7 @@
 - **建议层级**：扩展层（定量归趋方法学独特，为微纳塑料效应研究提供剂量学底座）
 
 ### 5. 游静（You Jing）— 暨南大学【6PPD-Q 毒理视角补充，完整简卡见 E 册】
-- **本册视角**：国内 6PPD-Q 鱼类毒理的引领团队：2026 年连续产出手性 6PPD-Q 对映体选择性毒代动力学、6PPD-Q 急性暴露脂质/能量代谢紊乱两项虹鳟机制研究，并与中山大学合作用化学蛋白质组学锁定线粒体 ADP/ATP 转运酶为 6PPD-Q 候选靶标——与本库"6PPD-Q×鱼类毒性"交叉价值最高的国内人选。
+- **本册视角**（深档案勘误 2026-11-06：两篇虹鳟 JHM 2026 的通讯作者为同组李慧珍，游静为末位/资深作者；ES&T 2026 化学蛋白质组一文由中山大学团队主导、游静为第三作者——"引领团队"应理解为课题组而非其本人通讯）：国内 6PPD-Q 鱼类毒理的活跃课题组：2026 年连续产出手性 6PPD-Q 对映体选择性毒代动力学、6PPD-Q 急性暴露脂质/能量代谢紊乱两项虹鳟机制研究，并与中山大学合作用化学蛋白质组学锁定线粒体 ADP/ATP 转运酶为 6PPD-Q 候选靶标——与本库"6PPD-Q×鱼类毒性"交叉价值最高的国内人选。
 - **近期代表作**：
   - Acute exposure to 6PPD-Q at environmentally relevant concentrations induces lipid and energy metabolism dysregulation in rainbow trout | J. Hazard. Mater. | 2026 | [10.1016/j.jhazmat.2026.143103](https://doi.org/10.1016/j.jhazmat.2026.143103)
   - Enantioselective toxicokinetics drive the differential toxicity of chiral 6PPD-quinone in rainbow trout | J. Hazard. Mater. | 2026 | [10.1016/j.jhazmat.2026.143034](https://doi.org/10.1016/j.jhazmat.2026.143034)

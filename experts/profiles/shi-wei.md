@@ -14,6 +14,7 @@
 - **职称/博导身份**：从通讯作者地位及长期独立带队情况看应为教授/博导（**待核实**，南大环境学院官网未成功抓取）
 - **核心合作网络**：与**于红霞（Hongxia Yu）**课题组长期深度绑定（于常为共同通讯）；与**张效伟（Xiaowei Zhang）**（转录组/AOP）、**魏思（Si Wei）**、**周庆（Qing Zhou）/潘洋（Yang Pan）**（消毒副产物方向）、**郭静（Jing Guo）、谭浩悦（Haoyue Tan）** 等骨干密切合作；国际合作者含 John P. Giesy、Emilio Benfenati、Huixiao Hong、Daniel Villeneuve 等
 - **主攻对象**：内分泌干扰物（EDCs）、药物与个人护理品（PPCPs）、消毒副产物（DBPs）、PFAS、邻苯二甲酸酯（PAEs）、双酚类、PBDEs 等新污染物
+- 2026-11-07 轮询备注：2026 年 PNAS（PMID 42832660）、Autophagy（PMID 42153647）署名单位为"State Key Laboratory of Water Pollution Control and Green Resource Recycling, School of Environment, Nanjing University"，而 2026-09 IEAM（PMID 42114126）仍署"State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment"——提示国家重点实验室已更名（与本节所列旧名不同），⚠️待核实；通讯邮箱 njushiwei@nju.edu.cn 未见变动证据（本次命中文章中史薇均非通讯作者，PubMed 未列其邮箱）。
 
 ---
 
@@ -217,6 +218,7 @@ LetPub 登录/VIP 检索（姓名=史薇 + 单位=南京大学 + 学部=化学/�
 2. **h-index、总引用、基金项目**等计量信息。
 3. 2023 STOTEN "Toxicity of TPhP on the gills and intestines of zebrafish"（PMID 37918726，[DOI](https://doi.org/10.1016/j.scitotenv.2023.168212)）中的 "Wei Shi" 署名——该文核心团队（陈建秋、郭睿昕等）与南大环境学院主线不同，**可能为同名他人或非核心参与**，未纳入代表作/近期精读，建议核实。
 4. 部分 2024–2026 论文摘要中受 PubMed 转码影响出现符号缺失（如希腊字母、方法名），引用前建议核对原文。
+- 2026-11-07 轮询：近 60 天无新增（检索式：Shi Wei[Author] AND Nanjing University[Affiliation] AND (endocrine disrupt* OR toxicity OR risk assessment OR zebrafish OR effect-directed)，pdat 2026/09/01–2026/11/07，命中 4 条；排除原因：PNAS 2026 Causality-integrated graph learning（DOI 10.1073/pnas.2608919123）与 Environ Int 2026 0.5–5 kDa DBPs（DOI 10.1016/j.envint.2026.110521）已在第 4 节；Autophagy 2026 叶酸/CD36 血管损伤（10.1080/15548627.2026.2676795）史薇为中间作者且主题为弓形虫，不相关；IEAM 2026 中国下一代环境风险评估 workshop 简讯（10.1093/inteam/vjag084）史薇为中间署名、非通讯，且为政策简讯，不收；WebSearch/OpenAlex 补查无新增）
 
 ---
 *据 PubMed 检索整理；所有论文引用均附 DOI 链接以标注原作者与来源。个人头衔类信息请以南京大学环境学院官方页面为准。*

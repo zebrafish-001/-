@@ -6,6 +6,7 @@
 - **教育/经历**（据水生所导师页面，[ihb.cas.cn](https://ihb.cas.cn/edu/dsdw/bsds/202103/t20210304_7921540.html)）：本科、硕士毕业于武汉大学；1997–2000 香港城市大学生物与化学系环境毒理学博士（与 Paul K.S. Lam、Rudolf S.S. Wu 等长期合作可互证）；1989 年起任职水生所，2005 年起任研究员。
 - **研究方向**：水环境典型有机污染物（溴代/有机磷阻燃剂、全氟及多氟化合物、微纳塑料、抗菌剂/防污剂等新污染物）对鱼类的毒性效应、分子机制与生态风险评价；主持国家自然科学基金重点项目"新兴溴代阻燃剂的水环境暴露、毒性效应及分子机制"。
 - **PubMed 可检出论文**：以 "Zhou Bingsheng + Institute of Hydrobiology" 检索得 191 条（2026-10）。核心长期合作者/出身团队成员：杨丽华（Yang L）、韩健（Han J）、郭永勇（Guo Y）、刘春生（Chunsheng Liu，2022-07 起在中国地质大学（武汉），原华中农大）、王强伟（Qiangwei Wang，现浙大）、陈连国（Lianguo Chen，现水生所独立PI）、石雄杰（Xiongjie Shi，现武大）等——其课题组是中国鱼类毒理领域重要的人才源头。
+- 2026-11-07 轮询备注：2026 年新文署名单位为 Key Laboratory of Breeding Biotechnology and Sustainable Aquaculture（EST，PMID 42975500）/ State Key Laboratory of Breeding Biotechnology and Sustainable Aquaculture（Water Res，PMID 42156216），均在 Institute of Hydrobiology, CAS, Wuhan，与本节所列"淡水生态与生物技术国家重点实验室"不同，疑似实验室更名/整合，⚠️待核实；本次未见通讯邮箱 bszhou@ihb.ac.cn 变动证据（PubMed 记录未列邮箱）。
 
 ## 2. 学术思想蒸馏
 ### 2.1 核心主张
@@ -39,6 +40,8 @@
 8. **A protective role of autophagy in TDCIPP-induced developmental neurotoxicity in zebrafish larvae**（Aquat Toxicol, 2018；[DOI](https://doi.org/10.1016/j.aquatox.2018.03.016)）。用雷帕霉素/氯喹双向干预证明自噬对 TDCIPP 神经发育毒性的保护作用，体现其"药理拯救实验闭环机制"的方法论签名。
 
 ## 4. 近期文章蒸馏（2024–2026，时间倒序；均经 PubMed 核实）
+> 2026-11-07 轮询新增
+0. **Paternal Preconception Calcitriol Intervention Rescued DBDPE-Induced Transgenerational Developmental and Visual Toxicity in Zebrafish** | Environ Sci Technol | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c09071)（PMID 42975500；2026-11-03 刊出，60(43):30455-30468；Zhou 为末位作者，单位水生所；通讯作者标注 PubMed 未给出，⚠️待核实）。核心发现：雄鱼 DBDPE 暴露 2 个月损害 F0 精子质量，F1/F2 幼鱼出现发育畸形，且低剂量即致 F2 眼部畸形，视觉系统对跨代 DBDPE 毒性最敏感；F1/F2 行为异常、视网膜变薄、光转导基因失调；类固醇生物合成（尤其骨化三醇/calcitriol 合成）跨剂量跨代持续紊乱，F0 睾丸骨化三醇缺乏；父本孕前补充骨化三醇可恢复精子质量并缓解子代视觉与发育毒性。方法要点：父系单独暴露→F1/F2 跨代设计，转录组+行为+视网膜组织学，孕前营养干预"挽救"实验。启示：视觉功能是斑马鱼视动/光-暗行为终点的前提，跨代行为测试应同步评估视网膜结构与光转导基因，以免把视觉缺陷误读为"行为/认知"效应；"挽救实验"提供因果验证范式。
 1. **Decabromodiphenyl Ethane Sensitizes Zebrafish to Alcoholic Liver Injury by Compromising NAD+-Mediated Multicellular Responses** | Environ Sci Technol | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c05329)。核心发现：DBDPE 预暴露通过耗竭 NAD+ 相关多细胞修复反应，使雄性斑马鱼对酒精肝损伤显著敏感化。方法要点：成鱼预暴露+急性乙醇激发的"两步打击"设计，线粒体功能与氧化应激终点。启示：行为毒理同样可借"污染物×生活方式因子"双打击设计放大低剂量效应——值得把酒精/高脂/应激引入行为实验情景。
 2. **父系暴露环境浓度 TDCIPP 经 miR-184 介导子代心脏与肝脏毒性**（标题中斜体基因名在 PubMed 显示缺失，全称⚠️待核实）| Environ Sci Technol | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c00486)。核心发现：雄鱼 150 天暴露 55–5500 ng/L TDCIPP，TDCIPP 富集于睾丸但不进入子代，子代心/肝毒性由精子携带的 miRNA（miR-184）表观遗传信息介导。方法要点：仅父系暴露×未暴露雌鱼交配的严格设计，排除化学物直接携带。启示：做跨代行为毒理时务必区分"化学传递"与"表观遗传传递"——测卵/胚胎内化学残留应成为标配对照；精子 miRNA 测序是可借鉴的机制抓手。
 3. **Pollutant-Diet Interactions Drive Distinct Mechanisms of TBBPA-Induced Hepatic Insulin Resistance in Zebrafish** | Environ Sci Technol | 2026 | [DOI](https://doi.org/10.1021/acs.est.5c15793)。核心发现：10/100 nM TBBPA 在正常脂 vs 高脂膳食下经不同通路诱导肝胰岛素抵抗——同一污染物、不同宿主状态、不同机制。方法要点：4 周成鱼暴露×2 膳食因子析因设计+代谢组/转录组整合。启示：析因（污染物×膳食）设计同样适用于行为终点；报告中应明确饲料脂肪含量，否则跨实验室行为数据不可比。

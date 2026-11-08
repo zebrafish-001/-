@@ -11,6 +11,7 @@
 - **重要动态（高置信，来自2025–2026论文署名）**：2025年起论文中持续出现**云南大学生态与环境学院**（高原山地生态与退化环境修复云南省重点实验室、VegLab植被结构功能与建造全国重点实验室）双聘/新任职署名，2026年 *Nature Ecology & Evolution* 通讯邮箱为 **zhangxw@ynu.edu.cn**——提示其已向云南大学拓展或转移主要阵地（具体职务待核实）。
 - **教育与头衔（来自第三方学者目录，均待核实）**：南京大学学士（2000）、香港城市大学硕士、密歇根州立大学博士（2008）、萨斯喀彻温大学博士后，2009年12月起任南京大学教授；青年长江学者（2016）、中国环境科学学会青年科学家金奖（2018）、国家"万人计划"（2019）。
 - **主要方向标签**：eDNA/eRNA宏条形码多营养级生物监测；斑马鱼胚胎/人源细胞浓度依赖简化转录组（CRZT/RHT）；AOP网络与毒性预测；基于通路的效应导向分析与长江流域关键致毒物识别；新污染物（PFAS、OPFRs、双酚类似物、苯并三唑类、纳米材料）生态风险。
+- 2026-11-08 轮询备注：2026-09 在线的 3 篇 ES&T（10.1021/acs.est.6c06492、6c07489、6c05039）及 Environ Sci Ecotechnol 通讯（10.1016/j.ese.2026.100760，已排除）中，张效伟署名**仅云南大学**（VegLab / 高原山地生态与退化环境修复云南省重点实验室，School of Ecology and Environmental Science），未再并列南京大学；2026-06 Nat Ecol Evol（10.1038/s41559-026-03106-1）仍同署南大"水污染控制与绿色资源化全国重点实验室"与云大，邮箱 zhangxw@ynu.edu.cn。提示主阵地已向云南大学迁移，职务仍⚠️待核实。
 
 ## 2. 学术思想蒸馏
 
@@ -50,6 +51,19 @@
 8. **Effect-Directed Analysis Based on the Reduced Human Transcriptome (RHT) to Identify Organic Contaminants in Source and Tap Waters along the Yangtze River**（Environmental Science & Technology, 2022；DOI: 10.1021/acs.est.1c08676）。把RHT作为EDA的效应检测端，对长江沿线水源水/自来水进行毒物识别，是"组学驱动EDA"应用于国家重大水安全需求的代表。
 
 ## 4. 近期文章蒸馏（2024–2026，时间倒序；均经 PubMed 核实）
+> 2026-11-08 轮询新增
+新1. **Joint Effects of Water Quality Degradation and Non-Native Fish Invasion on Estuarine Biodiversity and Ecosystem Stability** | Environ Sci Technol | 2026 | DOI: 10.1021/acs.est.6c06492（PubMed 在线 2026-09-29；张效伟为末位作者，署名云南大学 VegLab；通讯身份⚠️待核实，PubMed 未列邮箱）
+ 核心发现：亚热带河口 eDNA 宏条形码显示，外来鱼的相对序列丰度（而非物种数）是本地鱼多样性下降的主因，存在统计断点与单峰型多样性响应；外来鱼主要通过争夺食物资源压缩本地种生态位；水质恶化与入侵存在强交互，水质恶化不仅直接胁迫，还间接削弱本地群落。
+ 方法要点：多营养级 eDNA 宏条形码 + 断点分析 + 生态位/交互效应建模（观测性数据集）。
+ 启示：提示"化学胁迫×生物因子"交互是野外常态；斑马鱼行为实验若只做单一化学品暴露，缺少与竞争/捕食线索共存的情境，外推到野外时需警惕。
+新2. **Continuous eDNA Monitoring Reveals Rare Fish Diversity and Enables Filtering of Exogenous DNA Signals in a Megariver** | Environ Sci Technol | 2026 | DOI: 10.1021/acs.est.6c07489（PubMed 在线 2026-09-15；末位作者，署名云南大学 VegLab；通讯身份⚠️待核实）
+ 核心发现：长江固定站点连续 1 年每日 eDNA 监测检出 210 个鱼类分类单元，其中 124 个确认为本地种；季度采样仅恢复约 30% 年度多样性（主要漏掉稀有种），≤3 天采样可恢复 >90%；以"环境耦合分数"（eDNA 与水质动态的同步性）为最强预测因子的随机森林模型识别外源 DNA，AUC 0.727，优于丰度阈值法。
+ 方法要点：日尺度时间序列、降采样分析、随机森林分类。
+ 启示：时间分辨率决定"检出什么"——与行为毒理中"单时点终点会漏掉瞬时/迟发表型"同构；可借鉴其降采样思路评估行为记录的采样频率。
+新3. **High-Resolution Spatiotemporal Dynamics of Airborne eDNA in a Forest Ecosystem** | Environ Sci Technol | 2026 | DOI: 10.1021/acs.est.6c05039（PubMed 日期 2026-09-01；末位作者，署名云南大学 VegLab；第一作者张丽娟；通讯身份⚠️待核实）
+ 核心发现：自动化 4 h 高频、多通道（负压旋风离心）空气 eDNA 采样器，在热带雨林冠层梯度 6 天获 108 个样品，宏条形码检出 786 个类群；细菌丰富度日间峰值，昆虫与脊索动物呈垂直分层；环境驱动因子随类群与尺度而异。
+ 方法要点：自制采样设备 + 垂直分层部署 + 多营养级宏条形码。
+ 启示：与斑马鱼行为毒理关联弱，主要说明其 eDNA 平台向陆地/空气介质扩展；可作为"空气 eDNA 暴露/生物多样性"方向的背景信息。（此前档案第 8 节将该文列为"可能是本人"，现 PubMed 记录确认末位作者为 Zhang Xiaowei、署名云大 VegLab，合作者含南大 Li Ming/Fu Zhaojun，判定为本人。）
 
 1. **Causality-integrated graph learning for multi-endpoint toxicity prediction** | PNAS | 2026 | DOI: 10.1073/pnas.2608919123（张为核心作者，与史薇/于红霞合作）
  核心发现：将文献挖掘的毒理因果机制作为有向图嵌入深度学习，仅凭化学结构即可生成化合物特异的通路扰动谱，实现内分泌干扰物多终点分类、排序与机理解释。
@@ -189,3 +203,4 @@
 - 中置信：早期（密歇根州立/Giesy实验室、H295R内分泌筛选）经历仅据学者目录与领域常识推断，⚠️待核实。
 - 待核实：荣誉头衔（青年长江2016、万人计划2019、青年科学家金奖2018）；云南大学的具体职务；Sci Rep 2017太湖浮游动物论文的DOI。
 - 同名排除说明：检索中发现云南大学另一 Zhang Xiaowei（空气eDNA森林研究，ES&T 2026, DOI: 10.1021/acs.est.6c05039）署名仅为云南大学 VegLab——鉴于张效伟本人2025年后亦署名云大VegLab，该文**可能是本人**但未见南大署名，列为⚠️待核实，未计入正文。
+- 2026-11-08 轮询：PubMed 检索式1（作者+南大/云大+eDNA/转录组/AOP等，2026-09-01 至 11-08）命中 7 条，检索式2（斑马鱼+Nanjing）命中 0；纳入 3 条（6c06492、6c07489、6c05039）；排除：Cell 2026（42880234，署名 CEMPS 的同名 Zhang Xiaowei，非本人）、Environ Sci Ecotechnol 通讯 Letter（10.1016/j.ese.2026.100760，非研究论文）、Environ Pollut 2026-07（10.1016/j.envpol.2026.128712，早于窗口，且为非通讯合作者署名）、Nat Ecol Evol（2026-06，已在档案）。OpenAlex/Crossref 补查：本环境 OpenAlex API 因匿名额度/输出截断未能完成逐条核对，仅 WebSearch 补查，未发现 PubMed 之外的窗口内新文，⚠️待核实。以上 3 条通讯作者身份均未由 PubMed 邮箱字段证实。

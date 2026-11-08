@@ -8,6 +8,7 @@
 - **院士与荣誉**：中国科学院院士（2009）；发展中国家科学院（TWAS）院士（2012）；美国国家工程院外籍院士（2026，⚠️建议复核 NAE 官方名单）；三次国家自然科学二等奖（2003、2011、2018）；ACS "Outstanding Achievements in Environmental Science & Technology" 奖（2021）；国家创新争先奖（2020）。
 - **学术服务**：ES&T 副主编（2006–2025）；ACS 期刊 *Environment & Health* 创刊主编（2023– ）；Elsevier *Eco-Environment & Health* 联合创刊主编（2022– ）。
 - **体量**：媒体报道发表 SCI 论文 1800 余篇、专著约 28–29 部（数字各来源不一，待核实）；牵头研制世界首台"高通量多功能成组毒理学分析仪"（媒体报道）。他是中国"新污染物治理"写入国家议程的主要科学推动者之一。
+- 2026-11-08 轮询备注：2026-09 至 11 月 PubMed 署名中，江桂斌所在实验室名称同时出现"State Key Laboratory of Environmental Chemistry and Toxicology"与"…Ecotoxicology"两种写法（RCEES，同一时期并存），另有"Zhejiang Key Laboratory of Environment and Health of New Pollutants"及"Hangzhou Institute for Advanced Study, UCAS"署名，与第 1 节"杭州高等研究院"职务一致；实验室正式更名时点仍⚠️待核实。
 
 ## 2. 学术思想蒸馏
 
@@ -43,6 +44,27 @@
 7. **Identification and prioritization of environmental organic pollutants: from an analytical and toxicological perspective**（Chem Rev, 2023，[DOI](https://doi.org/10.1021/acs.chemrev.3c00056)）。把 QSAR 预测、HRMS 非靶向筛查、效应导向分析三条技术路线整合为"未知污染物识别与优先排序"的统一框架——其"新污染物筛查理论与方法"的集大成宣言。
 
 ## 4. 近期文章蒸馏（2024–2026，时间倒序；均为 PubMed 检索确认；"启示"针对斑马鱼行为毒理学研究者）
+> 2026-11-08 轮询新增（本期窗口内 PubMed 命中约 33 条新上线，按规则>10 条仅收 ES&T 级别、末位作者（通讯身份⚠️待核实，PubMed 未列邮箱）、最多 5 条，优先与毒理/行为相关者；单位均为 RCEES）
+新1. **Inhalation of Environmentally Simulated PET Nanoplastics Induces Demyelinating Disorders via the CXCL12/CXCR4 Axis** | ES&T | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c03987)
+   核心发现：环境模拟 PET 纳米塑料经气溶胶吸入（0.1/1/10 mg/m³，慢性）可转位入脑，引起脱髓鞘、神经炎症与认知缺陷；机制为星形胶质细胞释放 CXCL12，经 CXCR4 激活小胶质细胞；AMD3100 阻断 CXCR4 可缓解体外小胶质迁移与少突胶质 MBP 下降。
+   方法要点：环境模拟（非商品微球）纳米塑料 + 吸入暴露模型 + 体外阻断验证。
+   启示：提示纳米塑料神经毒性的髓鞘/神经免疫通路；斑马鱼 mbp/olig2 转基因品系可低成本检验该轴并关联运动/刺激响应行为，且应采用环境老化颗粒而非标准微球。
+新2. **Per- and Polyfluoroalkyl Substances Can Induce Immunotoxicity via Direct Intestinal Lymphatic Absorption** | ES&T | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c08726)
+   核心发现：大鼠肠系膜淋巴管/颈静脉插管显示 PFAS 直接进入肠系膜淋巴（10 h 内浓度达血清的 27–116%），延长半衰期、选择性蓄积于淋巴结；ng/mL 环境相关浓度即损害单核细胞分化与功能。
+   方法要点：淋巴管插管毒代动力学 + 体外单核细胞实验。
+   启示：PFAS 的体内暴露不止"血液中心"框架；斑马鱼暴露液浓度与体内组织浓度的换算应考虑吸收途径差异，行为 POD 对应的内暴露需实测。
+新3. **Novel PFAS Alternatives 6:2 Cl-PFESA and HFPO-TA as Plasma FXII Activators: Experimental Evidence and Computational Mechanistic Insights** | ES&T | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c05707)
+   核心发现：6:2 Cl-PFESA 激活 FXII 的能力强于 PFOS，HFPO-TA 的 FXII 裂解强于 PFOA；小鼠静脉暴露 6:2 Cl-PFESA 升高血浆 FXIIa；HFPO 类替代物的激活不遵循简单碳链长度规律，分子动力学提示 Fib-II / PR 结构域选择性。
+   方法要点：体外/离体/体内 + 分子动力学与虚拟丙氨酸扫描。
+   启示：PFAS 替代物的血液学终点（凝血接触系统）可在斑马鱼幼鱼的血栓/出血表型中做跨物种验证，并与行为终点并列评估替代物"遗憾替代"风险。
+新4. **Structure-Related Activity of 4-Alkylphenols in Hepatic Lipogenesis Regulated by Estrogen Receptor Agonism and Oxidative Stress** | ES&T | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c06496)
+   核心发现：9 种 4-烷基酚异构体中，直链 4-n-APs 剂量依赖地促 HepG2 甘油三酯积累且呈随链长倒 U 型，支链 4-t-APs 无此作用；ER 拮抗或抑制 ROS 均可缓解，说明 ER 激动与氧化应激共同驱动。
+   方法要点：系列异构体构效关系 + 通路抑制剂验证（HepG2 细胞）。
+   启示：构效关系设计可借鉴于行为毒理的同系物筛选（直链/支链、链长）；斑马鱼幼鱼可在同一系列上同时读出脂代谢与运动行为。
+新5. **Single-Cell Insights into Size-Dependent Heterogeneous Bioconcentration and Distribution of Metal Species Ranging from Ions to Nanoclusters and Nanoparticles in Chlorella vulgaris** | ES&T | 2026 | [DOI](https://doi.org/10.1021/acs.est.5c16797)
+   核心发现：CyTOF 单细胞分析显示 Au 离子/纳米簇快速积累并外排，纳米颗粒呈饱和型积累，且粒径越大单细胞滞留越持久；等质量暴露下 Au 阳性细胞比例随原子数指数下降而单细胞负荷线性上升，存在"高富集"细胞亚群。
+   方法要点：CyTOF 单细胞金属定量，离子—纳米簇—纳米颗粒梯度。
+   启示：提示群体平均暴露掩盖个体异质性；斑马鱼行为中的"响应者/非响应者"分层也宜与个体内暴露量关联，并为藻类—鱼食物链传递的纳米材料暴露提供参照。
 
 1. **Application and Development of Standard Reference Materials as the Metrological Foundation for Retrospective Nontarget Analysis** | ES&T | 2026 | [DOI](https://doi.org/10.1021/acs.est.6c11841)
    核心：提出以标准参考物质（SRM）作为"回顾性非靶向分析"的计量学基础（观点/综述类，摘要未公开，细节⚠️待核实）。启示：行为毒理实验的暴露液应留存并数字化存档 HRMS 全扫描数据，便于日后把行为表型回溯关联到当时未识别的杂质/转化产物。
@@ -142,3 +164,4 @@
 - **置信度**：文献清单（第3、4节）——高（全部经 PubMed 元数据核对，含 DOI）；传记细节——中（多来源交叉但有出入）。
 - **待核实项**：① 美国国家工程院/欧洲科学院当选的官方名单与年份；② 出生地与博士学位授予单位/年份；③ 专著数量与 SCI 论文总数（1800+ 为媒体口径）；④ 第4节条目1、4、8 三篇 ES&T 观点类文章摘要未公开，内容概述基于标题，精读前请获取全文；⑤ "高通量多功能成组毒理学分析仪"的权威文献出处；⑥ 液晶单体方向的最早开创性论文（早期论文可能由合作者署名通讯，待核实）。
 - **排除说明**：广为流传的综述 *Emerging contaminants: A One Health perspective*（The Innovation, 2024, [DOI](https://doi.org/10.1016/j.xinn.2024.100612)）经核对作者名单**不含**江桂斌（仅有同姓 Gaofei Jiang），故未收录——同名混淆的典型案例，建档时已规避。
+- 2026-11-08 轮询：`Jiang, Guibin[Full Author Name]`，pdat 2026-09-01 至 11-08，PubMed 命中 48 条（含若干早于 9 月在线、PubMed 日期落入窗口的条目；9 月后新上线约 33 条）。全部末位作者单位核对为 RCEES / 浙江新污染物环境与健康重点实验室 / 杭高院，未混入 Jiang Gaofei 等同名。按"命中>10 仅收通讯作者且 ES&T 级别、最多 5 条"收入 5 篇（est.6c03987、6c08726、6c05707、6c06496、5c16797）；PubMed 无邮箱字段，通讯身份以末位作者推定，⚠️待核实。未收：ES&T 的 6c08602/6c10162/6c08887/6c10753（相关度低或观点类）、Sci Adv 10.1126/sciadv.aek0913（光催化材料，主题无关）、Water Res/Environ Pollut/J Hazard Mater 等非指定级别期刊、Editorial 与 Corrigendum（Ecotox Environ Saf、Talanta）、est.6c11841（已在档案）。本步未做 WebSearch/OpenAlex 补查（PubMed 产量已超阈值）。

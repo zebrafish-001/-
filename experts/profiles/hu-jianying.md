@@ -208,5 +208,6 @@
 **置信度**：2024–2026 论文清单——高（PubMed 核验）；任职变动——中高（复旦简历+署名，无官方人事公告）；基金清单——中（机构页面，未与 NSFC 官方库核对）；结题摘要与问题意识演变——低（摘要未取得，演变系推断）。
 
 **待核实项**：①长江学者年份（2009/2010）；②PNAS 2012 蓝藻类维 A 酸 DOI；③ACS ES&T Water 2025 青鳉 OPFR 题录；④2020/2025 面上项目批准号；⑤21377007、21777003 归属；⑥全部 NSFC 项目结题状态与摘要；⑦论文总数口径（155/168）。
+- 2026-11-09 轮询：近 60 天无新增（检索式 `Hu Jianying[Author] AND (Peking University OR Fudan University[Affiliation])` 2026/09/01–11/09 命中 2 条，另 `Hu J + Fudan + receptor/organoid/affinity/nontargeted` 命中 5 条、`Wan Yi AND Hu Jianying` 命中 0 条；命中中仅 10.1021/acs.est.6c03326 与 10.1021/acs.est.6c03677 为本人论文，均已在第 4 节 [1][2]，按 DOI 去重；其余 3 条为临床肿瘤学等同名 Hu J，排除。WebSearch 补查无新增。单位仍为复旦环境系，PubMed 署名含复旦与北大 LESP 双单位，无新变动）
 
 **同名排除清单（已核对，不属于她）**：复旦妇产科医院麻醉科 Hu Jianying；复旦人类表型组研究院孟德尔随机化作者；碳点促植物生长、北美鸟类性状（Curr Biol 2025）等 Hu J；万祎组不含胡建英署名的论文。

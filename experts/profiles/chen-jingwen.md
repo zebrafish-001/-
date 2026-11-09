@@ -58,6 +58,18 @@
    分子模拟（Boltz-2 预测亲和力）+ 虚拟筛选 + 体外验证，识别作用于斑马鱼血清素转运体（zSERT）的环境化学品，并解析 zSERT 比 hSERT 更敏感的结构机制；15 个预测命中有 14 个经体外验证。对行为毒理学高度相关。
 
 ## 4. 近期文章蒸馏（2024–2026，时间倒序）
+> 2026-11-09 轮询新增
+
+**[新1] Integrating Biological Activity with the Fish Plasma Model to Prioritize Antidepressants of Concern in Wastewater: A Case Study in Dalian, China**｜*Environ. Sci. Technol.*｜2026（60:23901，2026-09-01）｜[DOI](https://doi.org/10.1021/acs.est.6c09884)
+- 核心发现：18 种抗抑郁药及 4 种代谢物在中国污水出水中的浓度由用量预测，经调整的鱼血浆模型估算斑马鱼内暴露；抗抑郁药对斑马鱼 SERT（zSERT）的抑制强于人 SERT；以 zSERT/hSERT 抑制效力导出"鱼治疗血浆浓度（FTPC）"作效应阈值，用 FssPC/FTPC 比值评估中、英、日风险。
+- 方法要点：pH 依赖 Dow + 黑头呆鱼参数预测稳态血浆浓度；不确定性分析评估模型表现。
+- 对斑马鱼行为毒理学研究者的启示：给出把"靶点效力（zSERT）→ 内暴露（血浆浓度）"换算为行为实验暴露浓度的框架；行为实验可直接以 FTPC 量级选剂量，而非仅用水体名义浓度。与本档案 [1]（zSERT 筛选）为同一主线的延伸。⚠️通讯作者身份据作者末位（陈景文）判断，PubMed 元数据未含邮箱，待核实。
+
+**[新2] Transfer Learning Empowers the Development of Better-Performing Models for In Vivo Cardiotoxicity by Learning from In Vitro hERG Binding Data**｜*Chem. Res. Toxicol.*｜2026（39:1787，2026-09-21）｜[DOI](https://doi.org/10.1021/acs.chemrestox.6c00190)
+- 核心发现：以 hERG 结合（致心毒性的分子起始事件）数据预训练、再微调的迁移学习图神经网络（TL-GNN），预测体内心脏毒性的表现优于无迁移 GNN、经典机器学习及以 logKow 或百万级无标签化合物预训练的模型；应用域内筛查约 60 万种化学品，识别出 2.5 万余种潜在心脏毒物。
+- 方法要点：AOP 相关体外靶点预训练 → 小样本体内终点微调；构效关系景观法界定适用域。
+- 对斑马鱼行为毒理学研究者的启示：斑马鱼心率/心脏终点可作为该模型预测结果的实验验证端点；"AOP 体外靶点→体内小样本终点"的迁移学习思路可移植到行为终点（数据稀缺）。⚠️通讯作者身份据作者末位判断，待核实；该刊非 ES&T 级别，但命中数少于 10，按规则收录。
+
 > 每篇：核心发现 | 方法要点 | 对斑马鱼行为毒理学研究者的启示。均为 PubMed 检索确证，附 DOI。
 
 **[1] Zebrafish Serotonin Transporter Inhibition Enables Identification of Neuroactive Chemicals**｜*Environ. Sci. Technol.*｜2026（60:23162）｜[DOI](https://doi.org/10.1021/acs.est.6c04972)
@@ -199,6 +211,7 @@
 1. 其 pre-2024 高被引经典论文（早期 QSAR/QSPR、环境光化学奠基工作）具体篇目与引用数——需 Web of Science/Scholar 补检。
 2. 当前确切行政职务与最新学术兼职（主页信息时间跨度较大）。
 3. 第 4 节各篇中陈景文的精确作者位次（通讯 vs 共同作者）——部分已由邮箱确认为通讯（如 Nat Commun、J. Hazard. Mater.、EST hERG/McGPCR/生成式 PFAS、膜蛋白 perspective、zSERT），其余以单位+研究主题判定为核心作者，建议投稿前逐篇复核。
+- 2026-11-09 轮询：已更新，新增 2 条（见第 4 节顶部）。检索式 `Chen J[Author] AND "Dalian University of Technology"[Affiliation]`，2026/09/01–11/09，PubMed 命中 12 条；其中陈景文署名 4 条：收录 2 条（ES&T 抗抑郁药鱼血浆模型；Chem Res Toxicol 迁移学习心毒性）；排除 2 条（Eco Environ Health 社论，类型为社论；ES&T 夜间新粒子生成，陈景文为第 17 位作者非通讯、主题为大气化学），其余 8 条为大工同单位同姓名/非陈景文论文。WebSearch 补查无新增信息。单位无变动。
 
 ---
 *本档案文献信息据 PubMed 检索整理，所有论文已附 DOI 链接以标注原始出处。*

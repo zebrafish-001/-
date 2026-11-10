@@ -152,3 +152,4 @@
 **待核实项**：①ToxSick 起止/编号/呼叫标签；②ACS ES&T Toxicology 主编身份；③专著版次年份；④SOLUTIONS/EDA-EMERGE 正式角色；⑤WateReuse 10-07 身份；⑥ARC Fellowship 题目；⑦EU-ToxRisk/PARC 角色；⑧TIE/EDA 奠基文献与其关系。
 
 **同名排除**：`Escher BI[Author]`+关键词限定，署名机构均为 UFZ/图宾根/UQ/Griffith；GEPRIS 同名（Mainz 的 Anton Escher 等）已排除。
+- 2026-11-10 轮询：近 60 天无新增（PubMed `Escher BI[Author]`，2026-09-01 至今，dp 命中 6 条、edat 命中 2 条；DYNAMEX、Environ Int 110465、ETC vgag187、Water Res 127007 均已在 §4 收录；ETC 10.1093/etojnl/vgag145（Gwak…Escher, Hong，AhR 沉积物 EBT）Escher 为非通讯倒数第二作者，排除；Toxicon 10.1016/j.toxicon.2026.109148 为 2026-05，超出窗口；WebSearch 仅见已收文章；单位无变动）

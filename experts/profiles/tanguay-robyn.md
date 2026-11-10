@@ -193,3 +193,4 @@ HTS 数据按 FAIR 公开（BMD10/BMD50/AUC），链接环境样品与人类基�
 **待核实项**：①各论文通讯作者身份；②SOT 副会长当选；③ToxPoint 内容要点（摘要缺失）；④P42 早期总 PI 与 P30 续期状态；⑤陆军工程兵团小项目；⑥R35 承诺的公共数据库上线状态；⑦论文总数口径（200+/300+）。
 
 **同名排除**：Robert L.（2019 前）与 Robyn L. 为同一人；拉瓦尔大学 Robert M. Tanguay（热休克蛋白）需用单位区分；注意区分 Lisa Truong 与 Truong HD、Michael T. 与 Staci L. Massey Simonich。边缘条目（MOF 造影剂、文献计量、生物修复）仅为合作者，已排除。
+- 2026-11-10 轮询：近 60 天无新增（PubMed `Tanguay RL[Author] OR Tanguay R[Author]` AND zebrafish，2026-09-01 至今，dp 命中 3 条、edat 命中 6 条；3 条斑马鱼文献〔SLAS Technol 10.1016/j.slast.2026.100471、Toxics 10.3390/toxics14090807、Neurotoxicology 10.1016/j.neuro.2026.103504〕与 bioRxiv 10.64898/2026.08.07.743325 均已在 §4 收录；2 条为 Calgary 精神科 Robert Tanguay 同名误中，已排除；NAM Journal 10.1016/j.namjnl.2026.100130（Elliott & Tanguay，2026-09，NAM 术语的伦理与社会意义）为 2 作者观点稿、主题偏离且通讯身份未核，未收 ⚠️待核实；WebSearch 无 2026-09 后新文；单位无变动）

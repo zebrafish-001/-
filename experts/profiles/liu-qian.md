@@ -28,6 +28,8 @@
 - 因此她是**江桂斌体系内"独立成军"的中生代**：保留了该体系的"方法先行 + 纳米/颗粒物 + 暴露到健康"三条主线（见 `profiles/jiang-guibin.md`），但自己的特色鲜明：以**同位素/元素/微结构"指纹"**与**质谱成像**为核心技术，且**把同位素从环境溯源推进到人体疾病标志**。2022 年起其论文开始出现以她为设计者的独立方向（如 Chem Sci 2025 PP 熔喷布酶降解："Q. Liu and X. Huang designed the research"）。
 - 注意：江桂斌档案中已出现的 "Nat Nanotechnol 2016 银同位素分馏""Chem Soc Rev 2021 质谱纳米表征" 在本档案中均有她的署名位次核对（§3）；但江桂斌档案若将 Chem Rev 2017（Isotope tracers… MENPs）归入纳米同位素综述，需注意该文作者为 Yin Y, Tan Z, Hu L, Yu S, Liu J, Jiang G（PubMed 28212026），**无刘倩**，见 §8.4。
 
+- 2026-11-11 轮询备注：2026-09 起 PubMed 署名可见她同时署"中国科学院大学杭州高等研究院环境学院（School of Environment, Hangzhou Institute for Advanced Study, UCAS）"（Environ Health 2026-09，DOI 10.1021/envhealth.6c00429）；实验室名在 2026 年论文中多作 "State Key Laboratory of Environmental Chemistry and Toxicology"（不含 Eco-）。属署名变动迹象，是否为正式任职 ⚠️待核实。
+
 ---
 
 ## 2. 学术思想蒸馏
@@ -75,6 +77,16 @@
 ## 4. 近期文章蒸馏（2024–2026，时间倒序）
 
 > 通用格式：标题 | 期刊 | 年份 | DOI；核心发现；方法要点；位次；**对斑马鱼行为毒理学研究者的启示**。所有条目均来自 PubMed 检索（摘要已读）。位次为"倒数第二/江桂斌末位"者记"推定通讯 ⚠️"。
+
+> 2026-11-11 轮询新增
+
+- **新增 1. Unveiling watershed-scale transport pathways of anthropogenic lithium from industrial sources** | *Water Res* | 2026-10 | [10.1016/j.watres.2026.127201](https://doi.org/10.1016/j.watres.2026.127201)
+  - 发现：江西工业区下游河水、自来水、稻米与蔬菜中 Li 浓度比上游背景高数倍至十余倍；沉积物吸附、有机络合与生物吸收几乎不去除溶解态 Li，下游迁移由人为排放路径与水文混合主导，工业 Li 在排放点下游 100 km 仍可检出；谷物与饮用水是主要摄入途径，工业区内及其下游点位 THQ>1。方法：野外采样 + 源解析模型 + 暴露评估。位次：第 9/10 位（倒数第二，江桂斌末位），推定通讯 ⚠️；第一作者温浩楠，第二作者杨学志（单位 UCAS 杭州高等研究院）。
+  - 启示：锂电池相关新污染物已进入水—食物链暴露评估；斑马鱼研究若选用 Li 作暴露物，应参照下游实测浓度（而非高剂量）设计，并区分饮水与食物两条途径。
+
+- **新增 2. Microbial filtering and functional reprogramming in soil exposed to spent NCM battery black powder** | *Ecotoxicol Environ Saf* | 2026-09 | [10.1016/j.ecoenv.2026.120847](https://doi.org/10.1016/j.ecoenv.2026.120847)
+  - 发现：废旧 NCM 锂电池黑粉（含过渡金属、电解质盐及有机电解液/黏结剂衍生物）使红壤微生物群落呈非线性响应；高暴露下氮循环相关 KO 相对丰度下降、应激与有机质分解特征上升；PERMANOVA 显示处理解释 23.2% 的群落变异；SEM 提示功能变化可能经群落重构间接发生。方法：土壤微宇宙浓度梯度 + 宏基因组测序。位次：第 8/9 位（倒数第二，江桂斌末位），推定通讯 ⚠️；第一作者 Youran Gui。
+  - 启示：复合污染物（黑粉）的效应主要经"群落重构"而非单一浓度直接路径，提示多组分基质暴露需用浓度梯度 + 时间点设计；对斑马鱼可借鉴其分层暴露与结构方程分析思路。
 
 1. **Mass Spectrometry Imaging Reveals Biodistribution and Biotransformation of Black Phosphorus** | *Adv Healthc Mater* | 2026-10 | [10.1002/adhm.71824](https://doi.org/10.1002/adhm.71824)（⚠️该 DOI 形式特殊，由 PubMed 返回，建议抽查解析）。
    - 发现：无标记 MSI 平台显示 BP 及含氮/氧磷簇主要蓄积于肝脾，肝内呈围绕肝小叶放射状分布，可穿越血脑屏障；NOS 介导的 NO 生成驱动 BP 氮化。方法：LDI-MSI + 细胞验证。位次：倒数第二，推定通讯 ⚠️。
@@ -252,3 +264,4 @@ PubMed（含 get_article_metadata）、Europe PMC REST（检索、基金反查�
 | 其他同名（自然资源部第二海洋研究所、上海交大、复旦、中央财经大学等刘倩） | 单位/方向完全不同 | 未采用 |
 | 刘思金（Sijin Liu）组论文中的 "Liu Q" | 无机构标注或位次不详 | Small 2013（[10.1002/smll.201202732](https://doi.org/10.1002/smll.201202732)）、ACS Nano 2014（[10.1021/nn500719m](https://doi.org/10.1021/nn500719m)）、Toxicol Lett 2015（[10.1016/j.toxlet.2015.06.007](https://doi.org/10.1016/j.toxlet.2015.06.007)）、Nanotoxicology 2015（[10.3109/17435390.2015.1088589](https://doi.org/10.3109/17435390.2015.1088589)）：银纳米颗粒神经/视网膜毒性；⚠️待核实，暂不计入。 |
 | 同篇含两位 "Liu Q"、位次难断的合作稿 | 如 Zhou Q 组的 PM 研究 | 仅在 §8.4 记录，未计入主列表 |
+- 2026-11-11 轮询：2026-09-01 至 11-11 PubMed 检索式（Liu Qian[Author]+RCEES 单位）命中 13 条，（Liu Q+Jiang GB+同位素/MSI/磁铁矿/煤烟）命中 0 条；WebSearch 补查无新增。新增 2 条（Water Res 锂迁移、Ecotoxicol Environ Saf 电池黑粉）。排除：Adv Healthc Mater 黑磷 MSI（已收录）；J Autoimmun SLE 铜（已收录）；Anal Chem Ru@UiO-66 H2S 传感（倒数第二，但主题偏离本库，暂不收 ⚠️）；ES&T 煤电磁铁矿、Chem Rev 光反应颗粒物、ES&T 造林减排（非通讯/核心位）；Environ Health 会议综述评论（4 人署名，刘倩第 2、非其主导的综述性评述）；ES&T 的 FXII/4-烷基酚/过敏原及 Ecotoxicol 三溴苯酚共 4 篇（Qian S Liu，周群芳组，依 §8.4 排除）。

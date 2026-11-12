@@ -62,6 +62,8 @@
 ### 1.4 同名与排歧
 见第 8 节。
 
+2026-11-12 轮询备注：PubMed 机构字段中 Dai 的实验室英文名出现变体 "Key Laboratory of Environmental Health Impact Assessment for Emerging Contaminants, Ministry of Ecology and Environment"（PMID 42508201、42251928，2026-06/07），与既有 "State Environmental Protection Key Laboratory…" 可能为同一平台的译名差异（⚠️待核实）；单位仍为上海交通大学环境科学与工程学院，未见动物所署名的新文，亦无单位变动证据。
+
 ---
 
 ## 2. 学术思想蒸馏
@@ -313,3 +315,4 @@
 
 ### 8.4 同名排除说明
 "Dai J"是常见署名，仅用"Dai J"检索会混入大量其他作者。本次做法：①用全名"Dai Jiayin"；②加单位限定（Shanghai Jiao Tong、Institute of Zoology）；③对近期论文核对其机构字段中是否含"State Environmental Protection Key Laboratory of Environmental Health Impact Assessment of Emerging Contaminants"或动物所重点实验室；④对主题明显偏离（见 8.3 第 9 条）的命中不纳入。⚠️仍可能漏掉 2020 年之前以"Dai J"署名且机构信息不完整的论文，或误含同名作者。
+- 2026-11-12 轮询：近 60 天无新增（检索式 `"Dai Jiayin"[Author] AND ("Shanghai Jiao Tong"[Affiliation] OR "Institute of Zoology"[Affiliation])`，pdat 2026/09/01–2026/11/12，PubMed 命中 5 条；5 条均不收：42916446 已在 §4 第 1 条；42508201、42519817 已在档案；42775206（ES Health Wash 2026-06，Dai 为 19 位作者中的非通讯合作者）与 42251928（Environ Pollut 2026-06，Dai 5/9，Pan Y 通讯）均为 6 月在线、早于窗口且非核心作者。WebSearch 补查未见新的 Dai 通讯/核心作者文；⚠️J Environ Expo Assess 一篇 PFAS 混合物与脂肪肝论文含 Dai 署名，日期与作者位置未核实）

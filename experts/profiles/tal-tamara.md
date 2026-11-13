@@ -223,3 +223,4 @@ EPA Pathfinder（微生物组 → 发育毒性 → PFAS 生物修复）关注“
 **同名排除清单**
 - “Tal T”常见同名（未在结果中遇到作者归属混淆，但检索时需用单位过滤）：以色列/科学教育领域 Tali Tal（Technion）；其它医学/眼科领域的 Tal T（无单位匹配，已排除）。⚠️ 本次未逐一检出具体 PMID，列出仅为检索预案，需要在扩展检索时用 `AND (zebrafish OR toxicol*)` 或单位过滤。
 - 已确认同一人：Tamara L. Tal（OSU 时期）。
+- 2026-11-13 轮询：近 60 天无新增（PubMed `Tal T[Author] AND (zebrafish OR neurotoxicity OR microbiome OR Leipzig OR UFZ OR Helmholtz)` 限 2026/09/01–11/13 命中 0；WebSearch 补查仅见已收录的 EHP/ES&T 2026 论文及 UFZ 页面提及的 Schor PFOS-ppar EHP 稿、原油水相 ES&T 稿、PFAS 巨噬细胞蛋白质组稿，均无法确认发表日期在窗口内，⚠️待核实是否已收录/是否在窗口内；未见单位变动）。

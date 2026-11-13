@@ -267,3 +267,4 @@ PubMed（含 E-utilities）、Europe PMC、Crossref（funder 字段）、OpenAle
 - **中国药科大学天然药物活性物质重点实验室**的 Chen Lianguo（p97 共价抑制剂、中药靶点化学蛋白质组）：PMID 35256959、34027538。
 - **大鼠组织 8-氧鸟嘌呤研究的 "Lian-Guo Chen"**：PMID 23738036（作者含 Jian-Ping Cai，与本人无关）。
 - **同机构不同名的 "Chen L"**（Chen Liang、Chen Liangming、Chen Lei、Chen Lu、Chen Lin、Chen Linpeng、Chen Liuzhu、Chen Luefeng 等，在水生所/地大署名，共 103 篇，主题为微囊藻毒素、草鱼病毒、地下水污染、控制工程等）；水生所陈隽（Chen Jun）研究员为淡水生态毒理方向，**非本人**。
+- 2026-11-13 轮询：近 60 天无新增（PubMed `"Chen Lianguo"[Author]` 与 `lchenam` 限 2026/09/01–11/13 共命中 3 条：42242535 即 §4 已收 Environ Pollut 2026-06 条（去重）；42721925 Ecotoxicol Environ Saf 为温州医科大学药学部同名者（§8.4 已列）；42106196 为 Eur J Med Chem 勘误、同名者；WebSearch 补查未见新文；未见单位/实验室名变动）。

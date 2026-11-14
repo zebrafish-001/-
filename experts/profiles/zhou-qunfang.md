@@ -34,6 +34,8 @@
 - 本档案中"周群芳代表作"限于：(a) RCEES 机构页明示 * 通讯的 2011–2019 年论文；(b) 作者串中周群芳为第一/第二作者或倒数第二位（江桂斌末位）的论文，后者仅记"推定通讯 ⚠️"。
 - 其他课题组成员/合作者（Sun Zhendong、Yang Xiaoxi、Liang Jiabin、Su Jing、Gao Yan、Pei Yao、Liu Huinan 等）为第一作者的论文，列入"课题组产出"，周群芳位次推定通讯 ⚠️。
 
+- 2026-11-14 轮询备注：PubMed 2026-09 至 10 月署名（JAFC 2026-09-23、ES&T 2026-09-22/10-13）中周群芳除 RCEES 外另列 Institute of Environment and Health, Jianghan University（武汉）及 Zhejiang Key Laboratory of Environment & Health of New Pollutants / School of Environment, Hangzhou Institute for Advanced Study, UCAS 的兼职署名；实验室名在同期论文中 "Chemistry and Toxicology" 与 "Chemistry and Ecotoxicology" 并存。江汉大学聘任性质与时点 ⚠️待核实（WebSearch 未能在江汉大学页面核到其名）。
+
 ---
 
 ## 2. 学术思想蒸馏
@@ -209,3 +211,4 @@ RCEES 研究人员页（2019 版）；UCAS 导师页（含 2026-05-20 任职标�
 - **Zhou Qing / Zhou Q（水处理/消毒副产物）**：Environ Int 2026（DOI 10.1016/j.envint.2026.110521，Ren Hongqiang, Zhou Qing, Pan Yang）：**排除**。
 - **Zhou Q（其他）**：PNAS 2026 "Causality-integrated graph learning…"（Shi Wei、Zhang Xiaowei 团队）；JACS 2026 PFOA 光催化脱氟（Zhu Yongfa 团队）；Hum Genomics 2024 肺癌模型；Eco Environ Health 2025 噻虫嗪斑马鱼神经毒性（"Zhou Q" 位次 11，Zhou Qing 末位前，署名单位未核实，⚠️ **暂排除**）；Environ Int 2025 铅在肺脑（Zhou Q 第一作者，Hu Ligang 组，⚠️ 姓名全称未核实，**暂排除**）；Nature 2024 木质素芳基化（Wang Feng 组，周群芳是否为共同作者 ⚠️，**暂排除**）；Fertil Steril 2007 子宫内膜异位症（Liu H, Lang J, Zhou Q）；Sci Rep 2016 IR-780 声敏剂；Sci Rep 2021 COVID-19 聚类；J Cancer 2021 等：**排除**。
 - 周群芳早期论文中中文姓名拼写 "Qunfang Z" 出现于 2004 年 J Chromatogr A 等，已核对（RCEES 作者串含 Jiang G，列入时标注）。
+- 2026-11-14 轮询：近 60 天无新增。检索式 `Zhou Qunfang[Author] AND Research Center for Eco-Environmental Sciences`（2026/09/01–11/14）命中 6 条，均已在 §4 收录（按 DOI 去重：JAFC 10.1021/acs.jafc.6c04897、ES&T 10.1021/acs.est.6c05707、10.1021/acs.est.6c06496、10.1021/acs.est.6c08887、Ecotoxicol Environ Saf 10.1016/j.ecoenv.2026.120699、Food Chem 10.1016/j.foodchem.2026.150529）；WebSearch 补查无新文。

@@ -119,3 +119,4 @@
 - **最后更新**：2026-11-06。
 - **置信度**：高（论文标题/期刊/年份/DOI 均来自 PubMed/Crossref/OpenAlex 记录，DOI 已用 Crossref API 抽查 12 条均可解析：Science 2026、ES&T 2026/2025×3/2024×3/2021、Envpol 2025、ES&T 2013 等）；通讯作者位次依据 PubMed 署名邮箱、CUG 主页"第一或通讯作者"代表作清单与 OpenAlex corresponding 标记三者互证，但 ES&T 2025–2026 的具体通讯排序未见原文页面（ACS/Science 站点 403）。
 - **待核实项（共 9）**：①"青年基金 A 类 2026（2027–2031）"是否即原杰青级别及其批准号；②42377276 是否为"梁子湖高龄达氏鲌早亡"面上项目；③2026–2029 TDtBPP 肝毒性面上项目批准号；④Science 2026 实验室暴露浓度/周期/样本量（未取得全文）；⑤与周炳升的明文师承关系；⑥BTBPE ES&T 2025 刘春生是否为共同通讯；⑦2022 年后 NSFC 批准项目全貌（共享服务网不可达）；⑧低置信合作论文是否计入本人；⑨周炳升档案所称"现华中农大"应更新为 CUG（跨档案勘误）。
+- 2026-11-14 轮询：近 60 天无新增。检索式 §8 PubMed 式（2026/09/01–11/14）命中 1 条（PMID 42939114，Animals 2026 塔里木河特有鱼类综述，作者 Liu Changcai，Tarim University，非本人，排除）；补充式 `cliu@cug.edu.cn/Liu Chunsheng[Author]` 与 `Liu C + China University of Geosciences + Wuhan` 命中 0；WebSearch 补查未见新文。待核实 9 项均未获确切证据（未检得 2026 批准号），无变动。
